@@ -1,0 +1,2061 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+==================================================================================
+<field> attributes
+label:  readable field description
+  level:  menu level - 0 = first level menu, 1 = second level menu, 
+	displayFlag:  bin color flags - 
+               BCF_MIXED=0, BCF_RED_INCR=1, BCF_GREEN_INCR=2, BCF_BLUE_INCR=3, 
+               BCF_GRAY_INCR=4, BCF_SINGLECOLOR=5, BCF_TRANSPARENT=6,
+               BCF_BLUEGREEN=7, BCF_BLUERED=8, BCF_REDGREEN=9,
+               BCF_RED_DECR=10, BCF_GREEN_DECR=11, BCF_BLUE_DECR=12, 
+               BCF_GRAY_DECR=13
+		 mfiType: 0=quantity bins, 1=category bins
+		 binStyle: 0=linear, 1=equal counts
+		 min:      minValue of the collection
+		 max:      maxValue of the collection
+		 results:  1=show map of this attribute in the PostRun results tab,0=don't show
+		 decadalMaps:  0=don't include in decadal map out, > 0 = include in decadal outputs
+		 useInSiteAttr:  1=include attribute in site attribute editor, 0=don't include
+		 useInOutcomes:  1=include attribute in outcome editor, 0=don't include
+==================================================================================
+-->
+
+<fields layer="IDU">
+	<field col="LULC_A"
+		 label="Coarse-Articulation Land Use"
+		 level="0"
+		 displayFlag="4"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="1"
+		 decadalMaps="11"
+		 useInSiteAttr="1"
+		 useInOutcomes="1">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label="Urban" color="(221,0,0)"  value="1" />
+			<attr label="Rural" color="(255,127,127)"  value="2" />
+			<attr label="Agriculture" color="(128,64,0)"  value="3" />
+			<attr label="Forest" color="(53,204,61)"  value="4" />
+			<attr label="Wetlands" color="(14,207,241)"  value="5" />
+			<attr label="Other Vegetation" color="(255,255,0)"  value="6" />
+			<attr label="Water" color="(0,0,189)"  value="7" />
+			<attr label="Roads" color="(0,0,0)"  value="8" />
+		</attributes>
+	</field>
+
+	<field col="LULC_B"
+		 label="Mid-Articulation Land Use"
+		 level="0"
+		 displayFlag="4"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="1"
+		 decadalMaps="11"
+		 useInSiteAttr="1"
+		 useInOutcomes="1">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label="Residential" color="(221,0,0)"  value="1" />
+			<attr label="Commercial/Industrial" color="(221,20,20)"  value="2" />
+			<attr label="Civic/Open Space" color="(221,40,40)"  value="3" />
+			<attr label="Vacant" color="(221,60,60)"  value="4" />
+			<attr label="Urban NonVegetated" color="(221,80,80)"  value="5" />
+			<attr label="Rural Residential" color="(220,141,35)"  value="10" />
+			<attr label="Rural non-vegetated unknown" color="(235,235,235)"  value="11" />
+			<attr label="Rural Civic/Open Space" color="(180,180,180)"  value="12" />
+			<attr label="Tree/Berry Crops" color="(127,0,0)"  value="20" />
+			<attr label="Hay/Pasture/Fallow" color="(255,255,0)"  value="21" />
+			<attr label="Grass Seed/Grain" color="(0,255,0)"  value="22" />
+			<attr label="Row/Field Crops" color="(127,127,0)"  value="23" />
+			<attr label="Wood/Nursery Products" color="(127,255,127)"  value="24" />
+			<attr label="Forest Open" color="(0,127,0)"  value="30" />
+			<attr label="Forest Mixed" color="(0,117,0)"  value="31" />
+			<attr label="Forest Hardwood" color="(0,107,0)"  value="32" />
+			<attr label="Forest Semi-closed conifer" color="(0,97,0)"  value="33" />
+			<attr label="Forest Closed Conifer le 80 Years" color="(0,87,0)"  value="34" />
+			<attr label="Forest Closed Conifer gt 80 Years" color="(0,77,0)"  value="35" />
+			<attr label="Wetlands" color="(0,127,127)"  value="40" />
+			<attr label="Other Vegetation" color="(0,127,127)"  value="50" />
+			<attr label="Water" color="(0,0,127)"  value="60" />
+			<attr label="Roads" color="(0,0,0)"  value="70" />
+		</attributes>
+	</field>
+
+	<field col="LULC_C"
+		 label="Fine-Articulation Land Use"
+		 level="0"
+		 displayFlag="4"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="1"
+		 decadalMaps="11"
+		 useInSiteAttr="1"
+		 useInOutcomes="1">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label="Residential 0-4 DU/ac" color="(127,127,127)"  value="1" />
+			<attr label="Residential 4-9 DU/ac" color="(92,92,92)"  value="2" />
+			<attr label="Residential 9-16 DU/ac" color="(63,63,63)"  value="3" />
+			<attr label="Residential &gt; 16 DU/ac" color="(27,27,27)"  value="4" />
+			<attr label="Residential/Commercial" color="(12,12,12)"  value="10" />
+			<attr label="Commercial" color="(32,45,56)"  value="6" />
+			<attr label="Industrial" color="(44,55,66)"  value="8" />
+			<attr label="Civic/Open Space" color="(55,66,77)"  value="12" />
+			<attr label="Vacant" color="(66,77,88)"  value="5" />
+			<attr label="Urban NonVegetated" color="(77,88,99)"  value="11" />
+			<attr label="Rural Residential" color="(255,127,157)"  value="16" />
+			<attr label="Rural non-vegetated unknown" color="(255,127,127)"  value="24" />
+			<attr label="Rural Civic/Open Space" color="(255,127,87)"  value="26" />
+			<attr label="Orchard" color="(0,0,0)"  value="92" />
+			<attr label="Vineyards/Caneberries" color="(0,0,0)"  value="73" />
+			<attr label="Hay" color="(27,150,27)"  value="83" />
+			<attr label="Pasture" color="(27,170,27)"  value="85" />
+			<attr label="Bare/fallow" color="(27,190,27)"  value="88" />
+			<attr label="Grass seed" color="(120,120,0)"  value="67" />
+			<attr label="Grain" color="(120,150,0)"  value="71" />
+			<attr label="Row crop" color="(23,127,127)"  value="79" />
+			<attr label="Field crop" color="(23,157,127)"  value="90" />
+			<attr label="Turfgrass/park" color="(23,187,127)"  value="91" />
+			<attr label="Christmas trees" color="(128,64,40)"  value="93" />
+			<attr label="Nursery Crops" color="(128,64,80)"  value="72" />
+			<attr label="Hybrid poplar" color="(128,64,176)"  value="66" />
+			<attr label="Woodlot" color="(128,64,160)"  value="95" />
+			<attr label="Forest open" color="(0,97,0)"  value="51" />
+			<attr label="Forest Semi-closed mixed" color="(0,127,0)"  value="52" />
+			<attr label="Forest Closed mixed" color="(0,157,0)"  value="54" />
+			<attr label="Forest Semi-closed hardwood" color="(0,187,0)"  value="62" />
+			<attr label="Forest Closed hardwood" color="(0,217,0)"  value="53" />
+			<attr label="Forest Semi-closed conifer" color="(0,227,0)"  value="55" />
+			<attr label="FCC 0-20 yrs" color="(0,247,0)"  value="56" />
+			<attr label="FCC 21-40 yrs" color="(0,11,0)"  value="57" />
+			<attr label="FCC 41-60 yrs" color="(0,31,0)"  value="58" />
+			<attr label="FCC 61-80 yrs" color="(0,51,0)"  value="59" />
+			<attr label="FCC 81-200 yrs" color="(0,61,0)"  value="60" />
+			<attr label="FCC &gt; 200 yrs" color="(0,81,0)"  value="61" />
+			<attr label="Non-tree wetlands" color="(0,127,127)"  value="99" />
+			<attr label="Flooded Marsh" color="(0,195,195)"  value="89" />
+			<attr label="Oak savanna" color="(6,225,255)"  value="98" />
+			<attr label="Grassland" color="(6,255,255)"  value="86" />
+			<attr label="Shrublands" color="(6,29,255)"  value="87" />
+			<attr label="Channel non-vegetated" color="(0,0,235)"  value="29" />
+			<attr label="Stream orders 1-4" color="(0,0,185)"  value="30" />
+			<attr label="Stream orders 5-7" color="(0,0,150)"  value="31" />
+			<attr label="Water" color="(0,0,127)"  value="32" />
+			<attr label="Railroads" color="(40,40,40)"  value="18" />
+			<attr label="Primary roads" color="(60,60,60)"  value="19" />
+			<attr label="Secondary roads" color="(80,80,80)"  value="20" />
+			<attr label="Light duty roads" color="(100,100,100)"  value="21" />
+			<attr label="Other roads" color="(120,120,120)"  value="22" />
+		</attributes>
+	</field>
+
+	<field col="VEGCLASS"
+		 label="VDDT Veg Class ID"
+		 level="0"
+		 displayFlag="0"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="1">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label="Residential 0 - 4 DU/ac" color="(221,60,60)"  value="1" />
+			<attr label="Residential 4 - 9  DU/ac" color="(221,50,50)"  value="2" />
+			<attr label="Residential 9 - 16 DU/ac" color="(221,40,40)"  value="3" />
+			<attr label="Residential &gt; 16 DU/ac" color="(221,30,30)"  value="4" />
+			<attr label="Commercial" color="(251,40,40)"  value="6" />
+			<attr label="Commercial/Industrial" color="(251,30,30)"  value="7" />
+			<attr label="Industrial" color="(251,20,20)"  value="8" />
+			<attr label="Residential and commercial" color="(231,30,30)"  value="10" />
+			<attr label="Urban non-vegetated unknown" color="(221,0,0)"  value="11" />
+			<attr label="Railroad" color="(127,127,127)"  value="18" />
+			<attr label="Primary roads" color="(127,127,127)"  value="19" />
+			<attr label="Secondary roads" color="(127,127,127)"  value="20" />
+			<attr label="Light duty roads" color="(127,127,127)"  value="21" />
+			<attr label="Rural non-vegetated unknown" color="(127,127,127)"  value="24" />
+			<attr label="Main channel non-vegetated" color="(0,0,255)"  value="29" />
+			<attr label="Water" color="(0,0,255)"  value="33" />
+			<attr label="Snow/ice" color="(255,255,255)"  value="40" />
+			<attr label="Barren" color="(127,127,127)"  value="42" />
+			<attr label="Urban tree overstory" color="(221,0,0)"  value="49" />
+			<attr label="Hybrid poplar" color="(128,64,0)"  value="66" />
+			<attr label="Grass seed" color="(128,64,0)"  value="67" />
+			<attr label="Row crop" color="(128,64,0)"  value="68" />
+			<attr label="Grains" color="(128,64,0)"  value="71" />
+			<attr label="Nursery" color="(128,64,0)"  value="72" />
+			<attr label="Berries and Vineyards" color="(128,64,0)"  value="73" />
+			<attr label="Double cropping" color="(128,64,0)"  value="74" />
+			<attr label="Hops" color="(128,64,0)"  value="75" />
+			<attr label="Mint" color="(128,64,0)"  value="76" />
+			<attr label="Sugar beet seed" color="(128,64,0)"  value="78" />
+			<attr label="Hay" color="(128,64,0)"  value="83" />
+			<attr label="Pasture" color="(128,64,0)"  value="85" />
+			<attr label="Bare/fallow" color="(128,64,0)"  value="88" />
+			<attr label="Flooded/marsh" color="(128,64,0)"  value="89" />
+			<attr label="Field crop" color="(128,64,0)"  value="90" />
+			<attr label="Turfgrass/park" color="(221,0,0)"  value="91" />
+			<attr label="Orchard" color="(128,64,0)"  value="92" />
+			<attr label="Christmas trees" color="(128,64,0)"  value="93" />
+			<attr label="Woodlot" color="(128,64,0)"  value="95" />
+			<attr label="Upland prairie" color="(255,255,128)"  value="200" />
+			<attr label="Oak savanna, saplings" color="(255,255,0)"  value="201" />
+			<attr label="Oak savanna, pole-sized trees" color="(255,255,0)"  value="202" />
+			<attr label="Oak savanna, small trees, one layer" color="(255,255,0)"  value="203" />
+			<attr label="Oak savanna, large trees, one layer" color="(255,255,0)"  value="204" />
+			<attr label="Oak savanna, grass-forb stage, post-disturbance" color="(0,0,0)"  value="209" />
+			<attr label="Oak woodland, pole-sized trees" color="(255,69,0)"  value="210" />
+			<attr label="Oak woodland, small trees, one layer" color="(255,69,0)"  value="211" />
+			<attr label="Oak woodland, large trees, one layer" color="(255,69,0)"  value="212" />
+			<attr label="Oak-fir woodland, small trees, two layers" color="(210,56,4)"  value="220" />
+			<attr label="Oak-fir woodland, large trees, two layers" color="(210,56,4)"  value="221" />
+			<attr label="Douglas-fir w/oak, grass-forb stage" color="(128,255,0)"  value="230" />
+			<attr label="Douglas-fir w/oak, saplings" color="(128,255,0)"  value="231" />
+			<attr label="Douglas-fir w/oak, pole-sized trees, medium to closed canopy" color="(128,255,0)"  value="232" />
+			<attr label="Douglas-fir w/oak, small trees, medium to closed canopy, two layers" color="(128,255,0)"  value="233" />
+			<attr label="Douglas-fir w/oak, large trees, medium to closed canopy, two layers" color="(128,255,0)"  value="234" />
+			<attr label="Douglas-fir w/oak, grass-forb stage, post-disturbance" color="(0,0,0)"  value="239" />
+			<attr label="Douglas-fir, grass-forb stage" color="(34,139,34)"  value="240" />
+			<attr label="Douglas-fir, saplings" color="(34,139,34)"  value="241" />
+			<attr label="Douglas-fir, pole-sized trees, open canopy" color="(34,139,34)"  value="242" />
+			<attr label="Douglas-fir, small trees, open canopy, one layer" color="(34,139,34)"  value="243" />
+			<attr label="Douglas-fir, large trees, open canopy, one layer" color="(34,139,34)"  value="244" />
+			<attr label="Douglas-fir, pole-sized trees, medium to closed canopy" color="(34,139,34)"  value="245" />
+			<attr label="Douglas-fir, small trees, medium to closed canopy, two layers" color="(34,139,34)"  value="246" />
+			<attr label="Douglas-fir, large trees, medium to closed canopy, two layers" color="(34,139,34)"  value="247" />
+			<attr label="Douglas-fir, grass-forb stage, post-disturbance" color="(0,0,0)"  value="259" />
+			<attr label="Mesic mixed Douglas-fir and broadleaf deciduous, grass-forb stage" color="(0,255,128)"  value="260" />
+			<attr label="Mesic mixed Douglas-fir and broadleaf deciduous, saplings" color="(0,255,128)"  value="261" />
+			<attr label="Mesic mixed Douglas-fir and broadleaf deciduous, pole-sized trees, medium canopy" color="(0,255,128)"  value="262" />
+			<attr label="Mesic mixed Douglas-fir and broadleaf deciduous, small trees, medium canopy, one layer" color="(0,255,128)"  value="263" />
+			<attr label="Mesic mixed Douglas-fir and broadleaf deciduous, large trees, medium canopy, one layer" color="(0,255,128)"  value="264" />
+			<attr label="Mesic mixed Douglas-fir and broadleaf deciduous, pole-sized trees, closed canopy" color="(0,255,128)"  value="265" />
+			<attr label="Mesic mixed Douglas-fir and broadleaf deciduous, grass-forb stage, post-disturbance" color="(0,0,0)"  value="269" />
+			<attr label="Mesic needleleaf evergreen, small trees, closed canopy, two layers" color="(0,128,128)"  value="270" />
+			<attr label="Mesic needleleaf evergreen, large trees, closed canopy, two layers" color="(0,128,128)"  value="271" />
+			<attr label="Mesic broadleaf deciduous, grass-forb stage" color="(0,255,255)"  value="280" />
+			<attr label="Mesic broadleaf deciduous, saplings" color="(0,255,255)"  value="281" />
+			<attr label="Mesic broadleaf deciduous, pole-sized trees, medium canopy" color="(0,255,255)"  value="282" />
+			<attr label="Mesic broadleaf deciduous, small trees, closed canopy, one layer" color="(0,255,255)"  value="285" />
+			<attr label="Mesic broadleaf deciduous, large treesOak-fir, one layer" color="(0,255,255)"  value="286" />
+			<attr label="Mesic broadleaf deciduous, grass-forb stage, post-disturbance" color="(0,0,0)"  value="289" />
+			<attr label="Oak savanna, grass-forb stage, reduced fuels" color="(255,255,128)"  value="300" />
+			<attr label="Oak savanna, saplings, reduced fuels" color="(255,255,0)"  value="301" />
+			<attr label="Oak savanna, pole-sized trees, reduced fuels" color="(255,255,0)"  value="302" />
+			<attr label="Oak savanna, small trees, one layer, reduced fuels" color="(255,255,0)"  value="303" />
+			<attr label="Oak savanna, large trees, one layer, reduced fuels" color="(255,255,0)"  value="304" />
+			<attr label="Oak woodland, grass-forb stage, reduced fuels" color="(255,69,0)"  value="308" />
+			<attr label="Oak woodland, saplings, reduced fuels" color="(255,69,0)"  value="309" />
+			<attr label="Oak woodland, pole-sized trees, medium canopy, reduced fuels" color="(255,69,0)"  value="310" />
+			<attr label="Oak woodland, small trees, one layer, reduced fuels" color="(255,69,0)"  value="311" />
+			<attr label="Oak woodland, large trees, one layer, reduced fuels" color="(255,69,0)"  value="312" />
+			<attr label="Oak savanna, grass-forb stage, post-disturbance, reduced fuels" color="(0,0,0)"  value="318" />
+			<attr label="Oak woodland, grass-forb stage, post-disturbance, reduced fuels" color="(0,0,0)"  value="319" />
+			<attr label="Oak-fir woodland, small trees, two layers, reduced fuels" color="(210,56,4)"  value="320" />
+			<attr label="Oak-fir woodland, large trees, two layers, reduced fuels" color="(210,56,4)"  value="321" />
+			<attr label="Douglas-fir w/oak woodland, small trees, two layers, reduced fuels" color="(128,255,0)"  value="333" />
+			<attr label="Douglas-fir w/oak woodland, large trees, two layers, reduced fuels" color="(128,255,0)"  value="334" />
+			<attr label="Douglas-fir w/oak, grass-forb stage, post-disturbance, reduced fuels" color="(0,0,0)"  value="339" />
+			<attr label="Douglas-fir, grass-forb stage, reduced fuels" color="(34,139,34)"  value="340" />
+			<attr label="Douglas-fir, saplings, reduced fuels" color="(34,139,34)"  value="341" />
+			<attr label="Douglas-fir woodland, pole-sized trees, reduced fuels" color="(34,139,34)"  value="342" />
+			<attr label="Douglas-fir woodland, small trees, one layer, reduced fuels" color="(34,139,34)"  value="343" />
+			<attr label="Douglas-fir woodland, large trees, one layer, reduced fuels" color="(34,139,34)"  value="344" />
+			<attr label="Douglas-fir woodland, small trees, two layers, reduced fuels" color="(34,139,34)"  value="346" />
+			<attr label="Douglas-fir woodland, large trees, two layers, reduced fuels" color="(34,139,34)"  value="347" />
+			<attr label="Douglas-fir, grass-forb stage, post-disturbance, reduced fuels" color="(0,0,0)"  value="359" />
+			<attr label="Mesic mixed Douglas-fir and broadleaf deciduous woodland, pole-sized trees, reduced fuels" color="(0,255,128)"  value="362" />
+			<attr label="Mesic mixed Douglas-fir and broadleaf deciduous woodland, small trees, one layer, reduced fuels" color="(0,255,128)"  value="363" />
+			<attr label="Mesic mixed Douglas-fir and broadleaf deciduous woodland, large trees, one layer, reduced fuels" color="(0,255,128)"  value="364" />
+			<attr label="Mesic mixed Douglas-fir and broadleaf deciduous, grass-forb stage, post-disturbance, reduced fuels" color="(0,0,0)"  value="369" />
+			<attr label="Mesic needleleaf evergreen woodland, small trees, two layers, reduced fuels" color="(0,128,128)"  value="370" />
+			<attr label="Mesic needleleaf evergreen woodland, large trees, two layers, reduced fuels" color="(0,128,128)"  value="371" />
+			<attr label="Mesic broadleaf deciduous, grass-forb stage, reduced fuels" color="(0,255,255)"  value="380" />
+			<attr label="Mesic broadleaf deciduous, saplings, reduced fuels" color="(0,255,255)"  value="381" />
+			<attr label="Mesic broadleaf deciduous woodland, pole-sized trees, reduced fuels" color="(0,255,255)"  value="382" />
+			<attr label="Mesic broadleaf deciduous woodland, small trees, one layer, reduced fuels" color="(0,255,255)"  value="385" />
+			<attr label="Mesic broadleaf deciduous woodland, large trees, one layer, reduced fuels" color="(0,255,255)"  value="386" />
+			<attr label="Mesic broadleaf deciduous, grass-forb stage, post-disturbance, reduced fuels" color="(0,0,0)"  value="389" />
+			<attr label="Douglas-fir, grass-forb stage, plantation" color="(34,139,34)"  value="440" />
+			<attr label="Douglas-fir, saplings, plantation" color="(34,139,34)"  value="441" />
+			<attr label="Douglas-fir, pole-sized trees, open canopy, plantation" color="(34,139,34)"  value="442" />
+			<attr label="Douglas-fir, small trees, closed canopy, one layer, plantation" color="(34,139,34)"  value="443" />
+			<attr label="Douglas-fir, large trees, closed canopy, one layer, plantation" color="(34,139,34)"  value="444" />
+			<attr label="Douglas-fir, giant trees, closed canopy, one layer, plantation" color="(34,139,34)"  value="447" />
+			<attr label="Douglas-fir, giant trees, closed canopy, two layers, plantation" color="(34,139,34)"  value="448" />
+			<attr label="Pine savanna, grass-forb stage" color="(255,193,224)"  value="499" />
+			<attr label="Pine savanna, saplings" color="(255,193,224)"  value="500" />
+			<attr label="Pine savanna, pole-sized trees" color="(255,193,224)"  value="501" />
+			<attr label="Pine savanna, small trees, one layer" color="(255,193,224)"  value="502" />
+			<attr label="Pine savanna, large trees, one layer" color="(255,193,224)"  value="503" />
+			<attr label="Pine woodland, pole-sized trees" color="(128,0,64)"  value="504" />
+			<attr label="Pine woodland, small trees, two layers" color="(128,0,64)"  value="505" />
+			<attr label="Pine woodland, large trees, two layers" color="(128,0,64)"  value="506" />
+			<attr label="Pine savanna, grass-forb stage, post-disturbance" color="(0,0,0)"  value="509" />
+			<attr label="Madrone, grass-forb stage" color="(255,0,255)"  value="520" />
+			<attr label="Madrone, saplings" color="(255,0,255)"  value="521" />
+			<attr label="Madrone, pole-sized trees, medium canopy" color="(255,0,255)"  value="525" />
+			<attr label="Madrone, small trees, medium canopy, one layer" color="(255,0,255)"  value="526" />
+			<attr label="Madrone, large trees, medium canopy, one layer" color="(255,0,255)"  value="527" />
+			<attr label="Madrone, grass-forb stage, post-disturbance" color="(0,0,0)"  value="529" />
+			<attr label="Mixed madrone and Douglas-fir, small trees, medium canopy, two layers" color="(255,0,128)"  value="540" />
+			<attr label="Mixed madrone and Douglas-fir, large trees, medium canopy, two layers" color="(255,0,128)"  value="541" />
+			<attr label="Pine savanna, grass-forb stage, reduced fuels" color="(255,193,224)"  value="599" />
+			<attr label="Pine savanna, saplings, reduced fuels" color="(255,193,224)"  value="600" />
+			<attr label="Pine savanna, pole-sized trees, open canopy, reduced fuels" color="(255,193,224)"  value="601" />
+			<attr label="Pine savanna, small trees, one layer, reduced fuels" color="(255,193,224)"  value="602" />
+			<attr label="Pine savanna, large trees, one layer, reduced fuels" color="(255,193,224)"  value="603" />
+			<attr label="Pine woodland, small trees, one layer, reduced fuels" color="(128,0,64)"  value="605" />
+			<attr label="Pine woodland, large trees, one layer, reduced fuels" color="(128,0,64)"  value="606" />
+			<attr label="Pine woodland, grass-forb stage, post-disturbance, reduced fuels" color="(0,0,0)"  value="609" />
+			<attr label="Madrone, grass-forb stage, reduced fuels" color="(255,0,255)"  value="620" />
+			<attr label="Madrone, saplings, reduced fuels" color="(255,0,255)"  value="621" />
+			<attr label="Madrone, pole-sized trees, reduced fuels" color="(255,0,255)"  value="625" />
+			<attr label="Madrone, small trees, medium canopy, one layer, reduced fuels" color="(255,0,255)"  value="626" />
+			<attr label="Madrone, large trees, medium canopy, one layer, reduced fuels" color="(255,0,255)"  value="627" />
+			<attr label="Madrone, grass-forb stage, post-disturbance, reduced fuels" color="(0,0,0)"  value="629" />
+			<attr label="Mixed madrone and Douglas-fir, small trees, medium canopy, two layers, reduced fuels" color="(255,0,128)"  value="640" />
+			<attr label="Mixed madrone and Douglas-fir, large trees, medium canopy, two layers, reduced fuels" color="(255,0,128)"  value="641" />
+		</attributes>
+	</field>
+
+	<field col="PopDens"
+		 label="Population Density (#/m2)"
+		 level="0"
+		 displayFlag="1"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1e+003"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			People/m2
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 2.5e-005" color="(250,227,227)"  minVal="0" maxVal="2.5e-005" />
+			<attr label="2.5e-005 to 5e-005" color="(248,215,215)"  minVal="2.5e-005" maxVal="5e-005" />
+			<attr label="5e-005 to 7.5e-005" color="(246,204,204)"  minVal="5e-005" maxVal="7.5e-005" />
+			<attr label="7.5e-005 to 0.0001" color="(244,192,192)"  minVal="7.5e-005" maxVal="0.0001" />
+			<attr label="0.0001 to 0.000125" color="(242,181,181)"  minVal="0.0001" maxVal="0.000125" />
+			<attr label="0.000125 to 0.00015" color="(240,170,170)"  minVal="0.000125" maxVal="0.00015" />
+			<attr label="0.00015 to 0.000175" color="(238,158,158)"  minVal="0.00015" maxVal="0.000175" />
+			<attr label="0.000175 to 0.0002" color="(236,147,147)"  minVal="0.000175" maxVal="0.0002" />
+			<attr label="0.0002 to 0.000225" color="(234,136,136)"  minVal="0.0002" maxVal="0.000225" />
+			<attr label="0.000225 to 0.00025" color="(232,124,124)"  minVal="0.000225" maxVal="0.00025" />
+			<attr label="0.00025 to 0.000275" color="(230,113,113)"  minVal="0.00025" maxVal="0.000275" />
+			<attr label="0.000275 to 0.0003" color="(228,102,102)"  minVal="0.000275" maxVal="0.0003" />
+			<attr label="0.0003 to 0.000325" color="(226,90,90)"  minVal="0.0003" maxVal="0.000325" />
+			<attr label="0.000325 to 0.00035" color="(224,79,79)"  minVal="0.000325" maxVal="0.00035" />
+			<attr label="0.00035 to 0.000375" color="(222,68,68)"  minVal="0.00035" maxVal="0.000375" />
+			<attr label="0.000375 to 0.0004" color="(220,56,56)"  minVal="0.000375" maxVal="0.0004" />
+			<attr label="0.0004 to 0.000425" color="(218,45,45)"  minVal="0.0004" maxVal="0.000425" />
+			<attr label="0.000425 to 0.00045" color="(216,34,34)"  minVal="0.000425" maxVal="0.00045" />
+			<attr label="0.00045 to 0.000475" color="(214,22,22)"  minVal="0.00045" maxVal="0.000475" />
+			<attr label=" &gt; 0.000475" color="(212,11,11)"  minVal="0.000475" maxVal="1" />
+		</attributes>
+	</field>
+
+	<field col="POPDEN00"
+		 label="Population Density 2000 (#/sq mi)"
+		 level="0"
+		 displayFlag="4"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1e+003"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			Population Density as of the year 2000 census
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 100" color="(227,227,227)"  minVal="0" maxVal="100" />
+			<attr label="100 to 200" color="(204,204,204)"  minVal="100" maxVal="200" />
+			<attr label="200 to 300" color="(181,181,181)"  minVal="200" maxVal="300" />
+			<attr label="300 to 400" color="(158,158,158)"  minVal="300" maxVal="400" />
+			<attr label="400 to 500" color="(136,136,136)"  minVal="400" maxVal="500" />
+			<attr label="500 to 600" color="(113,113,113)"  minVal="500" maxVal="600" />
+			<attr label="600 to 700" color="(90,90,90)"  minVal="600" maxVal="700" />
+			<attr label="700 to 800" color="(68,68,68)"  minVal="700" maxVal="800" />
+			<attr label="800 to 900" color="(45,45,45)"  minVal="800" maxVal="900" />
+			<attr label=" &gt; 900" color="(22,22,22)"  minVal="900" maxVal="1e+010" />
+		</attributes>
+	</field>
+
+	<field col="POP_CAP"
+		 label="Population Capacity (#)"
+		 level="0"
+		 displayFlag="1"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1e+003"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			People
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 1" color="(250,227,227)"  minVal="0" maxVal="1" />
+			<attr label="1-2" color="(248,215,215)"  minVal="1" maxVal="2" />
+			<attr label="2-3" color="(246,204,204)"  minVal="2" maxVal="3" />
+			<attr label="3-4" color="(244,192,192)"  minVal="3" maxVal="4" />
+			<attr label="4-5" color="(242,181,181)"  minVal="4" maxVal="5" />
+			<attr label="5-10" color="(240,170,170)"  minVal="5" maxVal="10" />
+			<attr label="10-15" color="(238,158,158)"  minVal="10" maxVal="15" />
+			<attr label="15-20" color="(236,147,147)"  minVal="15" maxVal="20" />
+			<attr label="20-25" color="(234,136,136)"  minVal="20" maxVal="25" />
+			<attr label="25-50" color="(232,124,124)"  minVal="25" maxVal="50" />
+			<attr label="50-100" color="(230,113,113)"  minVal="50" maxVal="100" />
+			<attr label="100-150" color="(228,102,102)"  minVal="100" maxVal="150" />
+			<attr label="150-200" color="(226,90,90)"  minVal="150" maxVal="200" />
+			<attr label="200-300" color="(224,79,79)"  minVal="200" maxVal="300" />
+			<attr label=" &gt; 300" color="(212,11,11)"  minVal="300" maxVal="1e+008" />
+		</attributes>
+	</field>
+
+	<field col="Pop_Avail"
+		 label="Available Population Capacity (#)"
+		 level="0"
+		 displayFlag="1"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1e+003"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			People
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 1" color="(250,227,227)"  minVal="0" maxVal="1" />
+			<attr label="1-2" color="(248,215,215)"  minVal="1" maxVal="2" />
+			<attr label="2-3" color="(246,204,204)"  minVal="2" maxVal="3" />
+			<attr label="3-4" color="(244,192,192)"  minVal="3" maxVal="4" />
+			<attr label="4-5" color="(242,181,181)"  minVal="4" maxVal="5" />
+			<attr label="5-10" color="(240,170,170)"  minVal="5" maxVal="10" />
+			<attr label="10-15" color="(238,158,158)"  minVal="10" maxVal="15" />
+			<attr label="15-20" color="(236,147,147)"  minVal="15" maxVal="20" />
+			<attr label="20-25" color="(234,136,136)"  minVal="20" maxVal="25" />
+			<attr label="25-50" color="(232,124,124)"  minVal="25" maxVal="50" />
+			<attr label="50-100" color="(230,113,113)"  minVal="50" maxVal="100" />
+			<attr label="100-150" color="(228,102,102)"  minVal="100" maxVal="150" />
+			<attr label="150-200" color="(226,90,90)"  minVal="150" maxVal="200" />
+			<attr label="200-300" color="(224,79,79)"  minVal="200" maxVal="300" />
+			<attr label=" &gt; 300" color="(212,11,11)"  minVal="300" maxVal="1e+008" />
+		</attributes>
+	</field>
+
+	<field col="P_POP_AVAI"
+		 label="% Population Availability"
+		 level="0"
+		 displayFlag="1"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1e+003"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			Percent
+		 </description>
+		 <source>
+			Generated by Target
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 10" color="(250,227,227)"  minVal="0" maxVal="0.1" />
+			<attr label="10 to 20" color="(248,215,215)"  minVal="0.1" maxVal="0.2" />
+			<attr label="20 to 30" color="(246,204,204)"  minVal="0.2" maxVal="0.3" />
+			<attr label="30 to 40" color="(244,192,192)"  minVal="0.3" maxVal="0.4" />
+			<attr label="40 to 50" color="(242,181,181)"  minVal="0.4" maxVal="0.5" />
+			<attr label="50 to 60" color="(240,170,170)"  minVal="0.5" maxVal="0.6" />
+			<attr label="60 to 70" color="(238,158,158)"  minVal="0.6" maxVal="0.7" />
+			<attr label="70 to 80" color="(236,147,147)"  minVal="0.7" maxVal="0.8" />
+			<attr label="80 to 90" color="(234,136,136)"  minVal="0.8" maxVal="0.9" />
+			<attr label="90 to 100" color="(232,124,124)"  minVal="0.9" maxVal="1e+006" />
+		</attributes>
+	</field>
+
+	<field col="N_DU"
+		 label="Number of dwelling Units"
+		 level="0"
+		 displayFlag="3"
+		 datatype="Long"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="2e+003"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			Generated by SWCNH.DLL
+		 </source>
+		 <attributes>
+			<attr label="0" color="(255,255,255)"  minVal="0" maxVal="0.5" />
+			<attr label="1" color="(192,192,244)"  minVal="0.5" maxVal="1.5" />
+			<attr label="2" color="(181,181,242)"  minVal="1.5" maxVal="2.5" />
+			<attr label="3" color="(170,170,240)"  minVal="2.5" maxVal="3.5" />
+			<attr label="4" color="(158,158,238)"  minVal="3.5" maxVal="4.5" />
+			<attr label="5" color="(147,147,236)"  minVal="4.5" maxVal="5.5" />
+			<attr label="6" color="(136,136,234)"  minVal="5.5" maxVal="6.5" />
+			<attr label="7" color="(124,124,232)"  minVal="6.5" maxVal="7.5" />
+			<attr label="8" color="(113,113,230)"  minVal="7.5" maxVal="8.5" />
+			<attr label="9" color="(102,102,228)"  minVal="8.5" maxVal="9.5" />
+			<attr label="10 to 12" color="(90,90,226)"  minVal="9.5" maxVal="12.5" />
+			<attr label="13 to 16" color="(79,79,224)"  minVal="12.5" maxVal="16.5" />
+			<attr label="17 to 20" color="(68,68,222)"  minVal="16.5" maxVal="20.5" />
+			<attr label="21 to 25" color="(56,56,220)"  minVal="20.5" maxVal="25.5" />
+			<attr label="26 to 30" color="(45,45,218)"  minVal="25.5" maxVal="30.5" />
+			<attr label="31 to 40" color="(34,34,216)"  minVal="30.5" maxVal="40.5" />
+			<attr label="41 to 50" color="(22,22,214)"  minVal="40.5" maxVal="50.5" />
+			<attr label=" &gt; 50" color="(11,11,212)"  minVal="50.5" maxVal="1e+003" />
+		</attributes>
+	</field>
+
+	<field col="NEW_DU"
+		 label="Number of New dwelling Units"
+		 level="0"
+		 displayFlag="3"
+		 datatype="Long"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="2e+003"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			Generated by SWCNH.DLL
+		 </source>
+		 <attributes>
+			<attr label="0" color="(255,255,255)"  minVal="0" maxVal="0.5" />
+			<attr label="1" color="(192,192,244)"  minVal="0.5" maxVal="1.5" />
+			<attr label="2" color="(181,181,242)"  minVal="1.5" maxVal="2.5" />
+			<attr label="3" color="(170,170,240)"  minVal="2.5" maxVal="3.5" />
+			<attr label="4" color="(158,158,238)"  minVal="3.5" maxVal="4.5" />
+			<attr label="5" color="(147,147,236)"  minVal="4.5" maxVal="5.5" />
+			<attr label="6" color="(136,136,234)"  minVal="5.5" maxVal="6.5" />
+			<attr label="7" color="(124,124,232)"  minVal="6.5" maxVal="7.5" />
+			<attr label="8" color="(113,113,230)"  minVal="7.5" maxVal="8.5" />
+			<attr label="9" color="(102,102,228)"  minVal="8.5" maxVal="9.5" />
+			<attr label="10 to 12" color="(90,90,226)"  minVal="9.5" maxVal="12.5" />
+			<attr label="13 to 16" color="(79,79,224)"  minVal="12.5" maxVal="16.5" />
+			<attr label="17 to 20" color="(68,68,222)"  minVal="16.5" maxVal="20.5" />
+			<attr label="21 to 25" color="(56,56,220)"  minVal="20.5" maxVal="25.5" />
+			<attr label="26 to 30" color="(45,45,218)"  minVal="25.5" maxVal="30.5" />
+			<attr label="31 to 40" color="(34,34,216)"  minVal="30.5" maxVal="40.5" />
+			<attr label="41 to 50" color="(22,22,214)"  minVal="40.5" maxVal="50.5" />
+			<attr label=" &gt; 50" color="(11,11,212)"  minVal="50.5" maxVal="1e+003" />
+		</attributes>
+	</field>
+
+	<field col="WUI"
+		 label="Wildland/Urban Interface"
+		 level="0"
+		 displayFlag="4"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="1"
+		 decadalMaps="1"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			Generated by SWCNH.DLL
+		 </source>
+		 <attributes>
+			<attr label="Not in WUI" color="(255,255,255)"  value="0" />
+			<attr label="High Density Intermix" color="(255,127,127)"  value="1" />
+			<attr label="Medium Density Intermix" color="(128,64,0)"  value="2" />
+			<attr label="Low Density Intermix" color="(108,164,90)"  value="3" />
+			<attr label="High Density Interface" color="(255,177,177)"  value="4" />
+			<attr label="Medium Density Interface" color="(178,164,50)"  value="5" />
+			<attr label="Low Density Interface" color="(158,214,140)"  value="6" />
+		</attributes>
+	</field>
+
+	<field col="CONSERVE"
+		 label="Conservation Status"
+		 level="0"
+		 displayFlag="0"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="1">
+		 <description>
+			Conservation lands
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label="Not Conserved" color="(227,227,227)"  value="0" />
+			<attr label="Conservation Easement" color="(0,215,0)"  value="1" />
+			<attr label="Low-Intensity Forest Management" color="(0,255,0)"  value="2" />
+			<attr label="Development Rights Transfer" color="(0,230,0)"  value="3" />
+			<attr label="Development Rights Restriction" color="(134,230,150)"  value="4" />
+			<attr label="Federal Set-aside" color="(134,120,150)"  value="5" />
+		</attributes>
+	</field>
+
+	<field col="MANAGE"
+		 label="Management Status"
+		 level="0"
+		 displayFlag="0"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="1">
+		 <description>
+			Managed Conservation lands
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label="Not Managed" color="(227,227,227)"  value="0" />
+			<attr label="Structural Savanna Restoration" color="(34,120,150)"  value="10" />
+			<attr label="High quality Savanna Restoration" color="(134,20,150)"  value="11" />
+			<attr label="Structural Woodland Restoration" color="(134,120,50)"  value="12" />
+			<attr label="High quality Woodland Restoration" color="(34,180,50)"  value="13" />
+			<attr label="Fire Hazard Reduction" color="(134,20,50)"  value="14" />
+			<attr label="Upland Prairie Restoration" color="(255,255,0)"  value="15" />
+			<attr label="Wetland Prairie Restoration" color="(206,206,0)"  value="16" />
+			<attr label="Structural Planted Oak Woodland" color="(255,168,125)"  value="17" />
+			<attr label="High-quality Planted Oak Woodland" color="(255,128,0)"  value="18" />
+		</attributes>
+	</field>
+
+	<field col="CRO"
+		 label="Conservation/Restoration Opportunity Areas"
+		 level="0"
+		 displayFlag="4"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			Produced by the PNW Ecosystem Research Consortium. Information available at: http://www.fsl.orst.edu/pnwerc/wrb/metadata/cro50.html
+		 </source>
+		 <attributes>
+			<attr label="Tier 1 Oak" color="(221,0,0)"  value="1" />
+			<attr label="Tier 1 Prairie" color="(255,127,127)"  value="2" />
+			<attr label="Tier 1 Floodplain Forest" color="(128,64,0)"  value="3" />
+			<attr label="Tier 1 Upland Forest" color="(53,204,61)"  value="4" />
+			<attr label="Tier 1 Forest Riparian protection zones" color="(14,207,241)"  value="6" />
+			<attr label="Tier 1 Wetlands" color="(255,255,0)"  value="7" />
+			<attr label="Willamette River restored channels" color="(0,0,189)"  value="10" />
+			<attr label="Tier 2 Forest" color="(100,30,0)"  value="14" />
+			<attr label="Tier 2 Oak and Prairie" color="(120,0,0)"  value="15" />
+			<attr label="Tier 2 Riparian Protection Zones" color="(0,20,190)"  value="16" />
+			<attr label="Tier 2 Wetland Protection Zones" color="(30,30,190)"  value="18" />
+		</attributes>
+	</field>
+
+	<field col="COA"
+		 label="Conservation/Restoration Opportunity Areas (COA)"
+		 level="0"
+		 displayFlag="4"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			Produced by the Bart/Cody
+		 </source>
+		 <attributes>
+			<attr label="Upland" color="(221,0,0)"  value="1" />
+			<attr label="Upland Priority" color="(255,127,127)"  value="2" />
+			<attr label="Integrated" color="(128,64,0)"  value="3" />
+			<attr label="Integrated Priority" color="(53,204,61)"  value="4" />
+			<attr label="Riparian" color="(14,207,241)"  value="5" />
+			<attr label="Riparian Priority" color="(255,255,0)"  value="6" />
+			<attr label="Aquatic" color="(0,0,189)"  value="7" />
+			<attr label="Aquatic Priority" color="(100,30,0)"  value="8" />
+			<attr label="Aquatic Connection" color="(120,0,0)"  value="9" />
+			<attr label="Aquatic Connection Priority" color="(0,20,190)"  value="10" />
+		</attributes>
+	</field>
+
+	<field col="STANDAGE"
+		 label="Stand Age"
+		 level="0"
+		 displayFlag="4"
+		 datatype="Long"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="500"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="1">
+		 <description>
+			Age of Stand in Years
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 2.5" color="(255,0,0)"  minVal="0" maxVal="2.5" />
+			<attr label="2.5 to 20" color="(225,225,225)"  minVal="2.5" maxVal="20" />
+			<attr label="20 to 30" color="(200,200,200)"  minVal="20" maxVal="30" />
+			<attr label="30 to 40" color="(175,175,175)"  minVal="30" maxVal="40" />
+			<attr label="40 to 50" color="(150,150,150)"  minVal="40" maxVal="50" />
+			<attr label="50 to 60" color="(127,127,127)"  minVal="50" maxVal="60" />
+			<attr label="60 to 70" color="(100,100,100)"  minVal="60" maxVal="70" />
+			<attr label="70 to 80" color="(75,75,75)"  minVal="70" maxVal="80" />
+			<attr label="80 to 90" color="(50,50,50)"  minVal="80" maxVal="90" />
+			<attr label=" &gt; 90" color="(25,25,25)"  minVal="90" maxVal="100" />
+		</attributes>
+	</field>
+
+	<field col="POLICY"
+		 label="Policy applied to this cell"
+		 level="0"
+		 displayFlag="0"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="0"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+		</attributes>
+	</field>
+
+	<field col="POLICYAPPS"
+		 label="Total Policys applied to this cell"
+		 level="0"
+		 displayFlag="0"
+		 datatype="Long"
+		 mfiType="0"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="0"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+		</attributes>
+	</field>
+
+	<field col="AREA"
+		 label="Area (m2)"
+		 level="0"
+		 displayFlag="4"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="6.5e+004"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			IDU Area
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 16250" color="(227,227,227)"  minVal="0" maxVal="1.63e+004" />
+			<attr label="16250 to 32500" color="(170,170,170)"  minVal="1.63e+004" maxVal="3.25e+004" />
+			<attr label="32500 to 48750" color="(113,113,113)"  minVal="3.25e+004" maxVal="4.88e+004" />
+			<attr label=" &gt; 48750" color="(56,56,56)"  minVal="4.88e+004" maxVal="6.5e+004" />
+		</attributes>
+	</field>
+
+	<field col="ASPECT"
+		 label="Aspect"
+		 level="0"
+		 displayFlag="2"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="0"
+		 max="9"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			The area weighted dominant topographic aspect classification. Source Derived from the PNW-ERC 30m ASPCTI grid.
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label="Flat" color="(165,239,165)"  value="1" />
+			<attr label="0-45" color="(144,235,144)"  value="2" />
+			<attr label="46-90" color="(123,231,123)"  value="3" />
+			<attr label="91-135" color="(103,228,103)"  value="4" />
+			<attr label="136-180" color="(82,224,82)"  value="5" />
+			<attr label="181-225" color="(61,220,61)"  value="6" />
+			<attr label="226-315" color="(41,217,41)"  value="7" />
+			<attr label="316-360" color="(20,213,20)"  value="8" />
+		</attributes>
+	</field>
+
+	<field col="CURSI"
+		 label="Site Index"
+		 level="0"
+		 displayFlag="9"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="150"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			Site index codes are an ordinal scale, here treated as a continuous measure. When multiple values occur in the area of a single IDU, they are averaged on area weighted basis. Source: Site index for Douglas-fir based on King&apos;s (1966) curve with a 50-yr base age. Site index was estimated from the properties of soil polygons mapped by the Natural Resource Conservation Service. For details about site index contact Peter Gould (pgould@fs.fed.us) or Connie Harrington (charrington@fs.fed.us)
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 10" color="(210,0,0)"  minVal="0" maxVal="10" />
+			<attr label="10 to 20" color="(215,32,32)"  minVal="10" maxVal="20" />
+			<attr label="20 to 30" color="(221,64,64)"  minVal="20" maxVal="30" />
+			<attr label="30 to 40" color="(227,97,97)"  minVal="30" maxVal="40" />
+			<attr label="40 to 50" color="(232,129,129)"  minVal="40" maxVal="50" />
+			<attr label="50 to 60" color="(255,255,168)"  minVal="50" maxVal="60" />
+			<attr label="60 to 70" color="(255,255,130)"  minVal="60" maxVal="70" />
+			<attr label="70 to 80" color="(255,255,81)"  minVal="70" maxVal="80" />
+			<attr label="80 to 90" color="(255,255,36)"  minVal="80" maxVal="90" />
+			<attr label="90 to 100" color="(251,251,0)"  minVal="90" maxVal="100" />
+			<attr label="100 to 110" color="(129,232,129)"  minVal="100" maxVal="110" />
+			<attr label="110 to 120" color="(97,227,97)"  minVal="110" maxVal="120" />
+			<attr label="120 to 130" color="(64,221,64)"  minVal="120" maxVal="130" />
+			<attr label="130 to 140" color="(32,215,32)"  minVal="130" maxVal="140" />
+			<attr label=" &gt; 140" color="(0,210,0)"  minVal="140" maxVal="150" />
+		</attributes>
+	</field>
+
+	<field col="FLD100"
+		 label="100 yr Floodplain"
+		 level="0"
+		 displayFlag="0"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label="Outside Floodplain" color="(255,255,255)"  value="0" />
+			<attr label="Inside Floodplain" color="(128,0,64)"  value="1" />
+		</attributes>
+	</field>
+
+	<field col="IN_UGB"
+		 label="Urban Growth Boundaries"
+		 level="0"
+		 displayFlag="0"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="1">
+		 <description>
+			
+		 </description>
+		 <source>
+			Derived from the 2009 UGB map provided by the Oregon Spatial Data Library.
+		 </source>
+		 <attributes>
+			<attr label="Outside UGB" color="(227,227,227)"  value="0" />
+			<attr label="Albany" color="(234,193,71)"  value="1" />
+			<attr label="Lebanon" color="(142,173,10)"  value="2" />
+			<attr label="Waterloo" color="(51,153,204)"  value="3" />
+			<attr label="Sodaville" color="(152,204,102)"  value="4" />
+			<attr label="Brownsville" color="(173,10,30)"  value="5" />
+			<attr label="Sweet Home" color="(102,51,153)"  value="6" />
+			<attr label="Coburg" color="(142,173,10)"  value="7" />
+			<attr label="Eugene/Springfield" color="(30,91,20)"  value="8" />
+			<attr label="Veneta" color="(61,183,40)"  value="9" />
+			<attr label="Creswell" color="(112,81,244)"  value="10" />
+			<attr label="Lowell" color="(132,142,173)"  value="11" />
+			<attr label="Albany (Expansion)" color="(234,223,171)"  value="-1" />
+			<attr label="Lebanon (Expansion)" color="(242,213,110)"  value="-2" />
+			<attr label="Waterloo (Expansion)" color="(251,183,204)"  value="-3" />
+			<attr label="Sodaville (Expansion)" color="(252,204,202)"  value="-4" />
+			<attr label="Brownsville (Expansion)" color="(173,110,130)"  value="-5" />
+			<attr label="Sweet Home (Expansion)" color="(202,151,253)"  value="-6" />
+			<attr label="Coburg (Expansion)" color="(242,213,110)"  value="-7" />
+			<attr label="Eugene/Springfield (Expansion)" color="(230,191,180)"  value="-8" />
+			<attr label="Veneta (Expansion)" color="(161,183,140)"  value="-9" />
+			<attr label="Creswell (Expansion)" color="(212,81,244)"  value="-10" />
+			<attr label="Lowell (Expansion)" color="(132,142,173)"  value="-11" />
+		</attributes>
+	</field>
+
+	<field col="NEAREST_UG"
+		 label="Nearst Urban Growth Boundaries"
+		 level="0"
+		 displayFlag="0"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			Derived from the 2009 UGB map provided by the Oregon Spatial Data Library.
+		 </source>
+		 <attributes>
+			<attr label="Outside UGB" color="(227,227,227)"  value="0" />
+			<attr label="Albany" color="(234,193,71)"  value="1" />
+			<attr label="Lebanon" color="(142,173,10)"  value="2" />
+			<attr label="Waterloo" color="(51,153,204)"  value="3" />
+			<attr label="Sodaville" color="(152,204,102)"  value="4" />
+			<attr label="Brownsville" color="(173,10,30)"  value="5" />
+			<attr label="Sweet Home" color="(102,51,153)"  value="6" />
+			<attr label="Coburg" color="(142,173,10)"  value="7" />
+			<attr label="Eugene/Springfield" color="(30,91,20)"  value="8" />
+			<attr label="Veneta" color="(61,183,40)"  value="9" />
+			<attr label="Creswell" color="(112,81,244)"  value="10" />
+			<attr label="Lowell" color="(132,142,173)"  value="11" />
+		</attributes>
+	</field>
+
+	<field col="PSDOMCL"
+		 label="Dominant Presettlement Veg"
+		 level="0"
+		 displayFlag="0"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			Derived from the PNW-ERC VEG1851_V4 grid, re-classed to 12 categories.
+		 </source>
+		 <attributes>
+			<attr label="Upland Prairie" color="(145,182,36)"  value="11" />
+			<attr label="Wetland Prairie" color="(145,182,136)"  value="12" />
+			<attr label="Oak Savanna" color="(36,59,72)"  value="21" />
+			<attr label="Douglas Fir Savanna" color="(36,109,72)"  value="22" />
+			<attr label="Oak-Fir Woodland" color="(182,36,109)"  value="31" />
+			<attr label="Douglas Fir Woodland" color="(182,136,109)"  value="32" />
+			<attr label="Oak-Fir Forest" color="(72,218,145)"  value="41" />
+			<attr label="Upland Conifer Forest" color="(18,54,163)"  value="42" />
+			<attr label="Riparian Forest" color="(18,74,213)"  value="43" />
+			<attr label="Shrubland" color="(127,127,127)"  value="51" />
+			<attr label="Emergent Wetland" color="(27,127,227)"  value="52" />
+			<attr label="Water" color="(0,0,127)"  value="60" />
+		</attributes>
+	</field>
+
+	<field col="PSOAKFIRFR"
+		 label="Fraction Presettlement Oak/Fir Forest"
+		 level="0"
+		 displayFlag="2"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 0.1" color="(227,250,227)"  minVal="0" maxVal="0.1" />
+			<attr label="0.1 to 0.2" color="(204,246,204)"  minVal="0.1" maxVal="0.2" />
+			<attr label="0.2 to 0.3" color="(181,242,181)"  minVal="0.2" maxVal="0.3" />
+			<attr label="0.3 to 0.4" color="(158,238,158)"  minVal="0.3" maxVal="0.4" />
+			<attr label="0.4 to 0.5" color="(136,234,136)"  minVal="0.4" maxVal="0.5" />
+			<attr label="0.5 to 0.6" color="(113,230,113)"  minVal="0.5" maxVal="0.6" />
+			<attr label="0.6 to 0.7" color="(90,226,90)"  minVal="0.6" maxVal="0.7" />
+			<attr label="0.7 to 0.8" color="(68,222,68)"  minVal="0.7" maxVal="0.8" />
+			<attr label="0.8 to 0.9" color="(45,218,45)"  minVal="0.8" maxVal="0.9" />
+			<attr label=" &gt; 0.9" color="(22,214,22)"  minVal="0.9" maxVal="1" />
+		</attributes>
+	</field>
+
+	<field col="PSOAKFIRWD"
+		 label="Fraction Presettlement Oak/Fir Woodland"
+		 level="0"
+		 displayFlag="2"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 0.1" color="(227,250,227)"  minVal="0" maxVal="0.1" />
+			<attr label="0.1 to 0.2" color="(204,246,204)"  minVal="0.1" maxVal="0.2" />
+			<attr label="0.2 to 0.3" color="(181,242,181)"  minVal="0.2" maxVal="0.3" />
+			<attr label="0.3 to 0.4" color="(158,238,158)"  minVal="0.3" maxVal="0.4" />
+			<attr label="0.4 to 0.5" color="(136,234,136)"  minVal="0.4" maxVal="0.5" />
+			<attr label="0.5 to 0.6" color="(113,230,113)"  minVal="0.5" maxVal="0.6" />
+			<attr label="0.6 to 0.7" color="(90,226,90)"  minVal="0.6" maxVal="0.7" />
+			<attr label="0.7 to 0.8" color="(68,222,68)"  minVal="0.7" maxVal="0.8" />
+			<attr label="0.8 to 0.9" color="(45,218,45)"  minVal="0.8" maxVal="0.9" />
+			<attr label=" &gt; 0.9" color="(22,214,22)"  minVal="0.9" maxVal="1" />
+		</attributes>
+	</field>
+
+	<field col="PSOAKSV"
+		 label="Fraction Presettlement Oak Savanna"
+		 level="0"
+		 displayFlag="2"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 0.1" color="(227,250,227)"  minVal="0" maxVal="0.1" />
+			<attr label="0.1 to 0.2" color="(204,246,204)"  minVal="0.1" maxVal="0.2" />
+			<attr label="0.2 to 0.3" color="(181,242,181)"  minVal="0.2" maxVal="0.3" />
+			<attr label="0.3 to 0.4" color="(158,238,158)"  minVal="0.3" maxVal="0.4" />
+			<attr label="0.4 to 0.5" color="(136,234,136)"  minVal="0.4" maxVal="0.5" />
+			<attr label="0.5 to 0.6" color="(113,230,113)"  minVal="0.5" maxVal="0.6" />
+			<attr label="0.6 to 0.7" color="(90,226,90)"  minVal="0.6" maxVal="0.7" />
+			<attr label="0.7 to 0.8" color="(68,222,68)"  minVal="0.7" maxVal="0.8" />
+			<attr label="0.8 to 0.9" color="(45,218,45)"  minVal="0.8" maxVal="0.9" />
+			<attr label=" &gt; 0.9" color="(22,214,22)"  minVal="0.9" maxVal="1" />
+		</attributes>
+	</field>
+
+	<field col="PSUPPR"
+		 label="Fraction Presettlement Upland Prairie"
+		 level="0"
+		 displayFlag="2"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 0.1" color="(227,250,227)"  minVal="0" maxVal="0.1" />
+			<attr label="0.1 to 0.2" color="(204,246,204)"  minVal="0.1" maxVal="0.2" />
+			<attr label="0.2 to 0.3" color="(181,242,181)"  minVal="0.2" maxVal="0.3" />
+			<attr label="0.3 to 0.4" color="(158,238,158)"  minVal="0.3" maxVal="0.4" />
+			<attr label="0.4 to 0.5" color="(136,234,136)"  minVal="0.4" maxVal="0.5" />
+			<attr label="0.5 to 0.6" color="(113,230,113)"  minVal="0.5" maxVal="0.6" />
+			<attr label="0.6 to 0.7" color="(90,226,90)"  minVal="0.6" maxVal="0.7" />
+			<attr label="0.7 to 0.8" color="(68,222,68)"  minVal="0.7" maxVal="0.8" />
+			<attr label="0.8 to 0.9" color="(45,218,45)"  minVal="0.8" maxVal="0.9" />
+			<attr label=" &gt; 0.9" color="(22,214,22)"  minVal="0.9" maxVal="1" />
+		</attributes>
+	</field>
+
+	<field col="RMVIMP00"
+		 label="Improvement Value ($)"
+		 level="0"
+		 displayFlag="4"
+		 datatype="Integer"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1e+008"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 10000" color="(227,227,227)"  minVal="0" maxVal="1e+004" />
+			<attr label="10000 to 20000" color="(204,204,204)"  minVal="1e+004" maxVal="2e+004" />
+			<attr label="20000 to 30000" color="(181,181,181)"  minVal="2e+004" maxVal="3e+004" />
+			<attr label="30000 to 40000" color="(158,158,158)"  minVal="3e+004" maxVal="4e+004" />
+			<attr label="40000 to 50000" color="(136,136,136)"  minVal="4e+004" maxVal="5e+004" />
+			<attr label="50000 to 60000" color="(113,113,113)"  minVal="5e+004" maxVal="6e+004" />
+			<attr label="60000 to 70000" color="(90,90,90)"  minVal="6e+004" maxVal="7e+004" />
+			<attr label="70000 to 80000" color="(68,68,68)"  minVal="7e+004" maxVal="8e+004" />
+			<attr label="80000 to 90000" color="(45,45,45)"  minVal="8e+004" maxVal="9e+004" />
+			<attr label=" &gt; 90000" color="(22,22,22)"  minVal="9e+004" maxVal="1e+009" />
+		</attributes>
+	</field>
+
+	<field col="RMVLAND00"
+		 label="Land Value ($)"
+		 level="0"
+		 displayFlag="4"
+		 datatype="Integer"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1e+006"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 100000" color="(227,227,227)"  minVal="0" maxVal="1e+005" />
+			<attr label="100000 to 200000" color="(204,204,204)"  minVal="1e+005" maxVal="2e+005" />
+			<attr label="200000 to 300000" color="(181,181,181)"  minVal="2e+005" maxVal="3e+005" />
+			<attr label="300000 to 400000" color="(158,158,158)"  minVal="3e+005" maxVal="4e+005" />
+			<attr label="400000 to 500000" color="(136,136,136)"  minVal="4e+005" maxVal="5e+005" />
+			<attr label="500000 to 600000" color="(113,113,113)"  minVal="5e+005" maxVal="6e+005" />
+			<attr label="600000 to 700000" color="(90,90,90)"  minVal="6e+005" maxVal="7e+005" />
+			<attr label="700000 to 800000" color="(68,68,68)"  minVal="7e+005" maxVal="8e+005" />
+			<attr label="800000 to 900000" color="(45,45,45)"  minVal="8e+005" maxVal="9e+005" />
+			<attr label=" &gt; 900000" color="(22,22,22)"  minVal="9e+005" maxVal="1e+011" />
+		</attributes>
+	</field>
+
+	<field col="SEPSUITPC"
+		 label="Septic Suitability"
+		 level="0"
+		 displayFlag="1"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			Fraction of IDU area with soils suitable for septic systems
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 0.1" color="(250,227,227)"  minVal="0" maxVal="0.1" />
+			<attr label="0.1 to 0.2" color="(246,204,204)"  minVal="0.1" maxVal="0.2" />
+			<attr label="0.2 to 0.3" color="(242,181,181)"  minVal="0.2" maxVal="0.3" />
+			<attr label="0.3 to 0.4" color="(238,158,158)"  minVal="0.3" maxVal="0.4" />
+			<attr label="0.4 to 0.5" color="(234,136,136)"  minVal="0.4" maxVal="0.5" />
+			<attr label="0.5 to 0.6" color="(230,113,113)"  minVal="0.5" maxVal="0.6" />
+			<attr label="0.6 to 0.7" color="(226,90,90)"  minVal="0.6" maxVal="0.7" />
+			<attr label="0.7 to 0.8" color="(222,68,68)"  minVal="0.7" maxVal="0.8" />
+			<attr label="0.8 to 0.9" color="(218,45,45)"  minVal="0.8" maxVal="0.9" />
+			<attr label=" &gt; 0.9" color="(214,22,22)"  minVal="0.9" maxVal="1" />
+		</attributes>
+	</field>
+
+	<field col="SLOPEAV"
+		 label="Average Slope (%)"
+		 level="0"
+		 displayFlag="4"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="80"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			Average Topographic Slope
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 10" color="(227,227,227)"  minVal="0" maxVal="10" />
+			<attr label="10 to 20" color="(198,198,198)"  minVal="10" maxVal="20" />
+			<attr label="20 to 30" color="(170,170,170)"  minVal="20" maxVal="30" />
+			<attr label="30 to 40" color="(141,141,141)"  minVal="30" maxVal="40" />
+			<attr label="40 to 50" color="(113,113,113)"  minVal="40" maxVal="50" />
+			<attr label="50 to 60" color="(85,85,85)"  minVal="50" maxVal="60" />
+			<attr label="60 to 70" color="(56,56,56)"  minVal="60" maxVal="70" />
+			<attr label=" &gt; 70" color="(28,28,28)"  minVal="70" maxVal="80" />
+		</attributes>
+	</field>
+
+	<field col="SOILACCC"
+		 label="Soil Capability Class"
+		 level="0"
+		 displayFlag="2"
+		 datatype="String"
+		 mfiType="1"
+		 binStyle="0"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label="1X" color="(215,248,215)"  value="1X" />
+			<attr label="2E" color="(204,246,204)"  value="2E" />
+			<attr label="2S" color="(192,244,192)"  value="2S" />
+			<attr label="2W" color="(181,242,181)"  value="2W" />
+			<attr label="3E" color="(170,240,170)"  value="3E" />
+			<attr label="3S" color="(158,238,158)"  value="3S" />
+			<attr label="3W" color="(147,236,147)"  value="3W" />
+			<attr label="4E" color="(136,234,136)"  value="4E" />
+			<attr label="4S" color="(124,232,124)"  value="4S" />
+			<attr label="4W" color="(113,230,113)"  value="4W" />
+			<attr label="5W" color="(102,228,102)"  value="5W" />
+			<attr label="6E" color="(90,226,90)"  value="6E" />
+			<attr label="6S" color="(79,224,79)"  value="6S" />
+			<attr label="6W" color="(68,222,68)"  value="6W" />
+			<attr label="7E" color="(56,220,56)"  value="7E" />
+			<attr label="7S" color="(45,218,45)"  value="7S" />
+			<attr label="8S" color="(34,216,34)"  value="8S" />
+			<attr label="8W" color="(22,214,22)"  value="8W" />
+			<attr label="XX" color="(11,212,11)"  value="XX" />
+		</attributes>
+	</field>
+
+	<field col="DISTURB"
+		 label="Disturbance"
+		 level="0"
+		 displayFlag="0"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="1"
+		 decadalMaps="15"
+		 useInSiteAttr="1"
+		 useInOutcomes="1">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label="No Disturbance" color="(255,255,255)"  value="0" />
+			<attr label="Harvest" color="(128,64,0)"  value="1" />
+			<attr label="Thinning" color="(128,255,0)"  value="2" />
+			<attr label="Partial Harvest" color="(180,138,131)"  value="3" />
+			<attr label="Restoration" color="(195,64,200)"  value="4" />
+       <attr label="Convert to Plantation" color="(165,164,0)"  value="5" />
+       <attr label="Developed to Mixed" color="(0,128,192)"  value="11" />
+			<attr label="Developed to Woodland" color="(64,193,255)"  value="12" />
+			<attr label="Developed to Savanna" color="(132,215,255)"  value="13" />
+			<attr label="Surface Fire" color="(195,80,80)"  value="20" />
+			<attr label="Mixed Severity Burn (Low)" color="(215,60,60)"  value="21" />
+			<attr label="Mixed Severity Burn (High)" color="(235,40,40)"  value="22" />
+			<attr label="Stand Replacing Fire" color="(255,20,20)"  value="23" />
+			<attr label="Prescribed Burn" color="(255,255,0)"  value="29" />
+		</attributes>
+	</field>
+
+	<field col="FlameLen"
+		 label="Flame Length"
+		 level="0"
+		 displayFlag="1"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="10"
+		 results="1"
+		 decadalMaps="15"
+		 useInSiteAttr="0"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label="0" color="(255,255,255)"  minVal="0" maxVal="0" />
+			<attr label=" &lt; .5" color="(250,227,227)"  minVal="0" maxVal="0.5" />
+			<attr label=".5 to 1" color="(246,204,204)"  minVal="0.5" maxVal="1" />
+			<attr label="1 to 1.5" color="(242,181,181)"  minVal="1" maxVal="1.5" />
+			<attr label="1.5 to 2" color="(238,158,158)"  minVal="1.5" maxVal="2" />
+			<attr label="2 to 3" color="(234,136,136)"  minVal="2" maxVal="3" />
+			<attr label="3 to 4" color="(230,113,113)"  minVal="3" maxVal="4" />
+			<attr label="4 to 5" color="(226,90,90)"  minVal="4" maxVal="5" />
+			<attr label="5 to 6" color="(222,68,68)"  minVal="5" maxVal="6" />
+			<attr label="6 to 7" color="(218,45,45)"  minVal="6" maxVal="7" />
+			<attr label=" &gt; 7" color="(214,22,22)"  minVal="7" maxVal="100" />
+		</attributes>
+	</field>
+
+	<field col="PUBLANDS"
+		 label="Public Lands"
+		 level="0"
+		 displayFlag="0"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="1">
+		 <description>
+			
+		 </description>
+		 <source>
+			Derived from the PNW-ERC public lands map assembled from taxlot coverages, USGS 7.5’ quadrangle maps, a bio-management map produced by Defenders of Wildlife, a parks coverage provided by Portland Metro, the ERC 1990 LULC grid, the USFS grid FS0, and the Willamette National Forest WNFLMP7 coverage.
+		 </source>
+		 <attributes>
+			<attr label="Not Public" color="(227,227,227)"  value="0" />
+			<attr label="Unknown Public" color="(255,255,255)"  value="1" />
+			<attr label="National Wildlife Refuge" color="(179,29,89)"  value="6" />
+			<attr label="State Parks" color="(127,127,127)"  value="7" />
+			<attr label="State Forest" color="(89,14,44)"  value="8" />
+			<attr label="Not Used" color="(209,119,104)"  value="22" />
+			<attr label="County Park" color="(164,240,210)"  value="23" />
+			<attr label="City Park" color="(119,105,60)"  value="24" />
+			<attr label="Other Federal Land" color="(74,225,165)"  value="25" />
+			<attr label="Other State Land" color="(29,90,15)"  value="26" />
+			<attr label="Other County Land" color="(240,210,120)"  value="27" />
+			<attr label="Other City Land" color="(195,75,225)"  value="28" />
+			<attr label="Not Used" color="(150,195,75)"  value="32" />
+			<attr label="Unbuildable, DEQ Easement of R/W" color="(104,59,179)"  value="33" />
+			<attr label="State Wildlife Refuge" color="(59,180,30)"  value="36" />
+			<attr label="Private Conservation" color="(14,45,135)"  value="38" />
+			<attr label="Airport" color="(225,165,240)"  value="39" />
+		</attributes>
+	</field>
+
+	<field col="WETLAND"
+		 label="Significant Wetlands area (m2)"
+		 level="0"
+		 displayFlag="3"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="5e+004"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			NWI wetlands equal to or larger than 2 hectares in extent.
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 2500" color="(227,227,250)"  minVal="0" maxVal="2.5e+003" />
+			<attr label="2500 to 5000" color="(215,215,248)"  minVal="2.5e+003" maxVal="5e+003" />
+			<attr label="5000 to 7500" color="(204,204,246)"  minVal="5e+003" maxVal="7.5e+003" />
+			<attr label="7500 to 10000" color="(192,192,244)"  minVal="7.5e+003" maxVal="1e+004" />
+			<attr label="10000 to 12500" color="(181,181,242)"  minVal="1e+004" maxVal="1.25e+004" />
+			<attr label="12500 to 15000" color="(170,170,240)"  minVal="1.25e+004" maxVal="1.5e+004" />
+			<attr label="15000 to 17500" color="(158,158,238)"  minVal="1.5e+004" maxVal="1.75e+004" />
+			<attr label="17500 to 20000" color="(147,147,236)"  minVal="1.75e+004" maxVal="2e+004" />
+			<attr label="20000 to 22500" color="(136,136,234)"  minVal="2e+004" maxVal="2.25e+004" />
+			<attr label="22500 to 25000" color="(124,124,232)"  minVal="2.25e+004" maxVal="2.5e+004" />
+			<attr label="25000 to 27500" color="(113,113,230)"  minVal="2.5e+004" maxVal="2.75e+004" />
+			<attr label="27500 to 30000" color="(102,102,228)"  minVal="2.75e+004" maxVal="3e+004" />
+			<attr label="30000 to 32500" color="(90,90,226)"  minVal="3e+004" maxVal="3.25e+004" />
+			<attr label="32500 to 35000" color="(79,79,224)"  minVal="3.25e+004" maxVal="3.5e+004" />
+			<attr label="35000 to 37500" color="(68,68,222)"  minVal="3.5e+004" maxVal="3.75e+004" />
+			<attr label="37500 to 40000" color="(56,56,220)"  minVal="3.75e+004" maxVal="4e+004" />
+			<attr label="40000 to 42500" color="(45,45,218)"  minVal="4e+004" maxVal="4.25e+004" />
+			<attr label="42500 to 45000" color="(34,34,216)"  minVal="4.25e+004" maxVal="4.5e+004" />
+			<attr label="45000 to 47500" color="(22,22,214)"  minVal="4.5e+004" maxVal="4.75e+004" />
+			<attr label=" &gt; 47500" color="(11,11,212)"  minVal="4.75e+004" maxVal="5e+007" />
+		</attributes>
+	</field>
+
+	<field col="D_ROADS"
+		 label="Distance to Roads (m)"
+		 level="0"
+		 displayFlag="4"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1.5e+003"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 100" color="(227,227,227)"  minVal="0" maxVal="100" />
+			<attr label="100 to 200" color="(211,211,211)"  minVal="100" maxVal="200" />
+			<attr label="200 to 300" color="(196,196,196)"  minVal="200" maxVal="300" />
+			<attr label="300 to 400" color="(181,181,181)"  minVal="300" maxVal="400" />
+			<attr label="400 to 500" color="(166,166,166)"  minVal="400" maxVal="500" />
+			<attr label="500 to 600" color="(151,151,151)"  minVal="500" maxVal="600" />
+			<attr label="600 to 700" color="(136,136,136)"  minVal="600" maxVal="700" />
+			<attr label="700 to 800" color="(121,121,121)"  minVal="700" maxVal="800" />
+			<attr label="800 to 900" color="(105,105,105)"  minVal="800" maxVal="900" />
+			<attr label="900 to 1000" color="(90,90,90)"  minVal="900" maxVal="1e+003" />
+			<attr label="1000 to 1100" color="(75,75,75)"  minVal="1e+003" maxVal="1.1e+003" />
+			<attr label="1100 to 1200" color="(60,60,60)"  minVal="1.1e+003" maxVal="1.2e+003" />
+			<attr label="1200 to 1300" color="(45,45,45)"  minVal="1.2e+003" maxVal="1.3e+003" />
+			<attr label="1300 to 1400" color="(30,30,30)"  minVal="1.3e+003" maxVal="1.4e+003" />
+			<attr label=" &gt; 1400" color="(15,15,15)"  minVal="1.4e+003" maxVal="5e+003" />
+		</attributes>
+	</field>
+
+
+  <field col="RDSMAJ"
+		 label="Distance to Major Roads"
+		 level="0"
+		 displayFlag="4"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1e+004"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+    <description>
+
+    </description>
+    <source>
+
+    </source>
+    <attributes>
+      <attr label=" &lt; 500" color="(227,227,227)"  minVal="0" maxVal="500" />
+      <attr label="500 to 1000" color="(215,215,215)"  minVal="500" maxVal="1e+003" />
+      <attr label="1000 to 1500" color="(204,204,204)"  minVal="1e+003" maxVal="1.5e+003" />
+      <attr label="1500 to 2000" color="(192,192,192)"  minVal="1.5e+003" maxVal="2e+003" />
+      <attr label="2000 to 2500" color="(181,181,181)"  minVal="2e+003" maxVal="2.5e+003" />
+      <attr label="2500 to 3000" color="(170,170,170)"  minVal="2.5e+003" maxVal="3e+003" />
+      <attr label="3000 to 3500" color="(158,158,158)"  minVal="3e+003" maxVal="3.5e+003" />
+      <attr label="3500 to 4000" color="(147,147,147)"  minVal="3.5e+003" maxVal="4e+003" />
+      <attr label="4000 to 4500" color="(136,136,136)"  minVal="4e+003" maxVal="4.5e+003" />
+      <attr label="4500 to 5000" color="(124,124,124)"  minVal="4.5e+003" maxVal="5e+003" />
+      <attr label="5000 to 5500" color="(113,113,113)"  minVal="5e+003" maxVal="5.5e+003" />
+      <attr label="5500 to 6000" color="(102,102,102)"  minVal="5.5e+003" maxVal="6e+003" />
+      <attr label="6000 to 6500" color="(90,90,90)"  minVal="6e+003" maxVal="6.5e+003" />
+      <attr label="6500 to 7000" color="(79,79,79)"  minVal="6.5e+003" maxVal="7e+003" />
+      <attr label="7000 to 7500" color="(68,68,68)"  minVal="7e+003" maxVal="7.5e+003" />
+      <attr label="7500 to 8000" color="(56,56,56)"  minVal="7.5e+003" maxVal="8e+003" />
+      <attr label="8000 to 8500" color="(45,45,45)"  minVal="8e+003" maxVal="8.5e+003" />
+      <attr label="8500 to 9000" color="(34,34,34)"  minVal="8.5e+003" maxVal="9e+003" />
+      <attr label="9000 to 9500" color="(22,22,22)"  minVal="9e+003" maxVal="9.5e+003" />
+      <attr label=" &gt; 9500" color="(11,11,11)"  minVal="9.5e+003" maxVal="1e+005" />
+    </attributes>
+  </field>
+
+  <field col="RDSMIN"
+   label="Distance to Minor Roads"
+   level="0"
+   displayFlag="4"
+   datatype="Double"
+   mfiType="0"
+   binStyle="0"
+   min="0"
+   max="1e+004"
+   results="0"
+   decadalMaps="0"
+   useInSiteAttr="1"
+   useInOutcomes="0">
+    <description>
+
+    </description>
+    <source>
+
+    </source>
+    <attributes>
+      <attr label=" &lt; 500" color="(227,227,227)"  minVal="0" maxVal="500" />
+      <attr label="500 to 1000" color="(215,215,215)"  minVal="500" maxVal="1e+003" />
+      <attr label="1000 to 1500" color="(204,204,204)"  minVal="1e+003" maxVal="1.5e+003" />
+      <attr label="1500 to 2000" color="(192,192,192)"  minVal="1.5e+003" maxVal="2e+003" />
+      <attr label="2000 to 2500" color="(181,181,181)"  minVal="2e+003" maxVal="2.5e+003" />
+      <attr label="2500 to 3000" color="(170,170,170)"  minVal="2.5e+003" maxVal="3e+003" />
+      <attr label="3000 to 3500" color="(158,158,158)"  minVal="3e+003" maxVal="3.5e+003" />
+      <attr label="3500 to 4000" color="(147,147,147)"  minVal="3.5e+003" maxVal="4e+003" />
+      <attr label="4000 to 4500" color="(136,136,136)"  minVal="4e+003" maxVal="4.5e+003" />
+      <attr label="4500 to 5000" color="(124,124,124)"  minVal="4.5e+003" maxVal="5e+003" />
+      <attr label="5000 to 5500" color="(113,113,113)"  minVal="5e+003" maxVal="5.5e+003" />
+      <attr label="5500 to 6000" color="(102,102,102)"  minVal="5.5e+003" maxVal="6e+003" />
+      <attr label="6000 to 6500" color="(90,90,90)"  minVal="6e+003" maxVal="6.5e+003" />
+      <attr label="6500 to 7000" color="(79,79,79)"  minVal="6.5e+003" maxVal="7e+003" />
+      <attr label="7000 to 7500" color="(68,68,68)"  minVal="7e+003" maxVal="7.5e+003" />
+      <attr label="7500 to 8000" color="(56,56,56)"  minVal="7.5e+003" maxVal="8e+003" />
+      <attr label="8000 to 8500" color="(45,45,45)"  minVal="8e+003" maxVal="8.5e+003" />
+      <attr label="8500 to 9000" color="(34,34,34)"  minVal="8.5e+003" maxVal="9e+003" />
+      <attr label="9000 to 9500" color="(22,22,22)"  minVal="9e+003" maxVal="9.5e+003" />
+      <attr label=" &gt; 9500" color="(11,11,11)"  minVal="9.5e+003" maxVal="1e+005" />
+    </attributes>
+  </field>
+
+
+  <field col="D_STREAMS"
+		 label="Distance to Streams (m)"
+		 level="0"
+		 displayFlag="3"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="3e+003"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 200" color="(227,227,250)"  minVal="0" maxVal="200" />
+			<attr label="200 to 400" color="(211,211,247)"  minVal="200" maxVal="400" />
+			<attr label="400 to 600" color="(196,196,244)"  minVal="400" maxVal="600" />
+			<attr label="600 to 800" color="(181,181,242)"  minVal="600" maxVal="800" />
+			<attr label="800 to 1000" color="(166,166,239)"  minVal="800" maxVal="1e+003" />
+			<attr label="1000 to 1200" color="(151,151,236)"  minVal="1e+003" maxVal="1.2e+003" />
+			<attr label="1200 to 1400" color="(136,136,234)"  minVal="1.2e+003" maxVal="1.4e+003" />
+			<attr label="1400 to 1600" color="(121,121,231)"  minVal="1.4e+003" maxVal="1.6e+003" />
+			<attr label="1600 to 1800" color="(105,105,228)"  minVal="1.6e+003" maxVal="1.8e+003" />
+			<attr label="1800 to 2000" color="(90,90,226)"  minVal="1.8e+003" maxVal="2e+003" />
+			<attr label="2000 to 2200" color="(75,75,223)"  minVal="2e+003" maxVal="2.2e+003" />
+			<attr label="2200 to 2400" color="(60,60,220)"  minVal="2.2e+003" maxVal="2.4e+003" />
+			<attr label="2400 to 2600" color="(45,45,218)"  minVal="2.4e+003" maxVal="2.6e+003" />
+			<attr label="2600 to 2800" color="(30,30,215)"  minVal="2.6e+003" maxVal="2.8e+003" />
+			<attr label=" &gt; 2800" color="(15,15,212)"  minVal="2.8e+003" maxVal="1e+004" />
+		</attributes>
+	</field>
+
+	<field col="ZONE"
+		 label="Zone"
+		 level="0"
+		 displayFlag="0"
+		 datatype="Integer"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="1">
+		 <description>
+			Generalized Zoning Class
+		 </description>
+		 <source>
+			ID mapping from CZONE
+		 </source>
+		 <attributes>
+			<attr label="Unknown" color="(227,227,227)"  value="0" />
+			<attr label="C2: Neighborhood Commercial" color="(225,166,245)"  value="1" />
+			<attr label="C3: Commercial" color="(196,78,235)"  value="2" />
+			<attr label="E25: Exclusive Farm Use (25 Acre Minimum)" color="(166,245,225)"  value="3" />
+			<attr label="E30: Exclusive Farm Use (30 Acre Minimum)" color="(137,156,215)"  value="4" />
+			<attr label="E40: Exclusive Farm Use (40 Acre Minimum)" color="(107,68,205)"  value="5" />
+			<attr label="E60: Exclusive Farm Use (60 Acre Minimum)" color="(78,235,196)"  value="6" />
+			<attr label="F1: Non-Impacted Forest" color="(49,147,186)"  value="7" />
+			<attr label="F2: Impacted Forest" color="(19,58,176)"  value="8" />
+			<attr label="M2: Light Industrial" color="(245,225,166)"  value="9" />
+			<attr label="ML: Marginal Lands" color="(215,137,156)"  value="10" />
+			<attr label="Urban" color="(186,49,147)"  value="11" />
+			<attr label="NR: Natural Resource" color="(156,215,137)"  value="12" />
+			<attr label="PF: Public Facility" color="(127,127,127)"  value="13" />
+			<attr label="PR: Park and Recreation" color="(98,39,117)"  value="14" />
+			<attr label="QM: Quarry and Mining Operations" color="(68,205,107)"  value="15" />
+			<attr label="RC: Rural Commercial" color="(39,117,98)"  value="16" />
+			<attr label="RI: Rural Industrial" color="(9,29,88)"  value="17" />
+			<attr label="RPF: Rural Public Facility" color="(235,196,78)"  value="18" />
+			<attr label="RR1: Rural Residential (1 Acre Minimum)" color="(205,107,68)"  value="19" />
+			<attr label="RR10: Rural Residential (10 Acre Minimum)" color="(176,19,58)"  value="20" />
+			<attr label="RR10-NRES: Non Resource (10 Acre Minimum)" color="(147,186,49)"  value="21" />
+			<attr label="RR2: Rural Residential (2 Acre Minimum)" color="(117,98,39)"  value="22" />
+			<attr label="RR5: Rural Residential (5 Acre Minimum)" color="(127,127,127)"  value="23" />
+			<attr label="RR5-NRES: Non Resource (5 Acre Minimum)" color="(58,176,19)"  value="24" />
+			<attr label="SG: Sand, Gravel and Rock Products" color="(29,88,9)"  value="25" />
+			<attr label="UR-Low: 0-4 DU/ac" color="(186,49,147)"  value="100" />
+			<attr label="UR-Med: 4-9 DU/ac" color="(196,49,147)"  value="101" />
+			<attr label="UR-High: 9-16 DU/ac" color="(206,49,147)"  value="102" />
+			<attr label="UR-VHigh: &gt; 16 DU/ac" color="(216,49,147)"  value="103" />
+			<attr label="UR_CI: commercial/industrial" color="(226,49,147)"  value="110" />
+			<attr label="UR_MU: mixed use" color="(236,49,147)"  value="120" />
+			<attr label="RR-Cl: Cluster Developemnt" color="(246,49,147)"  value="130" />
+		</attributes>
+	</field>
+
+	<field col="CZONE"
+		 label="Initial Zoning"
+		 level="0"
+		 displayFlag="0"
+		 datatype="String"
+		 mfiType="1"
+		 binStyle="0"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="1">
+		 <description>
+			
+		 </description>
+		 <source>
+			Linn and Lane County zoning map shape files.
+		 </source>
+		 <attributes>
+			<attr label="" color="(227,227,227)"  value="" />
+			<attr label="C2" color="(225,166,245)"  value="C2" />
+			<attr label="C3" color="(196,78,235)"  value="C3" />
+			<attr label="E25" color="(166,245,225)"  value="E25" />
+			<attr label="E30" color="(137,156,215)"  value="E30" />
+			<attr label="E40" color="(107,68,205)"  value="E40" />
+			<attr label="E60" color="(78,235,196)"  value="E60" />
+			<attr label="F1" color="(49,147,186)"  value="F1" />
+			<attr label="F2" color="(19,58,176)"  value="F2" />
+			<attr label="M2" color="(245,225,166)"  value="M2" />
+			<attr label="ML" color="(215,137,156)"  value="ML" />
+			<attr label="none" color="(186,49,147)"  value="none" />
+			<attr label="NR" color="(156,215,137)"  value="NR" />
+			<attr label="PF" color="(127,127,127)"  value="PF" />
+			<attr label="PR" color="(98,39,117)"  value="PR" />
+			<attr label="QM" color="(68,205,107)"  value="QM" />
+			<attr label="RC" color="(39,117,98)"  value="RC" />
+			<attr label="RI" color="(9,29,88)"  value="RI" />
+			<attr label="RPF" color="(235,196,78)"  value="RPF" />
+			<attr label="RR1" color="(205,107,68)"  value="RR1" />
+			<attr label="RR10" color="(176,19,58)"  value="RR10" />
+			<attr label="RR10-NRES" color="(147,186,49)"  value="RR10-NRES" />
+			<attr label="RR2" color="(117,98,39)"  value="RR2" />
+			<attr label="RR5" color="(127,127,127)"  value="RR5" />
+			<attr label="RR5-NRES" color="(58,176,19)"  value="RR5-NRES" />
+			<attr label="SG" color="(29,88,9)"  value="SG" />
+		</attributes>
+	</field>
+
+	<field col="ACTOR"
+		 label="Agent Class"
+		 level="0"
+		 displayFlag="0"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="-1"
+		 max="-1"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			Agent Group
+		 </description>
+		 <source>
+			Generated by SWCNH.dll plugin
+		 </source>
+		 <attributes>
+			<attr label="Rural Residents" color="(255,0,0)"  value="0" />
+			<attr label="Ranchettes" color="(0,255,255)"  value="1" />
+			<attr label="Farmers" color="(128,255,0)"  value="2" />
+			<attr label="Foresters" color="(0,128,0)"  value="3" />
+			<attr label="Rural Estates" color="(255,0,255)"  value="4" />
+		</attributes>
+	</field>
+
+	<field col="TLAREA"
+		 label="Taxlot Area (m2)"
+		 level="0"
+		 displayFlag="4"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1e+006"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="0"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 50000" color="(227,227,227)"  minVal="0" maxVal="5e+004" />
+			<attr label="50000 to 100000" color="(215,215,215)"  minVal="5e+004" maxVal="1e+005" />
+			<attr label="100000 to 150000" color="(204,204,204)"  minVal="1e+005" maxVal="1.5e+005" />
+			<attr label="150000 to 200000" color="(192,192,192)"  minVal="1.5e+005" maxVal="2e+005" />
+			<attr label="200000 to 250000" color="(181,181,181)"  minVal="2e+005" maxVal="2.5e+005" />
+			<attr label="250000 to 300000" color="(170,170,170)"  minVal="2.5e+005" maxVal="3e+005" />
+			<attr label="300000 to 350000" color="(158,158,158)"  minVal="3e+005" maxVal="3.5e+005" />
+			<attr label="350000 to 400000" color="(147,147,147)"  minVal="3.5e+005" maxVal="4e+005" />
+			<attr label="400000 to 450000" color="(136,136,136)"  minVal="4e+005" maxVal="4.5e+005" />
+			<attr label="450000 to 500000" color="(124,124,124)"  minVal="4.5e+005" maxVal="5e+005" />
+			<attr label="500000 to 550000" color="(113,113,113)"  minVal="5e+005" maxVal="5.5e+005" />
+			<attr label="550000 to 600000" color="(102,102,102)"  minVal="5.5e+005" maxVal="6e+005" />
+			<attr label="600000 to 650000" color="(90,90,90)"  minVal="6e+005" maxVal="6.5e+005" />
+			<attr label="650000 to 700000" color="(79,79,79)"  minVal="6.5e+005" maxVal="7e+005" />
+			<attr label="700000 to 750000" color="(68,68,68)"  minVal="7e+005" maxVal="7.5e+005" />
+			<attr label="750000 to 800000" color="(56,56,56)"  minVal="7.5e+005" maxVal="8e+005" />
+			<attr label="800000 to 850000" color="(45,45,45)"  minVal="8e+005" maxVal="8.5e+005" />
+			<attr label="850000 to 900000" color="(34,34,34)"  minVal="8.5e+005" maxVal="9e+005" />
+			<attr label="900000 to 950000" color="(22,22,22)"  minVal="9e+005" maxVal="9.5e+005" />
+			<attr label=" &gt; 950000" color="(11,11,11)"  minVal="9.5e+005" maxVal="1e+009" />
+		</attributes>
+	</field>
+
+	<field col="U_PRIORITY"
+		 label="UGB Expansion Priority"
+		 level="0"
+		 displayFlag="3"
+		 datatype="Long"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="2e+003"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="0"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			Generated by SWCNH.DLL
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 100" color="(11,11,212)"  minVal="0" maxVal="100" />
+			<attr label="100 to 200" color="(22,22,214)"  minVal="100" maxVal="200" />
+			<attr label="200 to 300" color="(34,34,216)"  minVal="200" maxVal="300" />
+			<attr label="300 to 400" color="(45,45,218)"  minVal="300" maxVal="400" />
+			<attr label="400 to 500" color="(56,56,220)"  minVal="400" maxVal="500" />
+			<attr label="500 to 600" color="(68,68,222)"  minVal="500" maxVal="600" />
+			<attr label="600 to 700" color="(79,79,224)"  minVal="600" maxVal="700" />
+			<attr label="700 to 800" color="(90,90,226)"  minVal="700" maxVal="800" />
+			<attr label="800 to 900" color="(102,102,228)"  minVal="800" maxVal="900" />
+			<attr label="900 to 1000" color="(113,113,230)"  minVal="900" maxVal="1e+003" />
+			<attr label="1000 to 1100" color="(124,124,232)"  minVal="1e+003" maxVal="1.1e+003" />
+			<attr label="1100 to 1200" color="(136,136,234)"  minVal="1.1e+003" maxVal="1.2e+003" />
+			<attr label="1200 to 1300" color="(147,147,236)"  minVal="1.2e+003" maxVal="1.3e+003" />
+			<attr label="1300 to 1400" color="(158,158,238)"  minVal="1.3e+003" maxVal="1.4e+003" />
+			<attr label="1400 to 1500" color="(170,170,240)"  minVal="1.4e+003" maxVal="1.5e+003" />
+			<attr label="1500 to 1600" color="(181,181,242)"  minVal="1.5e+003" maxVal="1.6e+003" />
+			<attr label="1600 to 1700" color="(192,192,244)"  minVal="1.6e+003" maxVal="1.7e+003" />
+			<attr label="1700 to 1800" color="(204,204,246)"  minVal="1.7e+003" maxVal="1.8e+003" />
+			<attr label="1800 to 1900" color="(215,215,248)"  minVal="1.8e+003" maxVal="1.9e+003" />
+			<attr label=" &gt; 1900" color="(227,227,250)"  minVal="1.9e+003" maxVal="3e+003" />
+		</attributes>
+	</field>
+
+	<field col="FUTSI"
+		 label="Site Index"
+		 level="0"
+		 displayFlag="9"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="150"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			Site index codes are an ordinal scale, here treated as a continuous measure. When multiple values occur in the area of a single IDU, they are averaged on area weighted basis. Source: Site index for Douglas-fir based on King&apos;s (1966) curve with a 50-yr base age. Site index was estimated from the properties of soil polygons mapped by the Natural Resource Conservation Service. For details about site index contact Peter Gould (pgould@fs.fed.us) or Connie Harrington (charrington@fs.fed.us)
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 10" color="(210,0,0)"  minVal="0" maxVal="10" />
+			<attr label="10 to 20" color="(215,32,32)"  minVal="10" maxVal="20" />
+			<attr label="20 to 30" color="(221,64,64)"  minVal="20" maxVal="30" />
+			<attr label="30 to 40" color="(227,97,97)"  minVal="30" maxVal="40" />
+			<attr label="40 to 50" color="(232,129,129)"  minVal="40" maxVal="50" />
+			<attr label="50 to 60" color="(238,162,162)"  minVal="50" maxVal="60" />
+			<attr label="60 to 70" color="(255,255,155)"  minVal="60" maxVal="70" />
+			<attr label="70 to 80" color="(255,255,117)"  minVal="70" maxVal="80" />
+			<attr label="80 to 90" color="(255,255,66)"  minVal="80" maxVal="90" />
+			<attr label="90 to 100" color="(249,249,0)"  minVal="90" maxVal="100" />
+			<attr label="100 to 110" color="(129,232,129)"  minVal="100" maxVal="110" />
+			<attr label="110 to 120" color="(97,227,97)"  minVal="110" maxVal="120" />
+			<attr label="120 to 130" color="(64,221,64)"  minVal="120" maxVal="130" />
+			<attr label="130 to 140" color="(32,215,32)"  minVal="130" maxVal="140" />
+			<attr label=" &gt; 140" color="(0,210,0)"  minVal="140" maxVal="150" />
+		</attributes>
+	</field>
+
+	<field col="PVT"
+		 label="PVT"
+		 level="0"
+		 displayFlag="2"
+		 datatype="Long"
+		 mfiType="1"
+		 binStyle="0"
+		 min="0"
+		 max="20"
+		 results="1"
+		 decadalMaps="0"
+		 useInSiteAttr="1"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label="1" color="(227,250,227)"  value="1" />
+			<attr label="2" color="(215,248,215)"  value="2" />
+			<attr label="3" color="(34,139,34)"  value="3" />
+			<attr label="4" color="(128,0,64)"  value="4" />
+			<attr label="5" color="(181,242,181)"  value="5" />
+			<attr label="6" color="(255,0,128)"  value="6" />
+			<attr label="7" color="(158,238,158)"  value="7" />
+			<attr label="8" color="(147,236,147)"  value="8" />
+			<attr label="9" color="(136,234,136)"  value="9" />
+			<attr label="10" color="(124,232,124)"  value="10" />
+			<attr label="11" color="(113,230,113)"  value="11" />
+			<attr label="12" color="(102,228,102)"  value="12" />
+			<attr label="13" color="(90,226,90)"  value="13" />
+			<attr label="14" color="(79,224,79)"  value="14" />
+			<attr label="15" color="(68,222,68)"  value="15" />
+			<attr label="16" color="(56,220,56)"  value="16" />
+			<attr label="17" color="(255,255,0)"  value="17" />
+			<attr label="18" color="(34,216,34)"  value="18" />
+			<attr label="19" color="(22,214,22)"  value="19" />
+			<attr label="20" color="(11,212,11)"  value="20" />
+		</attributes>
+	</field>
+
+	<field col="D_UGB"
+		 label="Distance to UG"
+		 level="0"
+		 displayFlag="3"
+		 datatype="Double"
+		 mfiType="0"
+		 binStyle="0"
+		 min="0"
+		 max="1.2e+004"
+		 results="0"
+		 decadalMaps="0"
+		 useInSiteAttr="0"
+		 useInOutcomes="0">
+		 <description>
+			
+		 </description>
+		 <source>
+			
+		 </source>
+		 <attributes>
+			<attr label=" &lt; 600" color="(227,227,250)"  minVal="0" maxVal="600" />
+			<attr label="600 to 1200" color="(215,215,248)"  minVal="600" maxVal="1.2e+003" />
+			<attr label="1200 to 1800" color="(204,204,246)"  minVal="1.2e+003" maxVal="1.8e+003" />
+			<attr label="1800 to 2400" color="(192,192,244)"  minVal="1.8e+003" maxVal="2.4e+003" />
+			<attr label="2400 to 3000" color="(181,181,242)"  minVal="2.4e+003" maxVal="3e+003" />
+			<attr label="3000 to 3600" color="(170,170,240)"  minVal="3e+003" maxVal="3.6e+003" />
+			<attr label="3600 to 4200" color="(158,158,238)"  minVal="3.6e+003" maxVal="4.2e+003" />
+			<attr label="4200 to 4800" color="(147,147,236)"  minVal="4.2e+003" maxVal="4.8e+003" />
+			<attr label="4800 to 5400" color="(136,136,234)"  minVal="4.8e+003" maxVal="5.4e+003" />
+			<attr label="5400 to 6000" color="(124,124,232)"  minVal="5.4e+003" maxVal="6e+003" />
+			<attr label="6000 to 6600" color="(113,113,230)"  minVal="6e+003" maxVal="6.6e+003" />
+			<attr label="6600 to 7200" color="(102,102,228)"  minVal="6.6e+003" maxVal="7.2e+003" />
+			<attr label="7200 to 7800" color="(90,90,226)"  minVal="7.2e+003" maxVal="7.8e+003" />
+			<attr label="7800 to 8400" color="(79,79,224)"  minVal="7.8e+003" maxVal="8.4e+003" />
+			<attr label="8400 to 9000" color="(68,68,222)"  minVal="8.4e+003" maxVal="9e+003" />
+			<attr label="9000 to 9600" color="(56,56,220)"  minVal="9e+003" maxVal="9.6e+003" />
+			<attr label="9600 to 10200" color="(45,45,218)"  minVal="9.6e+003" maxVal="1.02e+004" />
+			<attr label="10200 to 10800" color="(34,34,216)"  minVal="1.02e+004" maxVal="1.08e+004" />
+			<attr label="10800 to 11400" color="(22,22,214)"  minVal="1.08e+004" maxVal="1.14e+004" />
+			<attr label=" &gt; 11400" color="(11,11,212)"  minVal="1.14e+004" maxVal="1.2e+004" />
+		</attributes>
+	</field>
+
+</fields>
