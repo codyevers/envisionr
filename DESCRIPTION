@@ -1,0 +1,22 @@
+Package: envisionr
+Title: Data Mapper for Envision Outputss
+Version: 0.0.0.9000
+Authors@R: 
+    person("Cody", "Evers", , "cevers@pdx.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-8449-7442"))
+Description: EnvisionR is a package for assembling Envision delta array output into vector data cubes and then viewing that data using a basic GIS interface. 
+License: `use_mit_license()`
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1
+Imports:
+    dplyr,
+    terra,
+    tidyr,
+    stars,
+    xml2,
+    purrr,
+    sf,
+    abind,
+    data.table,
+    shiny
