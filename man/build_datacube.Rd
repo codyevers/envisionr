@@ -7,7 +7,8 @@
 build_datacube(
   delta_array,
   fields,
-  idu_geom,
+  idu_geom = NULL,
+  run_name = NULL,
   idu_field = "IDU_INDEX",
   as_stars = TRUE
 )

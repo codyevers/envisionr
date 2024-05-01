@@ -1,7 +1,7 @@
 EnvisionR
 ================
 Cody Evers
-2023-01-20
+2024-04-30
 
 EnvisionR is a shiny exploring simulation data from Envision using a
 simple map interface.
@@ -112,11 +112,36 @@ This script requires several reference files which are saved in the
 Required functions are organized in a series of R scripts
 
 - `R/datacube_func.R` Functions related to building datacubes
-
 - `R/download_func.R` Functions for downloading delta arrays
-
 - `R/load_func.R` Functions for loading data
-
 - `R/plot_func.R` Functions for plotting datacubes
-
 - `shiny_func.R` UI and server functions for running EnvisionR shiny app
+
+**Loading new data**
+
+``` r
+# read delta_array csv into memory (1 minute)
+da <- read_delta_csv('/deltaarrays/DeltaArray_example.csv')
+
+# list attributes contained within the delta array
+unique(da$field)
+
+# select fields to include in the datacube
+fields = c('LULC_B','SIZE','CANOPY','LAYERS')
+
+# build datacube (1 minute) - save as stars object
+dc <- build_datacube(
+  delta_array = da,
+  fields = fields,
+  run_name = 'test_run',
+  idu_geom = ref_data$idu_vect)
+
+# save datacube object to the datacubes folder
+save_datacube(dc, filename = 'datacubes/dc_test.datacube')
+
+# load the datacube (same as above)
+dc1 <- load_datacube('datacubes/dc_test.datacube')
+
+# show datacube info
+print(dc1)
+```

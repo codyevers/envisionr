@@ -1,50 +1,15 @@
-# Function to install, update, and load packages
 #' Title
 #'
-#' @param ...
+#' @param filename
 #'
 #' @return
 #' @export
 
-load_packages <- function(...) {
-  packages <- sapply(as.list(match.call())[-1], deparse)
-  for (package in packages) {
-    # Check if the package is already installed, install if necessary
-    if (!require(package, character.only = TRUE, quietly = TRUE)) {
-      install.packages(package)
-    }
-    # Load the package
-    library(package, character.only = TRUE)
-  }
+read_delta_csv <- function(filename){
+  da <- data.table::fread(filename)
+  attr(da, 'filename') <- filename
+  return(da)
 }
-
-
-#' Title
-#'
-#' @param folderPath
-#'
-#' @return
-#' @export
-
-load_datacubes <- function(folderPath) {
-
-  # List all .RData files in the directory
-  rdataFiles <- list.files(path = folderPath, pattern = "\\.rda$", full.names = TRUE)
-
-  if(length(rdataFiles) == 0) {
-    cat("No .RData files found in", folderPath, "\n")
-    return(invisible(NULL)) # Return invisibly and do not proceed further
-  }
-
-  # Load each .RData file into the global environment
-  for(file in rdataFiles) {
-    load(file, envir = .GlobalEnv)
-  }
-
-  # Optional: Print a message after loading all files
-  cat("All .RData files have been loaded into the global environment from", folderPath, "\n")
-}
-
 
 #' Title
 #'
@@ -54,7 +19,7 @@ load_datacubes <- function(folderPath) {
 #' @return
 #' @export
 
-read_datacube <- function(file, name = NULL) {
+load_datacube <- function(file, name = NULL) {
   if(tools::file_ext(file) != 'datacube'){
     stop('Must have datacube extension')
   }
@@ -70,30 +35,15 @@ read_datacube <- function(file, name = NULL) {
   }
 }
 
-
-# Define the function
 #' Title
 #'
-#' @param file_path
-#' @param new_name
+#' @param datacube
+#' @param filename
 #'
 #' @return
 #' @export
 
-load_and_rename_object <- function(file_path, new_name) {
-  # Load the .RData file
-  load(file_path)
-
-  # Check if 'dc' is in the current environment
-  if (!exists("dc")) {
-    stop("The object 'dc' was not found in the loaded file.")
-  }
-
-  assign(new_name, value = dc, envir = .GlobalEnv)
-
-  # Optionally, remove 'dc' from the environment if it's no longer needed
-  remove(dc)
-
-  # Return the new object
-  return(get(new_name, envir = .GlobalEnv))
+save_datacube <- function(datacube, filename){
+  dc <- datacube
+  save(dc, file = filename)
 }

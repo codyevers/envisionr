@@ -23,10 +23,21 @@
 build_datacube <- function(
     delta_array,
     fields,
-    idu_geom,
+    idu_geom = NULL,
+    run_name = NULL,
     idu_field = 'IDU_INDEX',
     as_stars = TRUE
   ){
+
+    if(is.null(idu_geom)){
+      if(exists(ref_data$idu_vect)){
+        data('ref_data', package='envisionr')
+        idu_geom <- ref_data$idu_vect
+      } else {
+        stop('IDU reference required')
+      }
+    }
+
     datacube <- purrr::map(fields, function(f){
         build_slice(delta_array, idu_geom, idu_field, f)
       }, .progress = TRUE) |>
@@ -37,6 +48,11 @@ build_datacube <- function(
         st_set_dimensions(2, names='year', values=c(2019:2059)) |> # set dim 2 to year
         split(3) # transfers fields to stars attributes
     }
+
+    attr(dc, 'run_name') <- run_name
+    attr(dc, 'date_created') <- Sys.Date()
+    attr(dc, 'filename') <- attr(delta_array, 'filename')
+
     return(datacube)
 }
 
