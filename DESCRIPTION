@@ -1,6 +1,6 @@
 Package: envisionr
-Title: Data Mapper for Envision Outputss
-Version: 0.0.0.9000
+Title: Data mapper for Envision
+Version: 0.1.0
 Authors@R: 
     person("Cody", "Evers", , "cevers@pdx.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-8449-7442"))

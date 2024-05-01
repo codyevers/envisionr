@@ -29,13 +29,13 @@ build_datacube <- function(
     as_stars = TRUE
   ){
 
+    if(!exists('ref_data')){
+      data('ref_data', package='envisionr')
+      idu_geom <- ref_data$idu_vect
+    }
+
     if(is.null(idu_geom)){
-      if(exists(ref_data$idu_vect)){
-        data('ref_data', package='envisionr')
-        idu_geom <- ref_data$idu_vect
-      } else {
         stop('IDU reference required')
-      }
     }
 
     datacube <- purrr::map(fields, function(f){
@@ -49,9 +49,9 @@ build_datacube <- function(
         split(3) # transfers fields to stars attributes
     }
 
-    attr(dc, 'run_name') <- run_name
-    attr(dc, 'date_created') <- Sys.Date()
-    attr(dc, 'filename') <- attr(delta_array, 'filename')
+    attr(datacube, 'run_name') <- run_name
+    attr(datacube, 'date_created') <- Sys.Date()
+    attr(datacube, 'filename') <- attr(delta_array, 'filename')
 
     return(datacube)
 }

@@ -37,7 +37,8 @@ Download and install the EnvisionR package. Before we do, we'll make sure we del
 if(!require(envisionr)){
   devtools::install_github(
     repo = 'https://github.com/codyevers/envisionr', 
-    build = FALSE)
+    build = FALSE, 
+    force = TRUE)
 }
 library(envisionr)
 ```
@@ -82,11 +83,14 @@ Build datacubes from scratch. You've run Envision and taken the delta array csv 
 # read delta_array csv into memory (1 minute)
 da <- read_delta_csv('/deltaarrays/DeltaArray_example.csv')
 
+library(envisionr)
+da <- read_delta_csv('~/Downloads/DeltaArray_FTW-FF-HC_GFDL_Run0.csv')
+
 # list attributes contained within the delta array
 unique(da$field)
 
 # select fields to include in the datacube
-fields = c('LULC_B','SIZE','CANOPY','LAYERS')
+fields = c('LULC_B','VEGCLASS','DISTURB','VARIANT','N_DU','SIZE','CANOPY','LAYERS')
 
 # build datacube (1 minute) - save as stars object
 dc <- build_datacube(
@@ -102,6 +106,10 @@ dc1 <- load_datacube('datacubes/dc_test.datacube')
 
 # show datacube info
 print(dc1)
+
+# run EnvisionR 
+run_envisionr(dc1)
+
 ```
 
 ## Required data
