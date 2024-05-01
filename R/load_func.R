@@ -54,7 +54,7 @@ load_datacubes <- function(folderPath) {
 #' @return
 #' @export
 
-read_datacube <- function(file, name) {
+read_datacube <- function(file, name = NULL) {
   if(tools::file_ext(file) != 'datacube'){
     stop('Must have datacube extension')
   }
@@ -62,8 +62,12 @@ read_datacube <- function(file, name) {
   if (!exists("dc")) {
     stop("Object 'dc' was not found")
   }
-  assign(name, value = dc, envir = .GlobalEnv)
-  message(paste('Datacube loaded as', name))
+  if(!is.null(name)){
+    assign(name, value = dc, envir = .GlobalEnv)
+    message(paste('Datacube loaded as', name))
+  } else {
+    return(dc)
+  }
 }
 
 

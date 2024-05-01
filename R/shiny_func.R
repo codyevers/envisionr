@@ -12,7 +12,15 @@
 #' @import shiny
 #' @import shinyWidgets
 
-run_envisionr <- function(datacubes=NULL) {
+run_envisionr <- function(...) {
+
+  datacubes <- list(...)
+  idu_rast <- ref_data$idu_rast
+  idu_vect <- ref_data$idu_vect
+  roads <- ref_data$ref_roads
+  places <- ref_data$ref_places
+  zones <- ref_data$ref_zones
+  boundary <- ref_data$ref_boundary
 
   if(is.null(datacubes)){
     stop("Datacube(s) required")
@@ -46,7 +54,6 @@ run_envisionr <- function(datacubes=NULL) {
     fluidRow(
       column(
         width = 3,
-        # wellPanel(
           radioButtons(
             inputId = "select_run",
             label = "Select run",
@@ -54,8 +61,14 @@ run_envisionr <- function(datacubes=NULL) {
             selected = 'A',
             inline = T),
           div(style = "display: flex; justify-content: center;",
-              actionButton("left", "-1 run", style = "margin-bottom: 10px; margin-right: 5px"),
-              actionButton("right", "+1 run", style = "margin-bottom: 10px; margin-right: 5px")
+              actionButton(
+                inputId = "left",
+                label = "-1 run",
+                style = "margin-bottom: 10px; margin-right: 5px"),
+              actionButton(
+                inputId = "right",
+                label = "+1 run",
+                style = "margin-bottom: 10px; margin-right: 5px")
           ),
           selectInput(
               inputId = "filter",
@@ -63,8 +76,14 @@ run_envisionr <- function(datacubes=NULL) {
               choices = c('LULC_A', 'LULC_B')
             ),
           div(style = "display: flex; justify-content: center;",
-            actionButton("up", "-1 field", style = "margin-bottom: 10px; margin-right: 5px"),
-            actionButton("down", "+1 field", style = "margin-bottom: 10px; margin-right: 5px")
+            actionButton(
+              inputId = "up",
+              label = "-1 field",
+              style = "margin-bottom: 10px; margin-right: 5px"),
+            actionButton(
+              inputId = "down",
+              label = "+1 field",
+              style = "margin-bottom: 10px; margin-right: 5px")
           ),
           sliderInput(
             inputId = "year",
@@ -208,7 +227,9 @@ run_envisionr <- function(datacubes=NULL) {
   # SERVER
   # ....................................
 
-  server <- function(input, output, clientData, session) {
+  server_wrapper <- function(...){
+  # server <- function(input, output, clientData, session) {
+    function(input, output, clientData, session) {
 
     # Render the dynamic title in the UI
     output$title <- renderUI({
@@ -218,9 +239,6 @@ run_envisionr <- function(datacubes=NULL) {
     output$history_text <- renderUI({
       h3(paste0('EnvisionR - ', data()$run))
     })
-
-    files <- list.files(path = "data/dc", full.names = TRUE)
-    fnames <- list.files(path = "data/dc", full.names = FALSE) |> stringr::str_replace('.rda','')
 
     # data --------------
 
@@ -246,9 +264,9 @@ run_envisionr <- function(datacubes=NULL) {
     extent <- reactive({
       if(input$extent == ''){
         txt = '438483.2, 540570.0, 1061211.4, 1149023.9'
-        ext <- eval(parse(text = paste0('ext(', txt, ')')))
+        ext <- eval(parse(text = paste0('terra::ext(', txt, ')')))
       } else {
-        ext <- eval(parse(text = paste0('ext(', input$extent, ')')))
+        ext <- eval(parse(text = paste0('terra::ext(', input$extent, ')')))
       }
       return(ext)
     })
@@ -269,8 +287,8 @@ run_envisionr <- function(datacubes=NULL) {
       # set year to 0 if count query selected
       if(input$count_query == TRUE) y <- NULL
 
-      idu_raster <- update_raster(
-        raster = idu_raster,
+      idu_rast <- update_raster(
+        raster = idu_rast,
         datacube = dc,
         field = f,
         year = y,
@@ -280,7 +298,7 @@ run_envisionr <- function(datacubes=NULL) {
 
       pal_df <- get_pal('data/idu.xml', input$filter)
 
-      levels <- terra::unique(idu_raster)
+      levels <- terra::unique(idu_rast)
 
       # update UI inputs
       updateSelectInput(
@@ -298,7 +316,7 @@ run_envisionr <- function(datacubes=NULL) {
       return(list(
         run = run_name,
         datacube = dc,
-        idu_raster = idu_raster,
+        idu_rast = idu_rast,
         pal_df = pal_df,
         levels = levels))
     })
@@ -311,7 +329,7 @@ run_envisionr <- function(datacubes=NULL) {
       x <- input$plot_dblclick$x
       y <- input$plot_dblclick$y
       point <- stars::st_extract(
-        x = data()$idu_raster,
+        x = data()$idu_rast,
         at = matrix(c(x, y), ncol=2))
       selectedPoint$IDU_INDEX <- point$IDU_INDEX
       xy <- data.frame(x = x, y = y) |>
@@ -388,7 +406,6 @@ run_envisionr <- function(datacubes=NULL) {
     # observe for zoom button press
     observeEvent(input$zoom_button, {
       brush <- input$plot_brush
-      # print(paste(brush$xmin, brush$xmax, brush$ymin, brush$ymax))
       if (!is.null(brush)) {
         ranges$x <- c(brush$xmin, brush$xmax)
         ranges$y <- c(brush$ymin, brush$ymax)
@@ -409,7 +426,6 @@ run_envisionr <- function(datacubes=NULL) {
 
     output$legend <- renderPlot({
       req(data()$levels)
-      # browser()
       par(mar=rep(0,4))
       pal_df <- data()$pal_df |> filter(value %in% data()$levels$VALUE)
       plot(NULL ,xaxt='n',yaxt='n',bty='n',ylab='',xlab='', xlim=0:1, ylim=0:1)
@@ -420,7 +436,6 @@ run_envisionr <- function(datacubes=NULL) {
     output$map <- renderPlot({
 
       req(input$filter)
-
       if(is.null(data()$datacube)) return(NULL)
 
       pal_field <- input$filter
@@ -440,7 +455,7 @@ run_envisionr <- function(datacubes=NULL) {
       }
 
       plot_raster(
-        raster = data()$idu_raster,
+        raster = data()$idu_rast,
         pal_lookup = pal_field,
         pal_table = pal_df,
         extent = extent(),
@@ -508,7 +523,7 @@ run_envisionr <- function(datacubes=NULL) {
         }
 
         plot_raster(
-          raster = data()$idu_raster,
+          raster = data()$idu_rast,
           pal_lookup = pal_field,
           extent = input$extent,
           focus = selectedPoint$point,
@@ -527,8 +542,8 @@ run_envisionr <- function(datacubes=NULL) {
       library(animation)
       saveGIF({
         for(y in 2:40){
-          idu_raster <- update_raster(
-            raster = idu_raster,
+          idu_rast <- update_raster(
+            raster = idu_rast,
             datacube = data()$datacube,
             extent = input$extent,
             field = f,
@@ -537,7 +552,7 @@ run_envisionr <- function(datacubes=NULL) {
             queryB = q2)
 
           plot_raster(
-            raster = idu_raster,
+            raster = idu_rast,
             pal_lookup = input$filter,
             extent = input$extent,
             focus = selectedPoint$point,
@@ -566,6 +581,8 @@ run_envisionr <- function(datacubes=NULL) {
       }
     )
   }
+  }
 
+  server <- server_wrapper(ref_data)
   shinyApp(ui, server)
 }

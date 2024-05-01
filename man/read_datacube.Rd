@@ -4,7 +4,7 @@
 \alias{read_datacube}
 \title{Title}
 \usage{
-read_datacube(file, name)
+read_datacube(file, name = NULL)
 }
 \arguments{
 \item{name}{}

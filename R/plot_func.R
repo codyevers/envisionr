@@ -160,12 +160,13 @@ plot_raster <- function(
     plot(focus, pch=1, cex=1.5, col='white', add=T)
     plot(focus, pch=1, cex=1, add=T)
   }
-  if(any(grepl('Zones', options))) plot(zone, add=T)
-  if(any(grepl('Roads', options))) plot(road, add=T, col='red')
-  if(any(grepl('Boundary', options))) plot(boundary, add=T, lwd=2)
+  if(any(grepl('Zones', options))) plot(ref_data$ref_zones, add=T)
+  if(any(grepl('Roads', options))) plot(ref_data$ref_roads, add=T, col='red')
+  if(any(grepl('Boundary', options))) plot(ref_data$ref_boundary, add=T, lwd=2)
   if(any(grepl('Places', options))){
-    plot(places$geometry, add=T, pch=16)
-    text(st_coordinates(places), labels = places$Name, pos = 1, cex = 1)
+    plot(ref_data$ref_places$geometry, add=T, pch=16)
+    text(st_coordinates(ref_data$ref_places),
+         labels = ref_data$ref_places$Name, pos = 1, cex = 1)
   }
 }
 
@@ -183,10 +184,10 @@ rasterize_idu <- function( # parameters
     fields = 'IDU_INDEX',
     res = 500
   ){ # function
-    idu_raster <- stars::st_rasterize(
+    idu_rast <- stars::st_rasterize(
       sf = idu_shp |> dplyr::select(all_of(fields)),
       template = stars::st_as_stars(st_bbox(idu_shp), dx=res, dy=res, values=NA_real_))
-    return(idu_raster)
+    return(idu_rast)
 }
 
 #' Build IDU raster

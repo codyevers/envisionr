@@ -7,12 +7,10 @@ x <- dc_stars |> with(FlameLen > 0) |> apply(1, sum)
 x <- dc_stars |> with(DISTURB == 51) |> apply(1, sum)
 x <- dc_stars |> with(OUTREACH > 0) |> apply(1, sum)
 
-
 apply_query(
   query = 'N_DU > 0 & FlameLen > 0',
   datacube = dc_stars
 )
-
 
 # pull data for specific year
 yr = 2

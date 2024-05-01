@@ -4,7 +4,7 @@
 \alias{run_envisionr}
 \title{Title}
 \usage{
-run_envisionr(datacubes = NULL)
+run_envisionr(...)
 }
 \arguments{
 \item{datacubes}{}
