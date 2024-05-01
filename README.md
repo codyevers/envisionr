@@ -3,10 +3,10 @@ EnvisionR
 Cody Evers
 2024-04-30
 
-EnvisionR is a shiny exploring simulation data from Envision using a
-simple map interface.
+EnvisionR is a shiny application for exploring and extracting simulation
+data from Envision using a simple map interface.
 
-**Make a new project**
+## Create R project
 
 1.  Create a folder on computer in a easy to find location (e.g.,
     documents)
@@ -20,7 +20,7 @@ This will create a new RStudio project with an .Rproj file in the
 specified directory. This file helps manage paths and settings specific
 to your project.
 
-**Install required packages**
+## Install required packages
 
 This script requires several packages: pacman, devtools, dplyr, tidyr,
 purr, glue, stars, terra, sf, data.table, xml2, shiny, shinyjs, and
@@ -35,7 +35,7 @@ pacman::p_load(stars, terra, sf, data.table, xml2) # data structure
 pacman::p_load(shiny, shinyjs, shinyWidgets) # shiny
 ```
 
-**Install EnvisionR**
+## Install EnvisionR
 
 Download and install the EnvisionR package. Before we do, we’ll make
 sure we delete any version of EnvisionR that is already installed. Then
@@ -52,7 +52,7 @@ if(!require(envisionr)){
 library(envisionr)
 ```
 
-**Download demonstration datacubes**
+## Download demonstration datacubes
 
 Load some of the datacubes that we’d like to explore. These are large
 files so are not included in the EnvisionR package itself. Rather,
@@ -63,7 +63,7 @@ folder](https://oregonstate.box.com/s/lfgqvq0hakprc37n2n7h4xa3kazcft90)
 and place them in a folder called `datacubes` in your working directory.
 You can create a new folder if this folder doesn’t exist.
 
-**Load required reference data from the EnvisionR data**
+## Load required reference data from the EnvisionR data
 
 Load required reference data into memory includes the IDU data as well
 as boundaries, roads, and cities.
@@ -72,7 +72,7 @@ as boundaries, roads, and cities.
 data('ref_data', package = 'envisionr')
 ```
 
-**Load datacubes into memory**
+## Load datacubes into memory
 
 Read datacubes saved in your `datacubes` directory into memory using
 `load_datacube` and assign each to its own object (e.g., dc1, dc2, etc).
@@ -84,7 +84,7 @@ dc3 <- load_datacube('datacubes/FTW-FF-LD_GFDL_Run0.datacube')
 dc4 <- load_datacube('datacubes/FTW-NM-NO-GFDL_Run0.datacube')
 ```
 
-**Run EnvisionR**
+## Run EnvisionR
 
 Run EnvisionR using `run_envisionr` by providing the datacubes we just
 read into memory.
@@ -93,7 +93,7 @@ read into memory.
 run_envisionr(dc1, dc2, dc3, dc4)
 ```
 
-**Loading new data**
+## Loading new data
 
 Build datacubes from scratch. You’ve run Envision and taken the delta
 array csv file, placed it in a directory called `deltaarrays` in your
@@ -128,7 +128,7 @@ dc1 <- load_datacube('datacubes/dc_test.datacube')
 print(dc1)
 ```
 
-**Required data**
+## Required data
 
 This script requires several reference files which are saved in the
 `data/misc` folder .
@@ -140,7 +140,7 @@ This script requires several reference files which are saved in the
 - `data/ref_data.rda` Required reference spatial data including IDU,
   roads, zones, etc.
 
-**Functions**
+## Functions
 
 Functions are organized in a series of R scripts
 
