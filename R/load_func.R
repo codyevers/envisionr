@@ -20,9 +20,9 @@ read_delta_csv <- function(filename){
 #' @export
 
 load_datacube <- function(file, name = NULL) {
-  if(tools::file_ext(file) != 'datacube'){
-    stop('Must have datacube extension')
-  }
+  # if(tools::file_ext(file) != 'datacube'){
+  #   stop('Must have datacube extension')
+  # }
   load(file)
   if (!exists("dc")) {
     stop("Object 'dc' was not found")

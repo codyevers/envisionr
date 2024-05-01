@@ -44,55 +44,38 @@ library(envisionr)
 
 **Download demonstration datacubes**
 
-Load some of the datacubes that we'd like to explore. These are large files so are not included in the EnvisionR package itself. Rather, you'll want to create a folder in your working directory called datacubes then download the following files from box and then move them to the datacubes directory. Download the 7 files in this [box folder](https://oregonstate.box.com/s/lfgqvq0hakprc37n2n7h4xa3kazcft90) and place them in the `datacubes` folder. 
+Load some of the datacubes that we'd like to explore. These are large files so are not included in the EnvisionR package itself. Rather, you'll want to create a folder in your working directory called datacubes then download the following files from box and then move them to the datacubes directory. Download the 7 files in [this box folder](https://oregonstate.box.com/s/lfgqvq0hakprc37n2n7h4xa3kazcft90) and place them in a folder called `datacubes` in your working directory. You can create a new folder if this folder doesn't exist.
 
 **Load required reference data from the EnvisionR data**
 
-Let's load required reference data into memory. This includes the IDU data as well as boundaries, roads, and cities.
+Load required reference data into memory includes the IDU data as well as boundaries, roads, and cities.
 
 ```{r, eval=F}
 data('ref_data', package = 'envisionr')
 ```
 
-**Loading datacubes into memory**
+**Load datacubes into memory**
 
-Read the datacubes into memory using `read_datacube` and assign each to its own object (e.g., dc1, dc2, etc).
+Read datacubes saved in your `datacubes` directory into memory using `load_datacube` and assign each to its own object (e.g., dc1, dc2, etc).
 
 ```{r, eval=F}
-dc1 <- read_datacube('datacubes/FTW-FF-HC_GFDL_Run0.datacube')
-dc2 <- read_datacube('datacubes/FTW-FF-HD_GFDL_Run0.datacube')
-dc3 <- read_datacube('datacubes/FTW-FF-LD_GFDL_Run0.datacube')
-dc4 <- read_datacube('datacubes/FTW-NM-NO-GFDL_Run0.datacube')
+dc1 <- load_datacube('datacubes/FTW-FF-HC_GFDL_Run0.datacube')
+dc2 <- load_datacube('datacubes/FTW-FF-HD_GFDL_Run0.datacube')
+dc3 <- load_datacube('datacubes/FTW-FF-LD_GFDL_Run0.datacube')
+dc4 <- load_datacube('datacubes/FTW-NM-NO-GFDL_Run0.datacube')
 ```
 
-**Running EnvisionR**
+**Run EnvisionR**
 
-Run EnvisionR using `run_envisionr` by providing the object names of the datacubes we just read into memory.
+Run EnvisionR using `run_envisionr` by providing the datacubes we just read into memory.
 
 ```{r, eval=F}
 run_envisionr(dc1, dc2, dc3, dc4)
 ```
 
-**Required data**
-
-This script requires several reference files which are saved in the `data/misc` folder .
-
--   `datacubes/*.datacube` R binary data files containing datacube saved as a stars object. Several example datacubes can be [downloaded here](https://oregonstate.box.com/s/lfgqvq0hakprc37n2n7h4xa3kazcft90).
-
--   `data/idu.xml` Taken directly from Envision and is used to assign colors to different values.
--   `data/ref_data.rda` Miscellaneous reference data important to the SWCNH project.
-
-**Functions**
-
-Required functions are organized in a series of R scripts
-
--   `R/datacube_func.R` Functions related to building datacubes
--   `R/download_func.R` Functions for downloading delta arrays
--   `R/load_func.R` Functions for loading data
--   `R/plot_func.R` Functions for plotting datacubes
--   `shiny_func.R` UI and server functions for running EnvisionR shiny app
-
 **Loading new data**
+
+Build datacubes from scratch. You've run Envision and taken the delta array csv file, placed it in a directory called `deltaarrays` in your working directory and renamed it to `DeltaArra_example.csv`. Read the csv into memory then convert the csv into a datacube called `dc` for 4 selected fields. Save the datacube to your `datacubes` directory for later use.
 
 ```{r, eval=F}
 
@@ -109,8 +92,7 @@ fields = c('LULC_B','SIZE','CANOPY','LAYERS')
 dc <- build_datacube(
   delta_array = da,
   fields = fields,
-  run_name = 'test_run',
-  idu_geom = ref_data$idu_vect)
+  run_name = 'test_run')
 
 # save datacube object to the datacubes folder
 save_datacube(dc, filename = 'datacubes/dc_test.datacube')
@@ -122,3 +104,20 @@ dc1 <- load_datacube('datacubes/dc_test.datacube')
 print(dc1)
 ```
 
+**Required data**
+
+This script requires several reference files which are saved in the `data/misc` folder .
+
+-   `datacubes/*.datacube` R binary data files containing datacube saved as a stars object.
+-   `data/idu.xml` Taken directly from Envision; used to assign colors to different values.
+-   `data/ref_data.rda` Required reference spatial data including IDU, roads, zones, etc.
+
+**Functions**
+
+Functions are organized in a series of R scripts
+
+-   `R/datacube_func.R` Functions related to building datacubes
+-   `R/download_func.R` Functions for downloading delta arrays
+-   `R/load_func.R` Functions for loading data
+-   `R/plot_func.R` Functions for plotting datacubes
+-   `shiny_func.R` UI and server functions for running EnvisionR shiny app
