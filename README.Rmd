@@ -7,16 +7,16 @@ output: github_document
 
 EnvisionR is a shiny exploring simulation data from Envision using a simple map interface.
 
-**Required packages**
+**Make a new project**
 
 1.  Create a folder on computer in a easy to find location (e.g., documents)
 2.  Open RStudio: Launch RStudio on your computer.
 3.  Go to the File menu at the top left corner of RStudio, then select New Project
 4.  Select Existing Directory and navigate to the folder you want to use.
 
-RStudio will create a new RStudio project with an .Rproj file in the specified directory. This file helps manage paths and settings specific to your project.
+This will create a new RStudio project with an .Rproj file in the specified directory. This file helps manage paths and settings specific to your project.
 
-**Required packages**
+**Install required packages**
 
 This script requires several packages: pacman, devtools, dplyr, tidyr, purr, glue, stars, terra, sf, data.table, xml2, shiny, shinyjs, and shinyWidgets. Type the following line into the R console to first install the package pacman, then use pacman to automate the installation of the other require packages.
 
@@ -27,15 +27,24 @@ pacman::p_load(stars, terra, sf, data.table, xml2) # data structure
 pacman::p_load(shiny, shinyjs, shinyWidgets) # shiny
 ```
 
-**Prepping EnvisionR**
+**Install EnvisionR**
 
 Download and install the EnvisionR package. Before we do, we'll make sure we delete any version of EnvisionR that is already installed. Then we'll use the `install_github()` from the devtools package to install the EnvisionR package from github. Final, we load EnvisionR using `library(envisionr)`
 
 ```{r, eval=F}
-if(require("envisionr")) remove.packages("envisionr")
-if(!require("envisionr")) devtools::install_github('https://github.com/codyevers/envisionr')
+if(!require(envisionr)){
+  devtools::install_github(
+    repo = 'https://github.com/codyevers/envisionr', 
+    build = FALSE)
+}
 library(envisionr)
 ```
+
+**Download demonstration datacubes**
+
+Load some of the datacubes that we'd like to explore. These are large files so are not included in the EnvisionR package itself. Rather, you'll want to create a folder in your working directory called datacubes then download the following files from box and then move them to the datacubes directory. Download the 7 files in this [box folder](https://oregonstate.box.com/s/lfgqvq0hakprc37n2n7h4xa3kazcft90) and place them in the `datacubes` folder. 
+
+**Load required reference data from the EnvisionR data**
 
 Let's load required reference data into memory. This includes the IDU data as well as boundaries, roads, and cities.
 
@@ -43,9 +52,7 @@ Let's load required reference data into memory. This includes the IDU data as we
 data('ref_data', package = 'envisionr')
 ```
 
-Next, load some of the datacubes that we'd like to explore. These are large files so are not included in the EnvisionR package itself. Rather, you'll want to create a folder in your working directory called datacubes then download the following files from box and then move them to the datacubes directory. Download the 7 files in this [box folder](https://oregonstate.box.com/s/lfgqvq0hakprc37n2n7h4xa3kazcft90) and place them in the `datacubes` folder. 
-
-**Reading in the datacubes into memory**
+**Loading datacubes into memory**
 
 Read the datacubes into memory using `read_datacube` and assign each to its own object (e.g., dc1, dc2, etc).
 
