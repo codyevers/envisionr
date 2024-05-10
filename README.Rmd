@@ -24,9 +24,9 @@ This script requires several packages: pacman, devtools, dplyr, tidyr, purr, glu
 
 ```{r, eval=F}
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(devtools, dplyr, tidyr, purrr, glue) # data maniuplation
-pacman::p_load(stars, terra, sf, data.table, xml2) # data structure
-pacman::p_load(shiny, shinyjs, shinyWidgets) # shiny
+pacman::p_load(devtools, dplyr, dtplyr, tidyr, purrr, glue) 
+pacman::p_load(stars, terra, sf, data.table, xml2)
+pacman::p_load(shiny, shinyWidgets) 
 ```
 
 ## Install EnvisionR
@@ -34,12 +34,12 @@ pacman::p_load(shiny, shinyjs, shinyWidgets) # shiny
 Download and install the EnvisionR package. Before we do, we'll make sure we delete any version of EnvisionR that is already installed. Then we'll use the `install_github()` from the devtools package to install the EnvisionR package from github. Final, we load EnvisionR using `library(envisionr)`
 
 ```{r, eval=F}
-if(!require(envisionr)){
-  devtools::install_github(
-    repo = 'https://github.com/codyevers/envisionr', 
-    build = FALSE, 
-    force = TRUE)
-}
+devtools::install_github('https://github.com/codyevers/envisionr', build = FALSE, force = TRUE)
+```
+
+## Load EnvisionR package
+
+```{r, eval=F}
 library(envisionr)
 ```
 
@@ -71,6 +71,7 @@ dc4 <- load_datacube('datacubes/FTW-NM-NO-GFDL_Run0.datacube')
 Run EnvisionR using `run_envisionr` by providing the datacubes we just read into memory.
 
 ```{r, eval=F}
+run_envisionr(dc1)
 run_envisionr(dc1, dc2, dc3, dc4)
 ```
 
@@ -82,9 +83,6 @@ Build datacubes from scratch. You've run Envision and taken the delta array csv 
 
 # read delta_array csv into memory (1 minute)
 da <- read_delta_csv('/deltaarrays/DeltaArray_example.csv')
-
-library(envisionr)
-da <- read_delta_csv('~/Downloads/DeltaArray_FTW-FF-HC_GFDL_Run0.csv')
 
 # list attributes contained within the delta array
 unique(da$field)

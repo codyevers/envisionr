@@ -10,14 +10,15 @@
 #' @export
 #'
 #' @import dtplyr
-#' @importFrom terra rast
 #' @import dplyr
+#' @import dtplyr
 #' @import tidyr
 #' @import stars
 #' @import xml2
 #' @import purrr
 #' @import sf
 #' @import abind
+#' @importFrom terra rast
 #' @importFrom data.table setDT
 
 build_datacube <- function(
@@ -32,20 +33,26 @@ build_datacube <- function(
     if(!exists('ref_data')){
       data('ref_data', package='envisionr')
       idu_geom <- ref_data$idu_vect
+    } else {
+      idu_geom <- ref_data$idu_vect
     }
 
     if(is.null(idu_geom)){
         stop('IDU reference required')
     }
 
-    datacube <- purrr::map(fields, function(f){
-        build_slice(delta_array, idu_geom, idu_field, f)
-      }, .progress = TRUE) |>
-      abind::abind(along=3)
+    yr_range <- range(delta_array$year)
+
+    slices <- purrr::map(fields, function(field){
+        build_slice(delta_array, idu_geom, idu_field, field, yr_range[1], yr_range[2])
+      }, .progress = TRUE)
+
+    datacube <- slices |> abind::abind(along=3)
+
     if(as_stars){
       datacube <- stars::st_as_stars(datacube) |>
         st_set_dimensions(1, names='idu') |> # set dim 1 to idu_index
-        st_set_dimensions(2, names='year', values=c(2019:2059)) |> # set dim 2 to year
+        st_set_dimensions(2, names='year') |> # set dim 2 to year
         split(3) # transfers fields to stars attributes
     }
 
@@ -141,7 +148,7 @@ pull_yr0_slice <- function( # parameters
     end_year
   ){ # function
     idu_data <- idu_geom |>
-      st_drop_geometry() |>
+      sf::st_drop_geometry() |>
       dplyr::select(!!idu_field, !!fields) |>
       tidyr::pivot_longer(-idu_field, names_to = 'field') |>
       dplyr::mutate(year = 2019) |>
