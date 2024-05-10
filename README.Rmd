@@ -18,6 +18,10 @@ EnvisionR is a shiny application for exploring and extracting simulation data fr
 
 This will create a new RStudio project with an .Rproj file in the specified directory. This file helps manage paths and settings specific to your project.
 
+## Setting your working directory
+
+The working directory is useful because you can point to files in the working directory without needing to specify the absolute location (e.g., C:/ or /users/username/). Run `getwd()` if you want to see the current working directory. You can manually set the working directory using `setwd()`. When you open Rstudio using the Rproj file you created about, RStudio automatically sets the working directory to the folder in which that file is located. 
+
 ## Install required packages
 
 This script requires several packages: pacman, devtools, dplyr, tidyr, purr, glue, stars, terra, sf, data.table, xml2, shiny, shinyjs, and shinyWidgets. Type the following line into the R console to first install the package pacman, then use pacman to automate the installation of the other require packages.
@@ -31,13 +35,15 @@ pacman::p_load(shiny, shinyWidgets)
 
 ## Install EnvisionR
 
-Download and install the EnvisionR package. Before we do, we'll make sure we delete any version of EnvisionR that is already installed. Then we'll use the `install_github()` from the devtools package to install the EnvisionR package from github. Final, we load EnvisionR using `library(envisionr)`
+Download and install the EnvisionR package using the `install_github()` from the devtools package to install the EnvisionR package from github. You only need to install the package once. 
 
 ```{r, eval=F}
 devtools::install_github('https://github.com/codyevers/envisionr', build = FALSE, force = TRUE)
 ```
 
 ## Load EnvisionR package
+
+Once installed, we load EnvisionR using `library(envisionr)`, which makes the functions and data contained in the package available to call from your script. Unlike installing ao pacakge, you need to load the package every time you start a new R session.
 
 ```{r, eval=F}
 library(envisionr)
