@@ -4,10 +4,10 @@
 \alias{lookup_val}
 \title{Title}
 \usage{
-lookup_val(value, field)
+lookup_val(field, value, idu_xml = "idu.xml")
 }
 \arguments{
-\item{field}{}
+\item{value}{}
 }
 \description{
 Title

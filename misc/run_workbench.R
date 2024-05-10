@@ -58,9 +58,6 @@ run_envisionr(list(dc))
 # list palettes in idu.xml
 list_pals('data/idu.xml')
 
-# build palette library
-palette_list('data/idu.xml')
-
 # get palette
 pal_df <- get_pal(
   xml_file = 'data/idu.xml',

@@ -37,7 +37,7 @@ update_raster <- function(
   }
 
   # convert to terra rast:object
-  ras <- terra::rast(raster['VALUE',])
+  ras <- terra::rast(raster[c('VALUE'),])
 
   # look for extent
   if(!is.null(extent)){
@@ -117,7 +117,7 @@ plot_raster <- function(
   ras <- raster
 
   if(!is.null(pal_lookup)){
-    pal_df <- get_pal('data/idu.xml', pal_lookup)
+    pal_df <- get_pal(pal_lookup)
   }
 
   if(!is.null(pal_table)){
@@ -206,53 +206,37 @@ build_idu_raster <- function(idu_geom, resolution){
 
 #' List items in XML file
 #'
-#' @param xml_file
+#' @param idu_xml
 #'
 #' @return
 #' @export
 
 list_pals <- function( # parameters
-  xml_file = NULL
-){ # function
-  xml <- read_xml(xml_file)
-  xml |> xml_find_all('.//field') |> xml_attr('col')
-}
-
-#' Pull palette data from XML
-#'
-#' @param xml_file
-#'
-#' @return list of palettes
-
-palette_list <- function( # parameters
-  xml_file = NULL
-){ # function
-  pal_list <- purrr::map(fields, \(x){get_pal(xml_file, x)})
-  names(pal_list) <- fields
-  return(pal_list)
+  idu_xml = 'idu.xml'
+){
+  idu_xml |> xml2::read_xml() |> xml2::xml_find_all('.//field') |> xml2::xml_attr('col')
 }
 
 #' Get palette
 #'
-#' @param xml_file
+#' @param idu_xml
 #' @param field
 #'
 #' @return
 #' @export
 
 get_pal <- function(
-    xml_file,
-    field
+    field,
+    idu_xml = 'idu.xml'
 ){ # function
-  xml <- read_xml(xml_file)
+  xml <- read_xml(idu_xml)
   xpath_txt <- paste0(".//*[@col='",field,"']")
-  pal <- xml_find_all(xml, xpath_txt) |> xml_child('attributes') |> xml_children()
+  pal <- xml2::xml_find_all(xml, xpath_txt) |> xml2::xml_child('attributes') |> xml2::xml_children()
   if(length(pal) > 0){
-    pal_df <- purrr::map_dfr(pal, \(x) xml_attrs(x))
+    pal_df <- purrr::map_dfr(pal, \(x) xml2::xml_attrs(x))
     pal_df <- pal_df |> dplyr::mutate(hex = get_hex(color))
     return(pal_df)
   } else if (length(pal) == 0){
-    # message('No palette found')
     return(NULL)
   }
 }
@@ -282,9 +266,9 @@ get_hex <- function( # parameters
 #' @return
 #' @export
 
-get_label <- function(field, value){
+get_label <- function(field, value, idu_xml = 'idu.xml'){
   l <- ''
-  x <- get_pal('data/idu.xml', field)
+  x <- get_pal(field, idu_xml)
   if(any(names(x)=='minVal')){
     l <- x |>
       dplyr::filter(value >= as.numeric(minVal)) |>
@@ -301,14 +285,14 @@ get_label <- function(field, value){
 
 #' Title
 #'
-#' @param value
 #' @param field
+#' @param value
 #'
 #' @return
 #' @export
 
-lookup_val <- function(value, field){
-  pal_df <- get_pal('data/idu.xml', field = field)
+lookup_val <- function(field, value, idu_xml = 'idu.xml'){
+  pal_df <- get_pal(idu_xml, field = field)
   if(any(names(pal_df) == 'minVal')){
     x <- which(value > pal_df$minVal & value <= pal_df$maxVal)
   } else {

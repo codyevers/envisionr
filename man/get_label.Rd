@@ -4,7 +4,7 @@
 \alias{get_label}
 \title{Get label}
 \usage{
-get_label(field, value)
+get_label(field, value, idu_xml = "idu.xml")
 }
 \arguments{
 \item{value}{}

@@ -4,10 +4,10 @@
 \alias{list_pals}
 \title{List items in XML file}
 \usage{
-list_pals(xml_file = NULL)
+list_pals(idu_xml = "idu.xml")
 }
 \arguments{
-\item{xml_file}{}
+\item{idu_xml}{}
 }
 \description{
 List items in XML file

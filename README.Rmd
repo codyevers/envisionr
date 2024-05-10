@@ -71,7 +71,6 @@ dc4 <- load_datacube('datacubes/FTW-NM-NO-GFDL_Run0.datacube')
 Run EnvisionR using `run_envisionr` by providing the datacubes we just read into memory.
 
 ```{r, eval=F}
-run_envisionr(dc1)
 run_envisionr(dc1, dc2, dc3, dc4)
 ```
 

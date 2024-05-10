@@ -4,7 +4,7 @@
 \alias{get_pal}
 \title{Get palette}
 \usage{
-get_pal(xml_file, field)
+get_pal(field, idu_xml = "idu.xml")
 }
 \arguments{
 \item{field}{}
