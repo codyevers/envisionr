@@ -35,7 +35,7 @@ load_datacube('datacubes/OHW-SQ-RSK-HC_Run0_reduced.datacube', name = 'ohw_sq_rs
 
 # run EnvisionR
 run_envisionr(A = ohw_ff_sc_hd_run0,
-              B = ohw_ff_sc_ld_run0#,
-              # C = ohw_mf_rsk_ld_run0,
-              # D = ohw_sq_rsk_hc_run0
+              B = ohw_ff_sc_ld_run0,
+              C = ohw_mf_rsk_ld_run0,
+              D = ohw_sq_rsk_hc_run0
               )

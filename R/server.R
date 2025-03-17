@@ -19,7 +19,7 @@ server_wrapper <- function(ref_data, datacubes){
 
     # render the dynamic run label in the UI
     output$run_label <- renderUI({
-      h4(paste0(input$select_field, ' in ', input$year, ', ', data()$run))
+      h4(paste0(input$select_field, ' in ', input$year, ' - run ', data()$run))
     })
 
     # [DATA] -----
@@ -34,7 +34,7 @@ server_wrapper <- function(ref_data, datacubes){
     selectedPoint <- reactiveValues(IDU_INDEX = NULL, point = NULL)
 
     # reactive object to store loaded arrays
-    dc_library <- reactiveValues(dataList = datacubes)
+    dc_library <- reactiveValues(datacubes = datacubes)
 
     # reactive for year index based on selected year
     year_index <- reactive(input$year - 2018)
@@ -50,26 +50,14 @@ server_wrapper <- function(ref_data, datacubes){
       return(ext)
     })
 
-    ## data reactive -----
-    # input triggers
-    # - dc_library
-    # - select_run
-    # - select_field
-    # - year >> year_index()
-    # - extent >> extent()
-    # note currently used
-    # - county_query
-    # - queryA
-    # - queryB
-
-    # Function to retrieve selected datacube
+    # data reactive helper: retrieve selected datacube
     get_selected_datacube <- function(dc_library, selected_run) {
       sel <- which(c('A','B','C','D') == selected_run)
-      dc <- dc_library$dataList[[sel]]
+      dc <- dc_library$datacubes[[sel]]
       return(list(dc = dc, run_name = attr(dc, 'run')))
     }
 
-    # Function to determine year index
+    # data reactive helper: determine year index
     get_year_index <- function(year, count_query) {
       if (count_query) {
         return(NULL) # Count queries don't need a year
@@ -78,7 +66,7 @@ server_wrapper <- function(ref_data, datacubes){
       }
     }
 
-    # Function to parse extent input
+    # data reactive helper: parse extent input
     get_extent <- function(input_extent) {
       if (input_extent == '') {
         txt <- '438483.2, 540570.0, 1061211.4, 1149023.9'
@@ -88,11 +76,26 @@ server_wrapper <- function(ref_data, datacubes){
       return(eval(parse(text = paste0('terra::ext(', txt, ')'))))
     }
 
-    # Function to update UI inputs dynamically
+    # data reactive helper: update UI inputs dynamically
     update_ui_inputs <- function(session, dc, input) {
-      updateSelectInput(session, 'select_field', choices = names(dc), selected = input$select_field)
-      updatePickerInput(session, 'fields_aux', choices = names(dc), selected = c(input$select_field, input$fields_aux))
-      updateSelectizeInput(session, 'fields_aux_old', choices = names(dc), selected = c(input$select_field, input$fields_aux))
+      updateSelectInput(
+        session = session,
+        inputId = 'select_field',
+        choices = names(dc),
+        selected = input$select_field)
+      updatePickerInput(
+        session = session,
+        inputId = 'fields_aux',
+        choices = names(dc),
+        selected = c(input$select_field, input$fields_aux))
+      updateSelectizeInput(
+        session = session, 'fields_aux_old',
+        choices = names(dc),
+        selected = c(input$select_field, input$fields_aux))
+      updateRadioButtons(
+        session = session, "select_run",
+        choices = get_run_names(dc_library$datacubes),
+        selected = input$select_run)
     }
 
     # Function to update map raster
@@ -108,26 +111,38 @@ server_wrapper <- function(ref_data, datacubes){
       ))
     }
 
-    # ---- REFACTORED data() ----
+    ## data reactive -----
+    # input triggers
+    # - dc_library
+    # - select_run
+    # - select_field
+    # - year >> year_index()
+    # - extent >> extent()
+    # note currently used
+    # - county_query
+    # - queryA
+    # - queryB
+
     data <- reactive({
-      # 1. Get the selected datacube
+
+      # get the selected datacube
       selected <- get_selected_datacube(dc_library, input$select_run)
       dc <- selected$dc
       run_name <- selected$run_name
 
-      # 2. Determine year index
+      # determine year index
       y <- get_year_index(input$year, input$count_query)
 
-      # 3. Parse spatial extent
+      # parse spatial extent
       e <- get_extent(input$extent)
 
-      # 4. Update UI elements
+      # update UI elements
       update_ui_inputs(session, dc, input)
 
-      # 5. Update the raster map
+      # update the raster map
       idu_rast_updated <- update_map_raster(idu_rast, dc, input$select_field, y, e, input$queryA, input$queryB)
 
-      # 6. Define map palette
+      # define map palette
       pal_df <- get_pal(input$select_field)
       if (is.null(pal_df)) pal_df <- get_pal('A2rxn')
 
@@ -559,7 +574,7 @@ server_wrapper <- function(ref_data, datacubes){
       if (!is.na(file_paths[2])) datacubes[[2]] <- load_datacube(file_paths[2])
       if (!is.na(file_paths[3])) datacubes[[3]] <- load_datacube(file_paths[3])
       if (!is.na(file_paths[4])) datacubes[[4]] <- load_datacube(file_paths[4])
-      dc_library$dataList <- datacubes
+      dc_library$datacubes <- datacubes
 
       output$load_status <- renderText("Files loaded successfully!")
     }, error = function(e) {

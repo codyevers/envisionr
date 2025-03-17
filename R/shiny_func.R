@@ -1,23 +1,3 @@
-# ..........................
-# UI
-# ...........................
-
-# Function to get run names from datacubes
-get_run_names <- function(datacubes) {
-  default_labels <- c("A", "B", "C", "D") # Default options
-
-  # Extract run names if present, otherwise use default labels
-  run_names <- sapply(seq_along(datacubes), function(i) {
-    run_name_attr <- attr(datacubes[[i]], 'run_name')
-    if (!is.null(run_name_attr)) return(run_name_attr)
-    return(default_labels[i])
-  })
-
-  # Create a named vector for updating UI
-  run_choices <- setNames(default_labels[seq_along(datacubes)], run_names)
-  return(run_choices)
-}
-
 
 #' Title
 #'
@@ -60,5 +40,6 @@ run_envisionr <- function(...) {
   }
 
   server <- server_wrapper(ref_data, datacubes)
+
   shinyApp(ui, server)
 }
