@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
 ==================================================================================
 <field> attributes
 label:  readable field description
-  level:  menu level - 0 = first level menu, 1 = second level menu, 
-   displayFlag:  bin color flags - 
-               BCF_MIXED=0, BCF_RED_INCR=1, BCF_GREEN_INCR=2, BCF_BLUE_INCR=3, 
+  level:  menu level - 0 = first level menu, 1 = second level menu,
+   displayFlag:  bin color flags -
+               BCF_MIXED=0, BCF_RED_INCR=1, BCF_GREEN_INCR=2, BCF_BLUE_INCR=3,
                BCF_GRAY_INCR=4, BCF_SINGLECOLOR=5, BCF_TRANSPARENT=6,
                BCF_BLUEGREEN=7, BCF_BLUERED=8, BCF_REDGREEN=9,
-               BCF_RED_DECR=10, BCF_GREEN_DECR=11, BCF_BLUE_DECR=12, 
+               BCF_RED_DECR=10, BCF_GREEN_DECR=11, BCF_BLUE_DECR=12,
                BCF_GRAY_DECR=13
        mfiType: 0=quantity bins, 1=category bins
        binStyle: 0=linear, 1=equal counts
@@ -2254,13 +2254,13 @@ label:  readable field description
 
       </source>
       <attributes>
-        <attr minVal="-1" maxVal="-0.75" color="(210,0,0)" label=" &lt;= -0.75"/>
-        <attr minVal="-0.75" maxVal="-0.5" color="(220,56,56)" label="-0.75 to -0.5"/>
-        <attr minVal="-0.5" maxVal="-0.25" color="(230,113,113)" label="-0.5 to -0.25"/>
-        <attr minVal="-0.25" maxVal="0" color="(227,227,227)" label="-0.25 to 0"/>
-        <attr minVal="0" maxVal="0.25" color="(170,240,170)" label="0 to 0.25"/>
-        <attr minVal="0.25" maxVal="0.5" color="(113,230,113)" label="0.25 to 0.5"/>
-        <attr minVal="0.5" maxVal="0.75" color="(56,220,56)" label="0.5 to 0.75"/>
+        <attr minVal="-1" maxVal="0" color="(210,0,0)" label=" &lt;= -0.75"/>
+        <attr minVal="0" maxVal="0.2" color="(220,56,56)" label="-0.75 to -0.5"/>
+        <attr minVal="0.2" maxVal="0.3" color="(230,113,113)" label="-0.5 to -0.25"/>
+        <attr minVal="0.3" maxVal="0.4" color="(227,227,227)" label="-0.25 to 0"/>
+        <attr minVal="0.4" maxVal="0.5" color="(170,240,170)" label="0 to 0.25"/>
+        <attr minVal="0.5" maxVal="0.5" color="(113,230,113)" label="0.25 to 0.5"/>
+        <attr minVal="0.6" maxVal="0.75" color="(56,220,56)" label="0.5 to 0.75"/>
         <attr minVal="0.75" maxVal="1e+06" color="(0,210,0)" label=" &gt; 0.75"/>
       </attributes>
     </field>
@@ -2669,7 +2669,7 @@ label:  readable field description
 				<attr value="30" color="(127,127,127)" label="Surface Mining" />
 				<attr value="40" color="(76,229,178)" label="Resort District" />
 				<attr value="50" color="(200,0,0)" label="Urban Reserve" />
-				<attr value="99" color="(10,10,10)" label="Other" /> 
+				<attr value="99" color="(10,10,10)" label="Other" />
         -->
       </attributes>
     </field>

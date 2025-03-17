@@ -3,11 +3,11 @@
 # 2. calculate change count
 # 3. address display error with negative values (e.g., DISTURB)
 
-pacman::p_load(data.table, dtplyr, sf, terra, dplyr, tidyr, stars, xml2, tictoc, purrr)
+pacman::p_load(envisionr, data.table, dtplyr, sf, terra, dplyr, tidyr, stars, xml2, tictoc, purrr)
 
-source('R/datacube_func.R')
-source('R/plot_func.R')
-source('R/shiny_func.R')
+# source('R/datacube_func.R')
+# source('R/plot_func.R')
+# source('R/shiny_func.R')
 load('data/spatial.rda')
 
 # run shiny app

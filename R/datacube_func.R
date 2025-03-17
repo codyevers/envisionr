@@ -43,22 +43,28 @@ build_datacube <- function(
 
     yr_range <- range(delta_array$year)
 
-    slices <- purrr::map(fields, function(field){
-        build_slice(delta_array, idu_geom, idu_field, field, yr_range[1], yr_range[2])
+    slices <- fields |> purrr::map(function(field){
+        build_slice(
+          delta_array = delta_array,
+          idu_geom = idu_geom,
+          idu_field = idu_field,
+          fields = field,
+          start_year = yr_range[1],
+          end_year = yr_range[2])
       }, .progress = TRUE)
 
+    # bind slices into a cubes
     datacube <- slices |> abind::abind(along=3)
 
     if(as_stars){
       datacube <- stars::st_as_stars(datacube) |>
-        st_set_dimensions(1, names='idu') |> # set dim 1 to idu_index
+        st_set_dimensions(1, names='idu') |> # set dim 1 to the idu index
         st_set_dimensions(2, names='year') |> # set dim 2 to year
         split(3) # transfers fields to stars attributes
     }
 
     attr(datacube, 'run_name') <- run_name
     attr(datacube, 'date_created') <- Sys.Date()
-    attr(datacube, 'filename') <- attr(delta_array, 'filename')
 
     return(datacube)
 }
@@ -96,35 +102,52 @@ build_slice <- function(
 
     setDT(delta_array)
 
-    # Perform the operations
+    # filter to field f and select/rename columns; convert year to a factor,
+    # select first row in case of duplicates
     delta_array <- delta_array[
       field %in% fields, .(idu, field, year, value = newValue)
     ][, year := factor(year, levels = start_year:end_year)
     ][, head(.SD, 1), by = c('idu','field','year')]
 
-    # pull starting data from idu geometry
     if(any(names(idu_geom) == fields) == FALSE){
       idu_geom[,fields] <- NA
     }
 
-    idu_dat <- pull_yr0_slice(idu_geom, fields, idu_field, start_year, end_year)
+    # pull starting data from idu geometry
+    year0_values <- pull_yr0_slice(
+      idu_geom = idu_geom,
+      fields = fields,
+      idu_field = idu_field,
+      start_year = start_year,
+      end_year = end_year)
 
-    delta_array <- bind_rows(idu_dat, delta_array) |>
+    # combine year0 w/ delta array, fill in missing combos, and fill w/ value
+    delta_array_c <- bind_rows(year0_values, delta_array) |>
       tidyr::complete(field, year, idu) |>
-      dplyr::arrange(field, idu, year) |>
+      dplyr::arrange(field, idu, year)
+
+    # fill missing values by replacing missing data from top to bottom
+    delta_array_a_f <- delta_array_c |>
       dplyr::group_by(field, idu) |>
       tidyr::fill(value)
 
-    dim1 <- unique(delta_array$idu)
-    dim2 <- unique(delta_array$year)
-    dim3 <- unique(delta_array$field)
+    # pull values in reverse order of review order of dimensions
+    vals <- delta_array_a_f |>
+      dplyr::arrange(field, year, idu) |>
+      dplyr::pull(value)
 
-    datacube <- array(
-      data = delta_array |> dplyr::arrange(field, year, idu) |> dplyr::pull(value),
-      dim = c(length(dim1), length(dim2), length(dim3)),
-      dimnames = list(idu = dim1, year = dim2, field = dim3))
+    # define dimensions values
+    idu_dim <- unique(delta_array_a_f$idu)
+    year_dim <- unique(delta_array_a_f$year)
+    field_dim <- unique(delta_array_a_f$field)
 
-    return(datacube)
+    # arrange values in slice
+    slice <- array(
+      data = vals,
+      dim = c(length(idu_dim), length(year_dim), length(field_dim)),
+      dimnames = list(idu = idu_dim, year = year_dim, field = field_dim))
+
+    return(slice)
 }
 
 #' Pull yr0 slice
@@ -151,8 +174,8 @@ pull_yr0_slice <- function( # parameters
       sf::st_drop_geometry() |>
       dplyr::select(!!idu_field, !!fields) |>
       tidyr::pivot_longer(-idu_field, names_to = 'field') |>
-      dplyr::mutate(year = 2019) |>
-      dplyr::mutate(year = factor(year, start_year:end_year)) |>
+      dplyr::mutate(year = start_year - 1) |>
+      dplyr::mutate(year = factor(year, c(start_year-1,start_year:end_year))) |>
       dplyr::rename(idu = !!idu_field)
 
     return(idu_data)

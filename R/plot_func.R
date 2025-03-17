@@ -118,6 +118,7 @@ plot_raster <- function(
 
   if(!is.null(pal_lookup)){
     pal_df <- get_pal(pal_lookup)
+    if(is.null(pal_df)) pal_df <- get_pal('A2rxn')
   }
 
   if(!is.null(pal_table)){
@@ -165,6 +166,8 @@ plot_raster <- function(
   if(any(grepl('Boundary', options))) plot(ref_data$ref_boundary, add=T, lwd=2)
   if(any(grepl('Places', options))){
     plot(ref_data$ref_places$geometry, add=T, pch=16)
+  }
+  if(any(grepl('Labels', options))){
     text(st_coordinates(ref_data$ref_places),
          labels = ref_data$ref_places$Name, pos = 1, cex = 1)
   }

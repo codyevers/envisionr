@@ -5,124 +5,102 @@ pacman::p_load(
   dplyr, tidyr, purrr, stars, terra, sf,
   data.table, glue, xml2, shiny, shinyjs, shinyWidgets)
 
-load('data/spatial.rda')
-load('data/idu.rda')
+library(envisionr)
 
-source('R/load_func.R')
-source('R/download_func.R')
-source('R/datacube_func.R')
-source('R/plot_func.R')
+load('data/ref_data.rda')
+idu_shp <- ref_data$idu_vect
+
+# source('R/load_func.R')
+# source('R/download_func.R')
+# source('R/datacube_func.R')
+# source('R/plot_func.R')
 
 # Download delta array example -----------------------------
 
-# download single file
-url_slug = "FTW-FF-HC/Run0/DeltaArray_FTW-FF-HC_0.zip"
-download_delta_array(url_slug, '~/Downloads/', delete_temp_dir = T)
+scn = c(
+  'FTW-FF-RSK-HC','FTW-FF-RSK-HD','FTW-FF-RSK-LD',
+  'FTW-FF-SC-HC','FTW-FF-SC-HD','FTW-FF-SC-LD',
+  'FTW-MF-RSK-LD',
+  'FTW-NoM',
+  'OHW-FF-RSK-HC','OHW-FF-RSK-HD','OHW-FF-RSK-LD',
+  'OHW-FF-SC-HC','OHW-FF-SC-HD','OHW-MF-RSK-LD')
 
-# download multiple csvs
-url_slug_df <- data.frame(
-  a = "FTW-FF-HC/Run0/DeltaArray_FTW-FF-HC_0.zip",
-  b = "FTW-FF-HD/Run0/DeltaArray_FTW-FF-HD_0.zip",
-  c = "FTW-FF-LD/Run0/DeltaArray_FTW-FF-LD_0.zip",
-  d = "OHW-FF-HC/Run0/DeltaArray_OHW-FF-HC_0.zip")
+make_slug <- function(scn, run){
+  paste0(scn,'/Run',run,'/DeltaArray_',scn,'_',run,'.zip')
+}
 
-download_delta_array(url_slug_df$a, '~/Downloads')
-download_delta_array(url_slug_df$b, '~/Downloads')
-download_delta_array(url_slug_df$c, '~/Downloads')
-download_delta_array(url_slug_df$d, '~/Downloads')
+combo_df <- expand.grid(scn = scn, run = 0:9)
 
-# Build datacubes from delta array csv  ---------------------
-
-# read delta_array csv into memory (1 minute)
-da <- fread('~/Downloads/DeltaArray_FTW-FF-HC_Run0.csv')
-
-# IDU attributes within the delta array
-unique(da$field)
-
-# large field library (n = 26)
-fields = c('LULC_A','LULC_B','VEGCLASS','CoverType',
-           'DISTURB','VARIANT','FUELMODEL',
-           'FlameLen','PFLAMELEN','FireRisk',
-           'ZONE','N_DU','NEW_DU','WUI','UGB',
-           'A2rxn','SocialCap','SN_React',
-           'OUTREACH','FIREWISE','Policy',
-           'TIV','TSD','SIZE','CANOPY','LAYERS')
-
-# build datacube (1 minute) - save as stars object
-dc <- build_datacube(
-  delta_array = da,
-  fields = fields,
-  idu_geom = idu_shp,
-  idu_field='IDU_INDEX',
-  as_stars = TRUE
+fields = tribble(
+  ~field, ~desc,
+  'LULC_A', 'LULC Coarse',
+  'LULC_B', 'LULC Medium',
+  'VEGCLASS', 'LULC Fine',
+  'DISTURB', 'Disturbance',
+  'FlameLen', 'Flame Length Ft',
+  'PFLAMELEN', 'Potential Flame Length Ft',
+  'FUELMODEL', 'Fuel Model',
+  'FireRisk', 'Fire Risk',
+  'FireRiskFN', 'Fire Risk FN',
+  'WF_DMG_HA', 'Wildfire Loss Actual $/ha',
+  'WF_DMGP_HA', 'Wildfire Loss Potential $/ha',
+  'WF_EHLACT', 'Actual Housing Losses #',
+  'WF_EHLPOT', 'Potential Expected Housing Losses #',
+  'OUTREACH', 'Outreach',
+  'A2rxn', 'Actor Attitude',
+  'SocialCap', 'Social Capital',
+  'CoverType', 'Socail Capital Fireshed Region',
+  'VARIANT', 'Fuel Model Variant',
+  'PopDens', 'Popultion Density ppl/ha',
+  'NewPopDens', 'New Population Density ppl/ha',
+  'P_POP_AVAI', 'Population Availability',
+  'N_DU', 'Dwelling Units',
+  'NEW_DU', 'New Dwelling Units',
+  'IN_UGB', 'Urban Growth Boundary',
+  'FIREWISE', 'Firewise Implementation',
+  'FWconstr', 'Firewise Construction',
+  'WUI', 'Wildland Urban Interface',
+  'OWNER', 'Ownership',
+  'ZONE', 'Zone',
+  'TIV', 'Time in Variant',
+  'TSD', 'Time Since Disturbance',
+  'SIZE', 'Size Class',
+  'CANOPY', 'Canopy Cover',
+  'LAYERS', 'Canopy Layers',
+  'SN_React', 'Social Network Reaction'
 )
 
-# Plot datacube using EnvisionR plot functions -------------------
+# FTW-FF-RSK-HD Run 0 - Year 42
+# FTW-FF-SC-HD Run 0 - Year 42
+# OHW-FF-RSK-HD Run 0 - Year 42
+# OHW-FF-RSK-HD Run 0 - Year 42
 
-# load datacube
-load('datacubes_stars/FTW-FF-HC_Run0.datacube')
-str(dc)
+combo_df
 
-dc[c('LULC_A','VEGCLASS'),1000,30]
+i = 1
+for(i in c(13)){
+  a <- Sys.time()
+  run_i = combo_df$run[i]
+  scn_i = combo_df$scn[i]
+  url_slug <- make_slug(scn = scn_i, run = run_i)
+  download_delta_array(url_slug, '~/Downloads', delete_temp_dir = T, timeout = 1500)
 
-get_pal('data/idu.xml', 'DISTURB')
+  # read delta_array csv into memory (1 minute)
+  da <- fread(paste0('~/Downloads/DeltaArray_', scn_i, '_Run', run_i, '.csv'))
 
-# creater raster template
-idu_r <- rasterize_idu(idu_shp, res = 500)
+  # IDU attributes within the delta array
+  unique(da$field)
 
-# example attribute stars_raster with delta array attribute
-field = 'LULC_B'
-year = 10
-
-update_raster(idu_rast, dc, field, year) |>
-  plot_raster(pal_lookup = field)
-
-# query at year == y
-q = 'FlameLen > 0'
-q = 'N_DU > 0 & FlameLen > 0'
-
-# count instances of query over all time steps
-update_raster(idu_r, dc, field, query = q) |>
-  plot_raster(extent = '')
-
-# count instances of query over all time steps
-update_raster(idu_r, dc, field, year = NULL, query = q) |>
-  plot_raster()
-
-# Batch build datacubes -------------------
-
-df <- data.frame(
-  fn = c(
-    '~/Downloads/DeltaArray_FTW-FF-HC_GFDL_Run0.csv',
-    '~/Downloads/DeltaArray_FTW-FF-HC_MIROC2_Run0.csv',
-    '~/Downloads/DeltaArray_FTW-FF-HD_GFDL_Run0.csv',
-    '~/Downloads/DeltaArray_FTW-FF-LD_GFDL_Run0.csv',
-    '~/Downloads/DeltaArray_FTW-NoM_GFDL_Run0.csv',
-    '~/Downloads/DeltaArray_OHW-FF-HC_MIROC2_Run0.csv'),
-  run = c(
-      'FTW-FF-HC_GFDL_Run0',
-      'FTW-FF-HC_MIROC2_Run0',
-      'FTW-FF-HD_GFDL_Run0',
-      'FTW-FF-LD_GFDL_Run0',
-      'FTW-NoM-NoO-GFDL_Run0',
-      'OHW-FF-HC_MIROC2_Run0'
-    )
-  )
-
-df |> purrr::pmap(function(...){
-  params <- tibble(...)
-  print(params)
-
+  # build datacube (1 minute) - save as stars object
   dc <- build_datacube(
-    delta_array = fread(params$fn),
-    fields = fields,
+    delta_array = da,
+    fields = fields$field,
     idu_geom = idu_shp,
+    run_name = paste0(scn_i,'_Run',run_i),
     idu_field='IDU_INDEX',
     as_stars = TRUE
   )
+  Sys.time() - a
 
-  attr(dc, 'run_name') <- params$run
-  attr(dc, 'date_created') <- Sys.Date()
-  save(dc, file = paste0(params$run, '.datacube'))
-})
-
+  save(dc, file=paste0('~/Dropbox/',scn_i,'_Run',run_i,'.dc'))
+}
