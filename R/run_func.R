@@ -10,16 +10,18 @@
 #' @import shinyWidgets
 #' @import shinyFiles
 
-run_envisionr <- function(...) {
+run_envisionr <- function(..., field_filter = NULL) {
 
   # empty, unnamed list for holding datacubes
   datacubes <- list(...)
 
   # load reference data
-  # if(!exists('ref_data')){
+  if (!exists("ref_data", envir = .GlobalEnv)) {
     message('Loading reference data')
-    data('ref_data', package = 'envisionr', envir = environment())
-  # }
+    data('ref_data', package = 'envisionr', envir = .GlobalEnv)
+  }
+
+  # names(datacubes) <- get_run_names(datacubes)
 
   if(file.exists('idu.xml')){
     message('Using idu.xml in working directory')
@@ -39,7 +41,7 @@ run_envisionr <- function(...) {
     stop("Maximum of 4 runs")
   }
 
-  server <- server_wrapper(ref_data, datacubes)
+  server <- server_wrapper(ref_data, datacubes, field_filter)
 
   shinyApp(ui, server)
 }

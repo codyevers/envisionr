@@ -14,6 +14,7 @@ update_raster <- function(
   datacube,
   field = 1,
   year = 1,
+  focus = NULL,
   extent = NULL,
   queryA = '',
   queryB = ''

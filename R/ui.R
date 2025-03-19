@@ -8,7 +8,7 @@ ui <- function(request) {
     shinyjs::useShinyjs(),
 
     titlePanel(
-      div(icon("chart-line"), "EnvisionR")
+      div(icon("chart-line"), "EnvisionR", style = 'text-align:center;')
     ),
 
     tags$head(
@@ -19,11 +19,19 @@ ui <- function(request) {
       # Note the wrapping of the string in HTML()
       tags$style(
         HTML("
-          #fields_aux .btn {
-            padding: 2px;
-            text-align: center;
-            font-size:10px;
-            margin:2px;
+          kbd {
+            padding: 2px 4px;
+            font-size: 70%;
+            color: #fff;
+            background-color: #999;
+            border-radius: 3px;
+          }
+
+          #selected_point_info {
+            background-color: none;
+            border: 1px none #ddd;
+            width: 100%;
+            white-space: pre-wrap; /* Ensures text wraps */
           }
         ")
       ),
@@ -55,10 +63,11 @@ ui <- function(request) {
       ")
     ),
     fluidPage(
-      tabsetPanel(
-        tabPanel("View",
+      # tabsetPanel(
+      #   tabPanel("View",
           fluidPage(
             uiOutput("run_label", style = 'text-align: center;'),
+            uiOutput("layer_label", style = 'text-align: center;'),
             style = "border-style: 0px; margin-top:10px;",
             fluidRow(
               style = "margin-top: 5px",
@@ -125,14 +134,15 @@ ui <- function(request) {
                 selectInput(
                   inputId = "select_field",
                   label = HTML(
-                    'What to display? (<a id="show" href="#"
-                    style="text-decoration: underline; color: blue;">filter list</a>)'),
+                    'Theme
+                    (<a id="show" href="#" style="text-decoration:underline">filter layers</a>)<br>
+                    <kbd>Shift</kbd> + <kbd>W</kbd>/<kbd>S</kbd>'),
                   choices = c('LULC_A', 'LULC_B')
                 ),
                 # actionButton("show", "Select fields to display"),
                 sliderInput(
                   inputId = "year",
-                  label = "What year?",
+                  label = HTML("Year<br> <kbd>Shift</kbd> + <kbd>A</kbd>/<kbd>D</kbd>"),
                   min = 2020,
                   max = 2059,
                   value = 2020,
@@ -140,20 +150,55 @@ ui <- function(request) {
                   ticks = FALSE,
                   sep = ""
                 ),
-                pickerInput(
-                  inputId = "fields_aux",
-                  label = "Secondary fields",
-                  choices = LETTERS,
-                  multiple = TRUE,
-                  options = pickerOptions(container = "body", actionsBox = TRUE, liveSearch = TRUE),
-                  width = "100%"
-                ),
-                radioButtons(
+                selectInput(
                   inputId = "select_run",
-                  label = "Which run?",
+                  label = HTML("Run<br> <kbd>Shift</kbd> + <kbd>Q</kbd>/<kbd>E</kbd>"),
                   choices = c('A','B','C','D'),
-                  selected = 'A',
-                  inline = F),
+                  selected = 'A'),
+                checkboxInput(
+                  inputId = "toggle_options",
+                  label = "Show plot options"),
+                conditionalPanel(
+                  condition = "input.toggle_options",
+                  checkboxGroupInput(
+                    inputId = "plot_options",
+                    label = "Plot elements",
+                    inline = FALSE,
+                    choices = c(
+                      'Roads',
+                      'Zones',
+                      'Legend',
+                      'Places',
+                      'Boundary',
+                      'Axes'
+                    ),
+                    selected = c('Roads','Boundary','Places')
+                  ),
+                  textInput(
+                    inputId = "extent",
+                    label = "Zoom extent",
+                    value = NULL,
+                  ),
+                  downloadButton(
+                    'downloadPlot',
+                    label = 'Save map as PNG',
+                    style = "margin-right:10px"),
+                  downloadButton(
+                    'downloadData_fixedTime',
+                    label =  'Save map as CSV',
+                    style = "margin-right:10px")
+                ),
+                # checkboxInput(
+                #   inputId = "toggle_extent",
+                #   label = "Show extent box"),
+                # conditionalPanel(
+                #   condition = "input.toggle_extent",
+                #   textInput(
+                #     inputId = "extent",
+                #     label = "Extent",
+                #     value = NULL,
+                #   )
+                # ),
                 shinyjs::hidden(
                   checkboxInput(
                     inputId = "toggle_query",
@@ -199,17 +244,12 @@ ui <- function(request) {
                         actionButton(
                           inputId = 'reset_button',
                           label = 'Reset',
-                          style = "margin-right:10px; float:right"),
-                        downloadButton(
-                          'downloadPlot',
-                          label = 'Save image',
-                          style = "margin-right:10px; float:right"),
-                        downloadButton(
-                          'downloadData_fixedTime',
-                          label =  'Save csv',
                           style = "margin-right:10px; float:right")
                     ),
-                    verbatimTextOutput('selected_point_info')
+                    div(style = 'margin-top:10px;',
+                      # verbatimTextOutput('selected_point_info')
+                      tableOutput('selected_point_info')
+                    )
                   ),
                 ),
                 # fluidRow(
@@ -223,39 +263,9 @@ ui <- function(request) {
               column( # RIGHT PANEL ----------------------
                 width = 3,
                 checkboxInput(
-                  inputId = "toggle_options",
-                  label = "Show plot options"),
-                conditionalPanel(
-                  condition = "input.toggle_options",
-                  checkboxGroupInput(
-                    inputId = "plot_options",
-                    label = "Plot elements",
-                    inline = FALSE,
-                    choices = c(
-                      'Roads',
-                      'Zones',
-                      'Legend',
-                      'Places',
-                      'Boundary',
-                      'Axes'
-                    ),
-                    selected = c('Roads','Boundary','Places')
-                  )
-                ),
-                checkboxInput(
-                  inputId = "toggle_extent",
-                  label = "Show extent box"),
-                conditionalPanel(
-                  condition = "input.toggle_extent",
-                  textInput(
-                    inputId = "extent",
-                    label = "Extent (text)",
-                    value = NULL,
-                  )
-                ),
-                checkboxInput(
                   inputId = "toggle_legend",
-                  label = "Show legend"),
+                  label = "Show legend",
+                  value = TRUE),
                 conditionalPanel(
                   condition = 'input.toggle_legend',
                   strong("Legend"),
@@ -269,30 +279,30 @@ ui <- function(request) {
             )
           )
         ), # END RUN PANE
-        tabPanel("Load", # LOAD RUNS TAB -------------
-            fluidPage(
-
-             column(width = 6,
-               # Directory selection
-               shinyFiles::shinyDirButton("dir", "Select Directory", "Please select a directory"),
-               verbatimTextOutput("dirPath"),
-
-               # File dropdowns
-               selectInput("file1", "Run A", choices = NULL, width = '100%'),
-               selectInput("file2", "Run B", choices = NULL, width = '100%'),
-               selectInput("file3", "Run C", choices = NULL, width = '100%'),
-               selectInput("file4", "Run D", choices = NULL, width = '100%'),
-
-               # Load Runs button
-               actionButton("load_runs", "Load Runs"),
-             )
-           ),
-
-           column(width = 6,
-                verbatimTextOutput("load_status") # Display load status
-           )
-
-        ),
+        # tabPanel("Load", # LOAD RUNS TAB -------------
+        #     fluidPage(
+        #
+        #      column(width = 6,
+        #        # Directory selection
+        #        shinyFiles::shinyDirButton("dir", "Select Directory", "Please select a directory"),
+        #        verbatimTextOutput("dirPath"),
+        #
+        #        # File dropdowns
+        #        selectInput("file1", "Run A", choices = NULL, width = '100%'),
+        #        selectInput("file2", "Run B", choices = NULL, width = '100%'),
+        #        selectInput("file3", "Run C", choices = NULL, width = '100%'),
+        #        selectInput("file4", "Run D", choices = NULL, width = '100%'),
+        #
+        #        # Load Runs button
+        #        actionButton("load_runs", "Load Runs"),
+        #      )
+        #    ),
+        #
+        #    column(width = 6,
+        #         verbatimTextOutput("load_status") # Display load status
+        #    )
+        #
+        # ),
         # tabPanel("Fields", # SELECT FIELDS TAB -------------
         #   fluidPage(
         #     column(width = 6,
@@ -305,7 +315,7 @@ ui <- function(request) {
         #     )
         #   )
         # )
-    )
-  )
+      # )
+    # )
   )
 }

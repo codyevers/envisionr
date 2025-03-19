@@ -104,17 +104,17 @@ run_lut <- fn |>
   mutate(path = fn) |>
   mutate(name = fn |> str_extract("(?<=DeltaArray_).*?(?=\\.parquet$)"))
 
-map_function <- function(...){
+map_function <- function(..., parse_vegclass = FALSE){
 
   x <- tibble(...)
 
-  print(x$name)
-  a <- Sys.time()
+  message(x$name)
+  message('...opening data')
   da <- arrow::read_parquet(file.path(root, 'ReducedDeltaArrays', x$path))
   # da <- fread(file.path(root, x$path)) # use fread to read directly from zip
 
-  browser()
   # build datacube (1 minute) - save as stars object
+  message('...building datacube')
   dc <- build_datacube(
     delta_array = da,
     fields = unique(da$field),
@@ -124,10 +124,20 @@ map_function <- function(...){
     as_stars = TRUE
   )
 
-  # attr(dc, 'run_name')
-  # attr(dc, 'date_created')
+  if(parse_vegclass){
+    message('...parsing vegclass into covertype, size, canopy, layers')
+    dc <- dc |>
+      mutate(CoverType = stringr::str_sub(VEGCLASS, 1, 3) |> as.numeric()) |>
+      mutate(SIZE = stringr::str_sub(VEGCLASS, 4, 4) |> as.numeric()) |>
+      mutate(CANOPY = stringr::str_sub(VEGCLASS, 5, 5) |> as.numeric()) |>
+      mutate(LAYERS = stringr::str_sub(VEGCLASS, 6, 6) |> as.numeric())
+  }
 
-  save(dc, file = paste0(file.path(root, 'datacubes', x$name), '.datacube'))
+  attr(dc, 'run_name') <- gsub('_reduced', '', x$name)
+  attr(dc, 'date_created') <- Sys.time()
+
+  message('...writing datacube to disk')
+  save(dc, file = paste0(file.path(root, 'datacubes', gsub('_reduced', '', x$name)), '.datacube'))
   print(a <- Sys.time())
 
   return(NULL)
@@ -143,4 +153,4 @@ map_function <- function(...){
 # Run 15 (01_BAU_Few_EWE)
 
 build_list <- run_lut |> filter(run %in% c(2, 23, 40, 55, 13, 15))
-build_list |> pmap(map_function)
+build_list[65:96,] |> pmap(map_function, parse_vegclass = T)

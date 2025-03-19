@@ -3,7 +3,7 @@
 #' @param ref_data
 #' @param datacubes
 
-server_wrapper <- function(ref_data, datacubes){
+server_wrapper <- function(ref_data, datacubes, field_filter){
 
   function(input, output, clientData, session) {
 
@@ -19,25 +19,31 @@ server_wrapper <- function(ref_data, datacubes){
 
     # render the dynamic run label in the UI
     output$run_label <- renderUI({
-      h4(paste0(input$select_field, ' in ', input$year, ' - run ', data()$run))
+      h4(strong(paste0('Run ', input$select_run, ' - ', data()$run)))
+    })
+
+    # render the dynamic run label in the UI
+    output$layer_label <- renderUI({
+      h4(paste0(input$select_field, ' in ', input$year))
     })
 
     # [DATA] -----
 
-    # object to store map brush extent
-    ranges <- reactiveValues(x = NULL, y = NULL)
+    # reactive object to store provided data cubes
+    datacube_library <- reactiveValues(datacubes = datacubes)
 
     # reactive values for storing field information
-    fields <- reactiveValues(items = NULL, selected = NULL)
-
-    # reactive values for saving last selected points
-    selectedPoint <- reactiveValues(IDU_INDEX = NULL, point = NULL)
-
-    # reactive object to store loaded arrays
-    dc_library <- reactiveValues(datacubes = datacubes)
+    fields <- reactiveValues(items = NULL, selected = NULL, initial_selection = NULL)
+    fields$initial_selection <- field_filter
 
     # reactive for year index based on selected year
     year_index <- reactive(input$year - 2018)
+
+    # object to store map brush extent
+    ranges <- reactiveValues(x = NULL, y = NULL)
+
+    # reactive values for saving last selected points
+    selectedPoint <- reactiveValues(IDU_INDEX = NULL, point = NULL)
 
     # reactive for map extent
     extent <- reactive({
@@ -51,10 +57,10 @@ server_wrapper <- function(ref_data, datacubes){
     })
 
     # data reactive helper: retrieve selected datacube
-    get_selected_datacube <- function(dc_library, selected_run) {
-      sel <- which(c('A','B','C','D') == selected_run)
-      dc <- dc_library$datacubes[[sel]]
-      return(list(dc = dc, run_name = attr(dc, 'run')))
+    get_selected_datacube <- function(datacube_library, selected_run) {
+        sel <- which(c('A','B','C','D') == selected_run)
+        datacube <- datacube_library$datacubes[[sel]]
+        return(list(dc = datacube, run_name = attr(datacube, 'run')))
     }
 
     # data reactive helper: determine year index
@@ -77,43 +83,51 @@ server_wrapper <- function(ref_data, datacubes){
     }
 
     # data reactive helper: update UI inputs dynamically
-    update_ui_inputs <- function(session, dc, input) {
+    update_ui_inputs <- function(session, datacube, input) {
+
+      # select all if fields$selected is null
+      if(is.null(fields$selected)) {
+        fields$selected <- fields$items
+      }
+
+      # set default selection if provided in run_envisionr call
+      if(!is.null(fields$initial_selection)) {
+        fields$selected <- fields$initial_selection
+        fields$initial_selection <- NULL
+      }
+
       updateSelectInput(
         session = session,
         inputId = 'select_field',
-        choices = names(dc),
+        choices = fields$selected,
         selected = input$select_field)
-      updatePickerInput(
+
+      updateSelectInput(
         session = session,
-        inputId = 'fields_aux',
-        choices = names(dc),
-        selected = c(input$select_field, input$fields_aux))
-      updateSelectizeInput(
-        session = session, 'fields_aux_old',
-        choices = names(dc),
-        selected = c(input$select_field, input$fields_aux))
-      updateRadioButtons(
-        session = session, "select_run",
-        choices = get_run_names(dc_library$datacubes),
+        inputId = "select_run",
         selected = input$select_run)
     }
 
     # Function to update map raster
-    update_map_raster <- function(idu_rast, dc, field, year, extent, queryA, queryB) {
-      return(update_raster(
-        raster = idu_rast,
-        datacube = dc,
-        field = field,
-        year = year,
-        extent = extent,
-        queryA = queryA,
-        queryB = queryB
-      ))
+    update_map_raster <- function(idu_rast, datacube, field, year, extent, queryA, queryB) {
+      out <- NULL
+      try({
+        out <- update_raster(
+          raster = idu_rast,
+          datacube = datacube,
+          field = field,
+          year = year,
+          extent = extent,
+          queryA = queryA,
+          queryB = queryB
+        )
+      })
+      return(out)
     }
 
     ## data reactive -----
     # input triggers
-    # - dc_library
+    # - datacube_library
     # - select_run
     # - select_field
     # - year >> year_index()
@@ -126,9 +140,10 @@ server_wrapper <- function(ref_data, datacubes){
     data <- reactive({
 
       # get the selected datacube
-      selected <- get_selected_datacube(dc_library, input$select_run)
-      dc <- selected$dc
+      selected <- get_selected_datacube(datacube_library, input$select_run)
+      datacube <- selected$dc
       run_name <- selected$run_name
+      fields$items <- names(datacube)
 
       # determine year index
       y <- get_year_index(input$year, input$count_query)
@@ -137,10 +152,17 @@ server_wrapper <- function(ref_data, datacubes){
       e <- get_extent(input$extent)
 
       # update UI elements
-      update_ui_inputs(session, dc, input)
+      update_ui_inputs(session, datacube, input)
 
       # update the raster map
-      idu_rast_updated <- update_map_raster(idu_rast, dc, input$select_field, y, e, input$queryA, input$queryB)
+      idu_rast_updated <- update_map_raster(
+        idu_rast = idu_rast,
+        datacube = datacube,
+        field = input$select_field,
+        year = y,
+        extent = e,
+        queryA = input$queryA,
+        queryB = input$queryB)
 
       # define map palette
       pal_df <- get_pal(input$select_field)
@@ -148,7 +170,7 @@ server_wrapper <- function(ref_data, datacubes){
 
       return(list(
         run = run_name,
-        datacube = dc,
+        datacube = datacube,
         idu_rast = idu_rast_updated,
         pal_df = pal_df,
         levels = terra::unique(idu_rast_updated)
@@ -158,19 +180,17 @@ server_wrapper <- function(ref_data, datacubes){
     # [OBSERVER]-----
 
     # observe map for double clicks
-    # observe({
-    #   req(input$plot_dblclick)
-    #   x <- input$plot_dblclick$x
-    #   y <- input$plot_dblclick$y
-    #   point <- stars::st_extract(
-    #     x = data()$idu_rast,
-    #     at = matrix(c(x, y), ncol=2))
-    #   selectedPoint$IDU_INDEX <- point$IDU_INDEX
-    #   xy <- data.frame(x = x, y = y) |>
-    #     st_as_sf(coords = c('x','y')) |>
-    #     st_set_crs(st_crs(zone))
-    #   selectedPoint$point <- xy
-    # })
+    observe({
+      req(input$plot_dblclick)
+      x <- input$plot_dblclick$x
+      y <- input$plot_dblclick$y
+      selectedPoint$IDU_INDEX <- stars::st_extract(
+        x = stars::st_as_stars(ref_data$idu_rast),
+        at = matrix(c(x, y), ncol=2))
+
+      point_sf <- st_point(c(x, y)) |> st_sfc(crs = 5070)  |> st_sf()
+      selectedPoint$point <- point_sf
+    })
 
     # observe for year back button
     observeEvent(input$back, {
@@ -192,7 +212,7 @@ server_wrapper <- function(ref_data, datacubes){
 
     # select previous attribute
     observeEvent(input$up, {
-      choices = input$fields_aux
+      choices = fields$selected
       current_index <- match(input$select_field, choices)
       if (current_index > 1) {
         updated_selected <- choices[current_index - 1]
@@ -204,7 +224,7 @@ server_wrapper <- function(ref_data, datacubes){
 
     # select next attribute
     observeEvent(input$down, {
-      choices = input$fields_aux
+      choices = fields$selected
       current_index <- match(input$select_field, choices)
       if (current_index < length(choices)) {
         updated_selected <- choices[current_index + 1]
@@ -213,7 +233,7 @@ server_wrapper <- function(ref_data, datacubes){
       }
       updated_selected_aux = c(choices[-current_index], choices[current_index])
       updateSelectizeInput(session, "select_field", selected = updated_selected)
-      updateSelectizeInput(session, "fields_aux", selected = updated_selected_aux)
+      # updateSelectizeInput(session, "fields_aux", selected = updated_selected_aux)
     })
 
     # select previous run
@@ -277,6 +297,8 @@ server_wrapper <- function(ref_data, datacubes){
     # observe zoom reset button
     observeEvent(input$reset_button, {
       updateTextAreaInput(session, inputId = 'extent', value='')
+      selectedPoint$IDU_INDEX <- NULL
+      selectedPoint$point <- NULL
     })
 
     # observe show modal button
@@ -285,7 +307,7 @@ server_wrapper <- function(ref_data, datacubes){
         title = "Limit fields to those selected below",
         "Use the dropdown below to select which items to visualize and include in exported data",
         pickerInput(
-          inputId = "fields_aux_modal",
+          inputId = "fields_modal",
           label = "Secondary fields",
           choices =  fields$items,
           selected = fields$selected,
@@ -304,25 +326,18 @@ server_wrapper <- function(ref_data, datacubes){
     # observe modal OK button
     observeEvent(input$ok, {
 
-      fields$selected <- input$fields_aux_modal
+      fields$selected <- c(input$fields_modal, input$select_field)
 
-      updatePickerInput(
+      updateSelectInput(
         session = session,
-        inputId = "fields_aux",
+        inputId = "select_field",
         choices = fields$selected,
-        selected = fields$selected[1]
+        selected = input$select_field
         )
-
-      updateSelectizeInput(
-        session = session,
-        inputId = 'fields_aux_old',
-        choices = fields$selected,
-        selected = fields$selected[1])
 
       removeModal()
 
     })
-
 
     # observe changes to selected fields
     observe({
@@ -335,19 +350,18 @@ server_wrapper <- function(ref_data, datacubes){
 
     output$legend <- renderPlot({
       req(data()$levels)
-      if(any(names(data()$pal_df) == 'minVal')){
 
-        # continuous palette
+      # continuous palette
+      if(any(names(data()$pal_df) == 'minVal')){
         par(mar=rep(0,4), bg = "transparent")
         pal_df <- data()$pal_df
-        plot(NULL ,xaxt='n',yaxt='n',bty='n',ylab='',xlab='', xlim=0:1, ylim=0:1)
+        plot(NULL,xaxt='n',yaxt='n',bty='n',ylab='',xlab='', xlim=0:1, ylim=0:1)
         legend('topleft', legend = pal_df$label, ncol = 1, fill = pal_df$hex, box.lwd = NA)
-      } else {
-        # categorical palette
+      } else { # categorical palette
         par(mar=rep(0,4), bg = "transparent")
         pal_df <- data()$pal_df |> filter(value %in% data()$levels$VALUE)
-        plot(NULL ,xaxt='n',yaxt='n',bty='n',ylab='',xlab='', xlim=0:1, ylim=0:1)
-        legend('topleft', legend = pal_df$label, ncol = 1, fill = pal_df$hex, box.lwd = NA)
+        plot(NULL,xaxt='n',yaxt='n',bty='n',ylab='',xlab='', xlim=0:1, ylim=0:1)
+        legend('topleft', legend = paste0(pal_df$value, ' ', pal_df$label), ncol = 1, fill = pal_df$hex, box.lwd = NA)
       }
     }, bg = "transparent")
 
@@ -384,30 +398,40 @@ server_wrapper <- function(ref_data, datacubes){
     })
 
     ## attribute -----
-    output$selected_point_info <- renderPrint({
+    # output$selected_point_info <- renderPrint({
+    output$selected_point_info <- renderTable({
+
       req(selectedPoint$IDU_INDEX)
-      data_sel <- data()$datacube[
-        input$fields_aux,selectedPoint$IDU_INDEX,year_index()] |>
-        as.data.frame()
-      labels <- input$fields_aux |> map_dfr(function(x){
+      fld <- unique(fields$selected)
+      idu <- as.numeric(selectedPoint$IDU_INDEX)
+      yr <- year_index()
+
+      data_sel <- data()$datacube[fld, idu, yr] |>as.data.frame() |> t()
+      out <- data.frame(value = data_sel)
+
+      label <- purrr::map2_chr(rownames(out), out$value, \(x, y){
+        pal_x <- get_pal(x)
+        label_x <- ''
         try({
-          out <- lookup_val(data_sel[,x], x)
-          if(length(out$label) == 0){
-            data.frame(
-              field = out$field,
-              value = prettyNum(out$value, digits = 3),
-              label = '',
-              col = '')
+          if(is.null(pal_x)) {
+            label_x <- ''
           } else {
-            data.frame(
-              field = out$field,
-              value = prettyNum(out$value, digits = 3),
-              label = out$label,
-              col = out$hex)
+            if(any(names(pal_x) == 'minVal')){ # binned continous
+              label_x <- get_pal('FlameLen') |>
+                dplyr::mutate(minVal = as.numeric(minVal)) |>
+                dplyr::filter(minVal > as.numeric(y)) |>
+                dplyr::slice_head(n = 1) |>
+                dplyr::pull(label)
+            } else { # categorical
+              label_x <- pal_x$label[match(y, pal_x$value)]
+            }
           }
+          return(label_x)
         })
+
       })
-      print(labels)
+      out$label <- label
+      return(out)
     })
 
     ## table -----
@@ -497,89 +521,89 @@ server_wrapper <- function(ref_data, datacubes){
 
   # load runs panel ----- -----
 
-  # data ..................
-
-  shinyDirChoose(input, "dir", roots = c(home = "~/Github/envisionr"))
-
-  # Reactive to store the selected directory path
-  dirPath <- reactive({
-    parseDirPath(roots = c(home = "~/Github/envisionr"), input$dir)
-  })
-
-  # Output the selected directory path
-  output$dirPath <- renderPrint({
-    dirPath()
-  })
-
-  # Reactive to get the list of files in the selected directory
-  fileList <- reactive({
-
-    # trigger when dirPath updated
-    path <- dirPath() # < reactive
-    if (is.null(path)) return(NULL)
-
-    # return all datacube files in current directory
-    files <- list.files(path, full.names = FALSE, pattern = '.datacube')
-    if (length(files) == 0) return(NULL)
-
-    files
-  })
-
-  # Reactive values to store loaded data
-  loadedData <- reactiveValues(A = NULL, B = NULL, C = NULL, D = NULL)
-
-  # observers ..................
-
-  # Update the selectInput choices with first 4 datacube files
-  observe({
-    files <- fileList() # < reactive
-    if (is.null(files)) return(NULL)
-    updateSelectInput(session, "file1", choices = files, selected = files[1])
-    updateSelectInput(session, "file2", choices = files, selected = files[2])
-    updateSelectInput(session, "file3", choices = files, selected = files[3])
-    updateSelectInput(session, "file4", choices = files, selected = files[4])
-  })
-
-  # observe load runs button
-  observeEvent(input$load_runs, {
-    path <- dirPath()
-    if (is.null(path)) {
-      output$load_status <- renderText("No directory selected.")
-      return()
-    }
-
-    selected_files <- c(input$file1, input$file2, input$file3, input$file4)
-    selected_files <- selected_files[!is.na(selected_files) & selected_files != ""]
-
-    if (length(selected_files) == 0) {
-      output$load_status <- renderText("No files selected.")
-      return()
-    }
-
-    file_paths <- file.path(path, selected_files)
-
-    # load files (assuming they are RData or CSV for demonstration)
-    tryCatch({
-
-      load_datacube <- function(x){
-        load(x)
-        txt <- paste(attr(dc, 'run_name'), 'datacube loaded\n')
-        cat(txt)
-        output$load_status <- renderText(txt)
-        return(dc)
-      }
-
-      datacubes <- list()
-      if (!is.na(file_paths[1])) datacubes[[1]] <- load_datacube(file_paths[1])
-      if (!is.na(file_paths[2])) datacubes[[2]] <- load_datacube(file_paths[2])
-      if (!is.na(file_paths[3])) datacubes[[3]] <- load_datacube(file_paths[3])
-      if (!is.na(file_paths[4])) datacubes[[4]] <- load_datacube(file_paths[4])
-      dc_library$datacubes <- datacubes
-
-      output$load_status <- renderText("Files loaded successfully!")
-    }, error = function(e) {
-      output$load_status <- renderText(paste("Error loading files:", e$message))
-    })
-  })
+  # # data ..................
+  #
+  # shinyDirChoose(input, "dir", roots = c(home = "~/Github/envisionr"))
+  #
+  # # Reactive to store the selected directory path
+  # dirPath <- reactive({
+  #   parseDirPath(roots = c(home = "~/Github/envisionr"), input$dir)
+  # })
+  #
+  # # Output the selected directory path
+  # output$dirPath <- renderPrint({
+  #   dirPath()
+  # })
+  #
+  # # Reactive to get the list of files in the selected directory
+  # fileList <- reactive({
+  #
+  #   # trigger when dirPath updated
+  #   path <- dirPath() # < reactive
+  #   if (is.null(path)) return(NULL)
+  #
+  #   # return all datacube files in current directory
+  #   files <- list.files(path, full.names = FALSE, pattern = '.datacube')
+  #   if (length(files) == 0) return(NULL)
+  #
+  #   files
+  # })
+  #
+  # # Reactive values to store loaded data
+  # loadedData <- reactiveValues(A = NULL, B = NULL, C = NULL, D = NULL)
+  #
+  # # observers ..................
+  #
+  # # Update the selectInput choices with first 4 datacube files
+  # observe({
+  #   files <- fileList() # < reactive
+  #   if (is.null(files)) return(NULL)
+  #   updateSelectInput(session, "file1", choices = files, selected = files[1])
+  #   updateSelectInput(session, "file2", choices = files, selected = files[2])
+  #   updateSelectInput(session, "file3", choices = files, selected = files[3])
+  #   updateSelectInput(session, "file4", choices = files, selected = files[4])
+  # })
+  #
+  # # observe load runs button
+  # observeEvent(input$load_runs, {
+  #   path <- dirPath()
+  #   if (is.null(path)) {
+  #     output$load_status <- renderText("No directory selected.")
+  #     return()
+  #   }
+  #
+  #   selected_files <- c(input$file1, input$file2, input$file3, input$file4)
+  #   selected_files <- selected_files[!is.na(selected_files) & selected_files != ""]
+  #
+  #   if (length(selected_files) == 0) {
+  #     output$load_status <- renderText("No files selected.")
+  #     return()
+  #   }
+  #
+  #   file_paths <- file.path(path, selected_files)
+  #
+  #   # load files (assuming they are RData or CSV for demonstration)
+  #   tryCatch({
+  #
+  #     load_datacube <- function(x){
+  #       load(x)
+  #       txt <- paste(attr(datacube, 'run_name'), 'datacube loaded\n')
+  #       cat(txt)
+  #       output$load_status <- renderText(txt)
+  #       return(datacube)
+  #     }
+  #
+  #     datacubes <- list()
+  #     if (!is.na(file_paths[1])) datacubes[[1]] <- load_datacube(file_paths[1])
+  #     if (!is.na(file_paths[2])) datacubes[[2]] <- load_datacube(file_paths[2])
+  #     if (!is.na(file_paths[3])) datacubes[[3]] <- load_datacube(file_paths[3])
+  #     if (!is.na(file_paths[4])) datacubes[[4]] <- load_datacube(file_paths[4])
+  #     datacube_library$datacubes <- datacubes
+  #
+  #     output$load_status <- renderText("Files loaded successfully!")
+  #   }, error = function(e) {
+  #     output$load_status <- renderText(paste("Error loading files:", e$message))
+  #   })
+  # })
   }
 }

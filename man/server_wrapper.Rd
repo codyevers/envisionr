@@ -4,7 +4,7 @@
 \alias{server_wrapper}
 \title{Shiny server wrapper}
 \usage{
-server_wrapper(ref_data, datacubes)
+server_wrapper(ref_data, datacubes, field_filter)
 }
 \description{
 Shiny server wrapper
