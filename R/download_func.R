@@ -42,7 +42,7 @@ download_delta_array <- function(
     message(glue::glue('Delta array CSV copied to:\n{output_directory}'))
 
     if(delete_temp_dir){
-      unlink(temp_dir, recursive = TRUE)
+      unlink(file.path(temp_dir, "*"), recursive = TRUE)
     }
   }
 }

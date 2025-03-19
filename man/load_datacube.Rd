@@ -4,7 +4,7 @@
 \alias{load_datacube}
 \title{Title}
 \usage{
-load_datacube(file, name = NULL)
+load_datacube(file, name = NULL, parse_vegclass = FALSE)
 }
 \arguments{
 \item{name}{}
