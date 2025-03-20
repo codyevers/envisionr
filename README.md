@@ -1,10 +1,26 @@
 EnvisionR
 ================
 Cody Evers
-2024-04-30
+2024-03-20
 
-EnvisionR is a shiny application for exploring and extracting simulation
-data from Envision using a simple map interface.
+EnvisionR is a R Shiny application for exploring Envision runs using a
+simple mapping interface. It includes additional functionality for
+assembling data into ‘high dimensional’ datacubes for post-hoc analyses
+of Envision runs. This README contains information for installing and
+running EnvisionR.
+
+<figure>
+<img src="man/figures/envisionr_interface.png"
+alt="EnvisionR shiny interface" />
+<figcaption aria-hidden="true">EnvisionR shiny interface</figcaption>
+</figure>
+
+## Setting up EnvisionR
+
+EnvisionR uses R Shiny to interact and map data. That means it requires
+installing both R and RStudio on your system, then creating a new R
+Studio project where you can run EnvisionR, save your datacubes, and
+keep R scripts.
 
 ## Create R project
 
@@ -18,59 +34,70 @@ data from Envision using a simple map interface.
 
 This will create a new RStudio project with an .Rproj file in the
 specified directory. This file helps manage paths and settings specific
-to your project.
+to your project. A key benefit of using R projects is that it
+automatically sets the working directory to the location of the Rproj
+files. The working directory is useful because you can point to files in
+the working directory without needing to specify the absolute location
+(e.g., C:/ or /users/username/).
 
 ## Install required packages
 
-This script requires several packages: pacman, devtools, dplyr, tidyr,
-purr, glue, stars, terra, sf, data.table, xml2, shiny, shinyjs, and
+EnvisionR requires several external packages: pacman, devtools, dplyr,
+tidyr, purrr, sf, stars, terra, data.table, xml2, shiny, shinyjs, and
 shinyWidgets. Type the following line into the R console to first
-install the package pacman, then use pacman to automate the installation
-of the other require packages.
+install the package pacman, then use pacman to download devtools.
 
 ``` r
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(devtools, dplyr, tidyr, purrr, glue) # data maniuplation
-pacman::p_load(stars, terra, sf, data.table, xml2) # data structure
-pacman::p_load(shiny, shinyjs, shinyWidgets) # shiny
+pacman::p_load(devtools) 
 ```
 
 ## Install EnvisionR
 
-Download and install the EnvisionR package. Before we do, we’ll make
-sure we delete any version of EnvisionR that is already installed. Then
-we’ll use the `install_github()` from the devtools package to install
-the EnvisionR package from github. Final, we load EnvisionR using
-`library(envisionr)`
+Download and install the EnvisionR package using the `install_github()`
+from the devtools package to install the EnvisionR package from github.
+You only need to install the package once.
 
 ``` r
-if(!require(envisionr)){
-  devtools::install_github(
-    repo = 'https://github.com/codyevers/envisionr', 
-    build = FALSE)
-}
+devtools::install_github('https://github.com/codyevers/envisionr', build = FALSE, force = TRUE)
+```
+
+## Required pacakges
+
+The devtools should automatically install and load all external packages
+needed for EnvisionR. For reference, these are: dplyr, dtplyr, tidyr,
+purrr, stringr, glue, stars, terra, sf, data.table, xml2, shiny,
+shinyWidgets, shinyjs. If you run into problems with dependencies when
+running EnvisionR, use pacman::p_load() to install and load these
+packages.
+
+``` r
+pacman::p_load(dplyr, dtplyr, tidyr, purrr, glue) 
+pacman::p_load(stars, terra, sf, data.table, xml2)
+pacman::p_load(shiny, shinyWidgets
+```
+
+## Load EnvisionR package
+
+Once installed, we load EnvisionR using `library(envisionr)`, which
+makes the functions and data contained in the package available to call
+from your script. Unlike installing packages, which you only need to do
+once, you’ll need to load the package every time you start a new R
+session.
+
+``` r
 library(envisionr)
 ```
 
-## Download demonstration datacubes
+## Download datacubes
 
 Load some of the datacubes that we’d like to explore. These are large
-files so are not included in the EnvisionR package itself. Rather,
-you’ll want to create a folder in your working directory called
-datacubes then download the following files from box and then move them
-to the datacubes directory. Download the 7 files in [this box
-folder](https://oregonstate.box.com/s/lfgqvq0hakprc37n2n7h4xa3kazcft90)
-and place them in a folder called `datacubes` in your working directory.
-You can create a new folder if this folder doesn’t exist.
-
-## Load required reference data from the EnvisionR data
-
-Load required reference data into memory includes the IDU data as well
-as boundaries, roads, and cities.
-
-``` r
-data('ref_data', package = 'envisionr')
-```
+files (~250MB each) so are not included in the EnvisionR package itself.
+Rather, you’ll want to create a folder in your project folder called
+`datacubes` then download the following files from box and then move
+them to the datacubes directory. Download the datacubes files you need
+from the CNH2 FireNet box folder:
+<https://oregonstate.box.com/s/jubxxvv4gcyihuss6azx86e612bt65ux>).
 
 ## Load datacubes into memory
 
@@ -78,10 +105,10 @@ Read datacubes saved in your `datacubes` directory into memory using
 `load_datacube` and assign each to its own object (e.g., dc1, dc2, etc).
 
 ``` r
-dc1 <- load_datacube('datacubes/FTW-FF-HC_GFDL_Run0.datacube')
-dc2 <- load_datacube('datacubes/FTW-FF-HD_GFDL_Run0.datacube')
-dc3 <- load_datacube('datacubes/FTW-FF-LD_GFDL_Run0.datacube')
-dc4 <- load_datacube('datacubes/FTW-NM-NO-GFDL_Run0.datacube')
+dc1 <- load_datacube('datacubes/FTW-FF-RSK-HC_Run2.datacube')
+dc2 <- load_datacube('datacubes/FTW-FF-RSK-HD_Run2.datacube')
+dc3 <- load_datacube('datacubes/FTW-FF-RSK-LD_Run2.datacube')
+dc4 <- load_datacube('datacubes/FTW-FF-SC-HC_Run2.datacube')
 ```
 
 ## Run EnvisionR
@@ -93,7 +120,7 @@ read into memory.
 run_envisionr(dc1, dc2, dc3, dc4)
 ```
 
-## Loading new data
+## Building new datacubes
 
 Build datacubes from scratch. You’ve run Envision and taken the delta
 array csv file, placed it in a directory called `deltaarrays` in your
@@ -110,7 +137,7 @@ da <- read_delta_csv('/deltaarrays/DeltaArray_example.csv')
 unique(da$field)
 
 # select fields to include in the datacube
-fields = c('LULC_B','SIZE','CANOPY','LAYERS')
+fields = c('LULC_B','VEGCLASS','DISTURB','VARIANT','N_DU','SIZE','CANOPY','LAYERS')
 
 # build datacube (1 minute) - save as stars object
 dc <- build_datacube(
@@ -126,6 +153,9 @@ dc1 <- load_datacube('datacubes/dc_test.datacube')
 
 # show datacube info
 print(dc1)
+
+# run EnvisionR 
+run_envisionr(dc1)
 ```
 
 ## Required data
@@ -142,10 +172,14 @@ This script requires several reference files which are saved in the
 
 ## Functions
 
-Functions are organized in a series of R scripts
+Functions are organized in a series of R scripts. These are built into
+package itself. But
 
+- `R/ui` Shiny UI function
+- `R/server.R` Shiny server function
+- `R/run_func.R` run_envisionr wrapper function (main interface w/
+  EnvisionR)
 - `R/datacube_func.R` Functions related to building datacubes
 - `R/download_func.R` Functions for downloading delta arrays
 - `R/load_func.R` Functions for loading data
 - `R/plot_func.R` Functions for plotting datacubes
-- `shiny_func.R` UI and server functions for running EnvisionR shiny app
