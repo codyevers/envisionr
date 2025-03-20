@@ -122,6 +122,8 @@ run_envisionr(dc1, dc2, dc3, dc4)
 
 ## Building new datacubes
 
+## Building new datacubes
+
 Build datacubes from scratch. You’ve run Envision and taken the delta
 array csv file, placed it in a directory called `deltaarrays` in your
 working directory and renamed it to `DeltaArra_example.csv`. Read the
